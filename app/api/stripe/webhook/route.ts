@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       await handlePaymentFailure(event.data.object)
       break
     default:
-      console.log(`Unhandled event type ${event.type}`)
+      // Unhandled event type - log for debugging if needed
   }
 
   return NextResponse.json({ received: true })

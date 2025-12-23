@@ -29,6 +29,8 @@ async function connectDB() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      // Support both local MongoDB and MongoDB Atlas
+      // Atlas connection strings already include SSL/TLS settings
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
@@ -40,6 +42,7 @@ async function connectDB() {
     cached.conn = await cached.promise
   } catch (e) {
     cached.promise = null
+    console.error('❌ MongoDB connection error:', e)
     throw e
   }
 

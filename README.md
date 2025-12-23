@@ -47,6 +47,13 @@ npm install
 ```
 
 3. **Set up MongoDB:**
+
+**Option A: Use MongoDB Atlas (Recommended - Cloud)**
+- Follow the guide in [MONGODB_ATLAS_SETUP.md](./MONGODB_ATLAS_SETUP.md)
+- Get your connection string from Atlas dashboard
+- Update `.env.local` with your Atlas connection string
+
+**Option B: Use Local MongoDB**
 ```bash
 # Run the setup script (macOS/Linux)
 ./setup-mongodb.sh
@@ -60,11 +67,14 @@ mongod --dbpath ~/data/db
 ```
 
 4. **Set up environment variables:**
-The setup script creates a `.env.local` file. Update it with your actual keys:
+Create a `.env.local` file in the root directory with your configuration:
 
 ```env
 # Database
-MONGODB_URI=mongodb://localhost:27017/nexttransport
+# For local MongoDB:
+# MONGODB_URI=mongodb://localhost:27017/nexttransport
+# For MongoDB Atlas:
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/nexttransport?retryWrites=true&w=majority
 
 # Stripe (get from https://dashboard.stripe.com/test/apikeys)
 STRIPE_SECRET_KEY=sk_test_...
@@ -152,6 +162,8 @@ All environment variables are stored in `.env.local` (not committed to git).
 
 Required:
 - `MONGODB_URI` - MongoDB connection string
+  - Local: `mongodb://localhost:27017/nexttransport`
+  - Atlas: `mongodb+srv://username:password@cluster.mongodb.net/nexttransport?retryWrites=true&w=majority`
 - `STRIPE_SECRET_KEY` - Stripe secret key
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
 - `JWT_SECRET` - Secret for JWT tokens

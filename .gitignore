@@ -40,3 +40,9 @@ next-env.d.ts
 drive-download-*
 *.ai
 
+# temporary backup files
+backup/
+*.bson
+*.metadata.json
+prelude.json
+
