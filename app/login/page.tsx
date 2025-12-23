@@ -52,11 +52,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-accent-900 to-gray-900 relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4">
@@ -68,23 +68,23 @@ export default function LoginPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-blue-200 mb-2">
+            <h1 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-accent-200 mb-2">
               Admin Login
             </h1>
-            <p className="text-purple-200 text-sm">Enter your credentials to access the admin panel</p>
+            <p className="text-accent-200 text-sm">Enter your credentials to access the admin panel</p>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Username Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-semibold text-purple-200 mb-2">
+              <label htmlFor="username" className="block text-sm font-semibold text-accent-200 mb-2">
                 Username
               </label>
               <input
                 id="username"
                 {...register('username')}
-                className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                 placeholder="Enter your username"
                 autoComplete="username"
                 autoFocus
@@ -96,14 +96,14 @@ export default function LoginPage() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-purple-200 mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-accent-200 mb-2">
                 Password
               </label>
               <input
                 id="password"
                 {...register('password')}
                 type="password"
-                className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                 placeholder="Enter your password"
                 autoComplete="current-password"
               />
@@ -116,7 +116,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
+              className="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
             >
               {loading ? (
                 <span className="flex items-center justify-center">
@@ -136,7 +136,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <a
               href="/"
-              className="text-purple-200 hover:text-white text-sm transition-colors"
+              className="text-accent-200 hover:text-white text-sm transition-colors"
             >
               ← Back to Home
             </a>

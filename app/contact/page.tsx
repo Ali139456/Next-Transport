@@ -78,20 +78,20 @@ export default function ContactPage() {
   }, [reset])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-accent-900 to-slate-900 relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-6xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-blue-200">
+          <h1 className="text-6xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-accent-200">
             Get In Touch
           </h1>
-          <p className="text-xl text-purple-200 max-w-2xl mx-auto">
+          <p className="text-xl text-accent-200 max-w-2xl mx-auto">
             Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function ContactPage() {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl font-bold text-white mb-4">Let&apos;s Start a Conversation</h2>
-              <p className="text-purple-200 text-lg leading-relaxed">
+              <p className="text-accent-200 text-lg leading-relaxed">
                 Whether you have a question about our services, pricing, or need help with an existing booking, 
                 our team is ready to assist you every step of the way.
               </p>
@@ -117,25 +117,25 @@ export default function ContactPage() {
                   {method.link ? (
                     <a
                       href={method.link}
-                      className="flex items-start space-x-4 text-white hover:text-purple-200 transition-colors"
+                      className="flex items-start space-x-4 text-white hover:text-accent-200 transition-colors"
                     >
-                      <div className="flex-shrink-0 text-purple-300 group-hover:text-purple-200 transition-colors">
+                      <div className="flex-shrink-0 text-accent-300 group-hover:text-accent-200 transition-colors">
                         {method.icon}
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl font-bold mb-1">{method.title}</h3>
-                        <p className="text-purple-200 text-sm mb-2">{method.description}</p>
+                        <p className="text-accent-200 text-sm mb-2">{method.description}</p>
                         <p className="text-white font-semibold">{method.value}</p>
                       </div>
                     </a>
                   ) : (
                     <div className="flex items-start space-x-4 text-white">
-                      <div className="flex-shrink-0 text-purple-300">
+                      <div className="flex-shrink-0 text-accent-300">
                         {method.icon}
                       </div>
                       <div className="flex-1">
                         <h3 className="text-xl font-bold mb-1">{method.title}</h3>
-                        <p className="text-purple-200 text-sm mb-2">{method.description}</p>
+                        <p className="text-accent-200 text-sm mb-2">{method.description}</p>
                         <p className="text-white font-semibold">{method.value}</p>
                       </div>
                     </div>
@@ -147,12 +147,12 @@ export default function ContactPage() {
             {/* Response Time Card */}
             <div className="bg-gradient-to-r from-purple-600/30 to-blue-600/30 backdrop-blur-md rounded-2xl p-6 border border-purple-400/30">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-purple-200 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-accent-200 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
                   <h3 className="text-white font-bold mb-2">Quick Response Guarantee</h3>
-                  <p className="text-purple-100 text-sm">
+                  <p className="text-accent-100 text-sm">
                     We typically respond to all inquiries within 24 hours during business days. 
                     For urgent matters, please call us directly.
                   </p>
@@ -168,13 +168,13 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-purple-200 mb-2">
+                <label htmlFor="name" className="block text-sm font-semibold text-accent-200 mb-2">
                   Full Name *
                 </label>
                 <input
                   id="name"
                   {...register('name')}
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                   autoComplete="name"
                   placeholder="John Doe"
                 />
@@ -192,7 +192,7 @@ export default function ContactPage() {
                   id="email"
                   {...register('email')}
                   type="email"
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                   autoComplete="email"
                   placeholder="john@example.com"
                 />
@@ -204,13 +204,13 @@ export default function ContactPage() {
               {/* Phone Field */}
               <div>
                 <label htmlFor="phone" className="block text-sm font-semibold text-purple-200 mb-2">
-                  Phone Number <span className="text-purple-300 text-xs">(Optional)</span>
+                  Phone Number <span className="text-accent-300 text-xs">(Optional)</span>
                 </label>
                 <input
                   id="phone"
                   {...register('phone')}
                   type="tel"
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                   autoComplete="tel"
                   placeholder="+61 4XX XXX XXX"
                 />
@@ -224,7 +224,7 @@ export default function ContactPage() {
                 <input
                   id="subject"
                   {...register('subject')}
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none"
+                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
                   autoComplete="off"
                   placeholder="What's this regarding?"
                 />
@@ -254,7 +254,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
+                className="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
               >
                 {submitting ? (
                   <span className="flex items-center justify-center">

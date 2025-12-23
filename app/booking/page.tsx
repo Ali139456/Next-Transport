@@ -213,23 +213,23 @@ export default function BookingPage() {
 
   if (step === 'payment' && clientSecret) {
     return (
-      <div className="min-h-screen py-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 relative overflow-hidden">
+      <div className="min-h-screen py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-indigo-200/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-200/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-300/20 to-transparent rounded-full blur-3xl"></div>
         
         <div className="container mx-auto px-4 max-w-2xl relative z-10">
           <div className="text-center mb-8">
-            <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-accent-500 to-accent-600 bg-clip-text text-transparent">
               Complete Payment
             </h1>
           </div>
           
           <div className="bg-white/90 backdrop-blur-lg p-8 rounded-3xl card-shadow-lg mb-6 border border-white/20">
-            <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200/50">
-              <p className="text-lg font-semibold text-gray-900 mb-2">Booking ID: <span className="text-blue-600">{bookingId}</span></p>
+            <div className="mb-6 p-6 bg-gradient-to-r from-accent-50 to-accent-100 rounded-xl border border-accent-200/50">
+              <p className="text-lg font-semibold text-gray-900 mb-2">Booking ID: <span className="text-accent-600">{bookingId}</span></p>
               <p className="text-xl font-bold text-gray-900">
-                Payment Amount: <span className="text-indigo-600">${quote && (watch('paymentMethod') === 'full' ? (quote.totalPrice || 0) : (quote.depositAmount || 0)).toFixed(2)}</span>
+                Payment Amount: <span className="text-accent-600">${quote && (watch('paymentMethod') === 'full' ? (quote.totalPrice || 0) : (quote.depositAmount || 0)).toFixed(2)}</span>
               </p>
             </div>
             <Elements
@@ -255,15 +255,15 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-purple-50 via-white to-pink-50 relative overflow-hidden">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-pattern-dots opacity-30"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-pink-200/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-200/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-300/20 to-transparent rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-accent-500 to-accent-600 bg-clip-text text-transparent">
             Complete Your Booking
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -305,7 +305,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('firstName')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.firstName && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.firstName.message}</p>
@@ -317,7 +317,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('lastName')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.lastName && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.lastName.message}</p>
@@ -330,7 +330,7 @@ export default function BookingPage() {
               <input
                 {...register('email')}
                 type="email"
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.email.message}</p>
@@ -343,7 +343,7 @@ export default function BookingPage() {
               <input
                 {...register('phone')}
                 type="tel"
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.phone && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.phone.message}</p>
@@ -366,7 +366,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('vehicleMake')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.vehicleMake && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.vehicleMake.message}</p>
@@ -378,7 +378,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('vehicleModel')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.vehicleModel && (
                 <p className="text-red-500 text-sm mt-1">{errors.vehicleModel.message}</p>
@@ -393,7 +393,7 @@ export default function BookingPage() {
                 type="number"
                 min="1900"
                 max={new Date().getFullYear() + 1}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.vehicleYear && (
                 <p className="text-red-500 text-sm mt-1">{errors.vehicleYear.message}</p>
@@ -417,7 +417,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('pickupAddress')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.pickupAddress && (
                 <p className="text-red-500 text-sm mt-1">{errors.pickupAddress.message}</p>
@@ -430,7 +430,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('pickupSuburb')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.pickupSuburb && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupSuburb.message}</p>
@@ -442,7 +442,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('pickupPostcode')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.pickupPostcode && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupPostcode.message}</p>
@@ -454,7 +454,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('pickupState')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.pickupState && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupState.message}</p>
@@ -468,7 +468,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('pickupContactName')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.pickupContactName && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupContactName.message}</p>
@@ -481,7 +481,7 @@ export default function BookingPage() {
                 <input
                   {...register('pickupContactPhone')}
                   type="tel"
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.pickupContactPhone && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupContactPhone.message}</p>
@@ -494,7 +494,7 @@ export default function BookingPage() {
               </label>
               <select
                 {...register('preferredTime')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               >
                 <option value="morning">Morning (8am - 12pm)</option>
                 <option value="afternoon">Afternoon (12pm - 5pm)</option>
@@ -521,7 +521,7 @@ export default function BookingPage() {
               </label>
               <input
                 {...register('deliveryAddress')}
-                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
               />
               {errors.deliveryAddress && (
                 <p className="text-red-500 text-sm mt-1">{errors.deliveryAddress.message}</p>
@@ -534,7 +534,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('deliverySuburb')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.deliverySuburb && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliverySuburb.message}</p>
@@ -546,7 +546,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('deliveryPostcode')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.deliveryPostcode && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryPostcode.message}</p>
@@ -558,7 +558,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('deliveryState')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.deliveryState && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryState.message}</p>
@@ -572,7 +572,7 @@ export default function BookingPage() {
                 </label>
                 <input
                   {...register('deliveryContactName')}
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.deliveryContactName && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryContactName.message}</p>
@@ -585,7 +585,7 @@ export default function BookingPage() {
                 <input
                   {...register('deliveryContactPhone')}
                   type="tel"
-                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all bg-white shadow-sm hover:shadow-md"
+                  className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
                 />
                 {errors.deliveryContactPhone && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryContactPhone.message}</p>
@@ -633,7 +633,7 @@ export default function BookingPage() {
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
+          className="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
         >
           Continue to Payment
         </button>

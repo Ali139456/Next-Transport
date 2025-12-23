@@ -80,7 +80,7 @@ export default function HomePage() {
       </Parallax>
 
       {/* Features Section */}
-      <section className="py-32 bg-gradient-to-b from-white via-orange-50/30 to-white relative overflow-hidden">
+      <section className="py-32 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           <div className="text-center mb-20">
@@ -132,7 +132,7 @@ export default function HomePage() {
       </section>
 
       {/* Steps Section */}
-      <section className="py-32 bg-gradient-to-br from-accent-50 via-white to-orange-50 relative overflow-hidden">
+      <section className="py-32 bg-gradient-to-br from-accent-50 via-white to-accent-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
         <div className="container mx-auto px-4 max-w-7xl relative z-10">
           <div className="text-center mb-20">
@@ -236,7 +236,7 @@ export default function HomePage() {
           
           {/* Main Content: Stats Block + Testimonial */}
           <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-start">
-            {/* Left: Stats Block with Orange Background */}
+            {/* Left: Stats Block with Accent Background */}
             <div className="bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl sm:rounded-2xl p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-2xl order-2 lg:order-1">
               {/* Radial gradient pattern */}
               <div className="absolute inset-0 opacity-20">
