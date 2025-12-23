@@ -29,14 +29,26 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section with Parallax */}
-      <Parallax
-        strength={400}
-        bgImage="/images/hero-bg.jpg"
-        bgImageAlt="Car transport"
-        className="h-screen relative"
-      >
-        <div className="flex items-center justify-center h-screen bg-gradient-to-b from-black/70 via-black/60 to-black/70 relative">
+      {/* Hero Section - Fixed background on mobile, Parallax on desktop */}
+      <div className="h-screen relative">
+        {/* Mobile: Fixed background image */}
+        <div 
+          className="lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/images/hero-bg.jpg)' }}
+        />
+        {/* Desktop: Parallax */}
+        <div className="hidden lg:block absolute inset-0">
+          <Parallax
+            strength={400}
+            bgImage="/images/hero-bg.jpg"
+            bgImageAlt="Car transport"
+            className="h-full w-full"
+          >
+            <div className="h-screen" />
+          </Parallax>
+        </div>
+        {/* Content overlay */}
+        <div className="flex items-center justify-center h-screen bg-gradient-to-b from-black/70 via-black/60 to-black/70 relative z-10">
           {/* Animated background elements */}
           <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
           <div className="absolute top-20 left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -77,7 +89,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </Parallax>
+      </div>
 
       {/* Features Section */}
       <section className="py-32 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">

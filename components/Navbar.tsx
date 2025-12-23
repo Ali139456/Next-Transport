@@ -9,13 +9,13 @@ export default function Navbar() {
   return (
     <nav className="bg-black backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 md:h-24">
+        <div className="flex justify-between items-center h-24 md:h-28">
           <Link href="/" className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/images/logo.png" 
               alt="NextTransport Logo" 
-              className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
+              className="h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 w-auto"
             />
           </Link>
 
