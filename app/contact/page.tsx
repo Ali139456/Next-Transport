@@ -92,7 +92,7 @@ export default function ContactPage() {
             Get In Touch
           </h1>
           <p className="text-xl text-purple-200 max-w-2xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default function ContactPage() {
           {/* Contact Information Section */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-4">Let's Start a Conversation</h2>
+              <h2 className="text-3xl font-bold text-white mb-4">Let&apos;s Start a Conversation</h2>
               <p className="text-purple-200 text-lg leading-relaxed">
                 Whether you have a question about our services, pricing, or need help with an existing booking, 
                 our team is ready to assist you every step of the way.

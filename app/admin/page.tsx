@@ -30,10 +30,6 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
 
-  useEffect(() => {
-    fetchBookings()
-  }, [filter])
-
   const fetchBookings = async () => {
     try {
       const response = await fetch(`/api/admin/bookings?filter=${filter}`)
@@ -46,6 +42,10 @@ export default function AdminPage() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    fetchBookings()
+  }, [filter])
 
   const updateStatus = async (bookingId: string, newStatus: string) => {
     try {

@@ -14,7 +14,7 @@ export default function AboutPage() {
             About NextTransport
           </h1>
           <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light">
-            Australia's leading vehicle transport platform - Connecting customers with reliable transport services nationwide
+            Australia&apos;s leading vehicle transport platform - Connecting customers with reliable transport services nationwide
           </p>
         </div>
         
@@ -31,11 +31,11 @@ export default function AboutPage() {
             </div>
             <p className="text-xl text-gray-700 mb-6 leading-relaxed">
               NextTransport.com.au was founded with a simple mission: to make vehicle transport across Australia 
-              as easy as booking a ride. We recognized that transporting a vehicle shouldn't be complicated, 
+              as easy as booking a ride. We recognized that transporting a vehicle shouldn&apos;t be complicated, 
               time-consuming, or stressful.
             </p>
             <p className="text-xl text-gray-700 mb-6 leading-relaxed">
-              Today, we are Australia's leading vehicle transport booking platform, serving thousands of customers 
+              Today, we are Australia&apos;s leading vehicle transport booking platform, serving thousands of customers 
               from individuals moving interstate to businesses managing fleet relocations. We combine cutting-edge 
               technology with a network of trusted, professional transport operators.
             </p>
@@ -136,7 +136,7 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Nationwide Coverage</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Serving all of Australia with extensive coverage. From Sydney to Perth, we've got you covered.</p>
+                <p className="text-gray-600 leading-relaxed text-lg">Serving all of Australia with extensive coverage. From Sydney to Perth, we&apos;ve got you covered.</p>
               </div>
             </div>
           </div>

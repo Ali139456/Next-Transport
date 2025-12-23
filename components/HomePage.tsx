@@ -45,7 +45,7 @@ export default function HomePage() {
           <div className="text-center text-white px-4 max-w-5xl relative z-10">
             <div className="mb-6 inline-block">
               <span className="bg-accent-600/90 backdrop-blur-sm text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg">
-                Australia's #1 Vehicle Transport
+                Australia&apos;s #1 Vehicle Transport
               </span>
             </div>
             <h1 className="text-6xl md:text-8xl font-extrabold mb-8 leading-tight drop-shadow-2xl">
@@ -167,7 +167,7 @@ export default function HomePage() {
               </div>
               <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-all">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Track</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Monitor your vehicle's journey in real-time with GPS</p>
+                <p className="text-gray-600 leading-relaxed text-lg">Monitor your vehicle&apos;s journey in real-time with GPS</p>
               </div>
             </div>
             <div className="text-center group relative">
@@ -215,7 +215,7 @@ export default function HomePage() {
                   24/7
                 </div>
                 <div className="text-xl text-gray-200 font-semibold">Support Available</div>
-                <p className="text-gray-400 mt-2">We're here whenever you need us</p>
+                <p className="text-gray-400 mt-2">We&apos;re here whenever you need us</p>
               </div>
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function HomePage() {
               <div className="relative min-h-[200px] sm:min-h-[250px]">
                 {/* Opening Quote Mark */}
                 <div className="absolute -top-2 -left-1 sm:-top-4 sm:-left-2 text-accent-500 pointer-events-none" style={{ fontSize: 'clamp(50px, 12vw, 80px)', lineHeight: '1', fontFamily: 'serif' }}>
-                  "
+                  &quot;
                 </div>
                 
                 {/* Testimonial Text */}
@@ -300,7 +300,7 @@ export default function HomePage() {
                 
                 {/* Closing Quote Mark */}
                 <div className="absolute -bottom-6 sm:-bottom-8 -right-1 sm:-right-2 text-accent-500 pointer-events-none" style={{ fontSize: 'clamp(50px, 12vw, 80px)', lineHeight: '1', fontFamily: 'serif' }}>
-                  "
+                  &quot;
                 </div>
               </div>
               
