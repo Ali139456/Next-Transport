@@ -1,16 +1,16 @@
 export default function AboutPage() {
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-orange-50 via-white to-amber-50 relative overflow-hidden">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-200/30 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-300/30 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-accent-100/20 to-orange-100/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-accent-100/20 to-accent-200/20 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Hero Section */}
         <div className="text-center mb-16 pt-8">
-          <h1 className="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-accent-600 via-accent-700 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-accent-600 via-accent-700 to-accent-600 bg-clip-text text-transparent">
             About NextTransport
           </h1>
           <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light">
@@ -48,7 +48,7 @@ export default function AboutPage() {
         
         {/* Mission & Values */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-gradient-to-br from-accent-50 via-orange-50 to-amber-50 rounded-3xl shadow-xl p-10 border-2 border-accent-200/50 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-accent-50 via-accent-100/50 to-accent-50 rounded-3xl shadow-xl p-10 border-2 border-accent-200/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent-200/30 rounded-full blur-2xl"></div>
             <div className="relative z-10">
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
@@ -65,10 +65,10 @@ export default function AboutPage() {
             </div>
           </div>
           
-          <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-3xl shadow-xl p-10 border-2 border-accent-300/50 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-accent-50 via-accent-100/50 to-accent-50 rounded-3xl shadow-xl p-10 border-2 border-accent-300/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent-300/30 rounded-full blur-2xl"></div>
             <div className="relative z-10">
-              <div className="bg-gradient-to-br from-accent-600 to-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
+              <div className="bg-gradient-to-br from-accent-600 to-accent-700 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
@@ -143,7 +143,7 @@ export default function AboutPage() {
         </div>
         
         {/* Stats Section */}
-        <div className="bg-gradient-to-br from-accent-600 via-accent-700 to-orange-600 rounded-3xl shadow-2xl p-12 text-white relative overflow-hidden">
+        <div className="bg-gradient-to-br from-accent-600 via-accent-700 to-accent-600 rounded-3xl shadow-2xl p-12 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>

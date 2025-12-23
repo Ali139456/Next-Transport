@@ -276,7 +276,7 @@ export default function TrackingPage() {
               .map((history, index) => {
                 try {
                   return (
-                <div key={index} className="border-l-2 border-primary-200 pl-4 py-2">
+                <div key={index} className="border-l-2 border-accent-200 pl-4 py-2">
                       <div className="font-semibold">{history.status || 'Unknown'}</div>
                   <div className="text-sm text-gray-600">
                         {history.timestamp ? new Date(history.timestamp).toLocaleString() : 'N/A'}
