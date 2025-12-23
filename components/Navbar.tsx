@@ -15,7 +15,7 @@ export default function Navbar() {
             <img 
               src="/images/logo.png" 
               alt="NextTransport Logo" 
-              className="h-14 sm:h-18 md:h-22 lg:h-24 w-auto"
+              className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
             />
           </Link>
 
