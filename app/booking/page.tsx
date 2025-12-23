@@ -293,7 +293,7 @@ export default function BookingPage() {
       <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-8">
         <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Customer Details
@@ -354,7 +354,7 @@ export default function BookingPage() {
 
         <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
             </svg>
             Vehicle Details
@@ -404,7 +404,7 @@ export default function BookingPage() {
 
         <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -509,7 +509,7 @@ export default function BookingPage() {
 
         <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             Delivery Details
@@ -597,35 +597,35 @@ export default function BookingPage() {
 
         <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
             Payment Method
           </h2>
           <div className="space-y-4">
-            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-purple-400 hover:bg-purple-50/50 transition-all group">
+            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-purple-50/50 transition-all group">
               <input
                 type="radio"
                 {...register('paymentMethod')}
                 value="full"
                 defaultChecked
-                className="w-5 h-5 text-purple-600 focus:ring-purple-500 focus:ring-2"
+                className="w-5 h-5 text-accent-600 focus:ring-purple-500 focus:ring-2"
               />
               <div className="ml-4">
                 <span className="font-semibold text-gray-900 group-hover:text-purple-700">Pay Full Amount</span>
-                <p className="text-lg font-bold text-purple-600">${quote.totalPrice.toFixed(2)}</p>
+                <p className="text-lg font-bold text-accent-600">${quote.totalPrice.toFixed(2)}</p>
               </div>
             </label>
-            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-purple-400 hover:bg-purple-50/50 transition-all group">
+            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-purple-50/50 transition-all group">
               <input
                 type="radio"
                 {...register('paymentMethod')}
                 value="deposit"
-                className="w-5 h-5 text-purple-600 focus:ring-purple-500 focus:ring-2"
+                className="w-5 h-5 text-accent-600 focus:ring-purple-500 focus:ring-2"
               />
               <div className="ml-4">
-                <span className="font-semibold text-gray-900 group-hover:text-purple-700">Pay Deposit (15%)</span>
-                <p className="text-lg font-bold text-purple-600">${quote.depositAmount.toFixed(2)} <span className="text-sm font-normal text-gray-600">- Balance on delivery</span></p>
+                <span className="font-semibold text-gray-900 group-hover:text-accent-700">Pay Deposit (15%)</span>
+                <p className="text-lg font-bold text-accent-600">${quote.depositAmount.toFixed(2)} <span className="text-sm font-normal text-gray-600">- Balance on delivery</span></p>
               </div>
             </label>
           </div>
