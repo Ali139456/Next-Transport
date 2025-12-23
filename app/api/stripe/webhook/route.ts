@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { stripe, isStripeEnabled } from '@/lib/stripe'
 import connectDB from '@/lib/mongodb'
 import Booking from '@/models/Booking'
 
 export async function POST(request: NextRequest) {
+  // Return early if Stripe is not enabled
+  if (!isStripeEnabled || !stripe) {
+    return NextResponse.json(
+      { error: 'Stripe is not configured' },
+      { status: 503 }
+    )
+  }
+
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 

@@ -1,12 +1,13 @@
 import Stripe from 'stripe'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not set in environment variables')
-}
+// Stripe is optional - only initialize if STRIPE_SECRET_KEY is set
+export const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2023-10-16',
+    })
+  : null
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16',
-})
+export const isStripeEnabled = !!process.env.STRIPE_SECRET_KEY
 
 export interface CreatePaymentIntentParams {
   amount: number
@@ -17,6 +18,10 @@ export interface CreatePaymentIntentParams {
 }
 
 export async function createPaymentIntent(params: CreatePaymentIntentParams) {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.')
+  }
+
   const { amount, currency = 'aud', customerId, metadata, paymentMethod } = params
 
   const paymentIntent = await stripe.paymentIntents.create({
@@ -36,6 +41,10 @@ export async function createPaymentIntent(params: CreatePaymentIntentParams) {
 }
 
 export async function createCustomer(email: string, name: string, phone?: string) {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.')
+  }
+
   const customer = await stripe.customers.create({
     email,
     name,
@@ -46,6 +55,10 @@ export async function createCustomer(email: string, name: string, phone?: string
 }
 
 export async function refundPayment(paymentIntentId: string, amount?: number) {
+  if (!stripe) {
+    throw new Error('Stripe is not configured. Please set STRIPE_SECRET_KEY environment variable.')
+  }
+
   const refund = await stripe.refunds.create({
     payment_intent: paymentIntentId,
     amount: amount ? Math.round(amount * 100) : undefined,

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Booking from '@/models/Booking'
-import { createPaymentIntent, createCustomer } from '@/lib/stripe'
+import { createPaymentIntent, createCustomer, isStripeEnabled } from '@/lib/stripe'
 import { sendEmail, getBookingConfirmationEmail } from '@/lib/notifications'
 
 export async function POST(request: NextRequest) {
@@ -19,30 +19,42 @@ export async function POST(request: NextRequest) {
       preferredDate,
     } = body
 
-    // Create or get Stripe customer
-    let stripeCustomerId
-    try {
-      const customer = await createCustomer(
-        body.customer.email,
-        `${body.customer.firstName} ${body.customer.lastName}`,
-        body.customer.phone
-      )
-      stripeCustomerId = customer.id
-    } catch (error) {
-      console.error('Error creating Stripe customer:', error)
-    }
+    // Stripe payment handling (only if Stripe is enabled)
+    let stripeCustomerId: string | undefined
+    let paymentIntentId: string | undefined
+    let clientSecret: string | undefined
 
-    // Create payment intent
-    const paymentAmount = paymentMethod === 'full' ? pricing.totalPrice : pricing.depositAmount
-    const paymentIntent = await createPaymentIntent({
-      amount: paymentAmount,
-      customerId: stripeCustomerId,
-      metadata: {
-        bookingType: 'vehicle-transport',
-        paymentMethod,
-      },
-      paymentMethod,
-    })
+    if (isStripeEnabled) {
+      // Create or get Stripe customer
+      try {
+        const stripeCustomer = await createCustomer(
+          body.customer.email,
+          `${body.customer.firstName} ${body.customer.lastName}`,
+          body.customer.phone
+        )
+        stripeCustomerId = stripeCustomer.id
+      } catch (error) {
+        console.error('Error creating Stripe customer:', error)
+      }
+
+      // Create payment intent
+      try {
+        const paymentAmount = paymentMethod === 'full' ? pricing.totalPrice : pricing.depositAmount
+        const paymentIntent = await createPaymentIntent({
+          amount: paymentAmount,
+          customerId: stripeCustomerId,
+          metadata: {
+            bookingType: 'vehicle-transport',
+            paymentMethod,
+          },
+          paymentMethod,
+        })
+        paymentIntentId = paymentIntent.id
+        clientSecret = paymentIntent.client_secret || undefined
+      } catch (error) {
+        console.error('Error creating payment intent:', error)
+      }
+    }
 
     // Create booking
     const booking = new Booking({
@@ -54,14 +66,14 @@ export async function POST(request: NextRequest) {
       },
       delivery,
       pricing,
-      payment: {
-        stripePaymentIntentId: paymentIntent.id,
+      payment: isStripeEnabled && paymentIntentId ? {
+        stripePaymentIntentId: paymentIntentId,
         stripeCustomerId,
         paymentMethod,
         status: 'pending',
         paidAmount: 0,
         transactions: [],
-      },
+      } : undefined,
       status: 'pending',
       tracking: {
         statusHistory: [
@@ -93,8 +105,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       bookingId: booking.bookingId,
-      paymentIntentId: paymentIntent.id,
-      clientSecret: paymentIntent.client_secret,
+      ...(paymentIntentId && { paymentIntentId }),
+      ...(clientSecret && { clientSecret }),
+      stripeEnabled: isStripeEnabled,
     })
   } catch (error) {
     console.error('Error creating booking:', error)

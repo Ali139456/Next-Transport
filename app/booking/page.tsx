@@ -177,14 +177,22 @@ export default function BookingPage() {
 
       const result = await response.json()
       
-      if (!result.clientSecret || !result.bookingId) {
+      if (!result.bookingId) {
         throw new Error('Invalid response from server')
       }
 
-      setClientSecret(result.clientSecret)
       setBookingId(result.bookingId)
-      setStep('payment')
-      toast.success('Booking created! Please complete payment.')
+
+      // Only proceed to payment if Stripe is enabled and clientSecret is provided
+      if (result.stripeEnabled && result.clientSecret) {
+        setClientSecret(result.clientSecret)
+        setStep('payment')
+        toast.success('Booking created! Please complete payment.')
+      } else {
+        // Skip payment step if Stripe is not enabled
+        toast.success('Booking created successfully!')
+        router.push(`/tracking/${result.bookingId}`)
+      }
     } catch (error: any) {
       toast.error(error.message || 'Failed to create booking. Please try again.')
       console.error('Booking error:', error)
