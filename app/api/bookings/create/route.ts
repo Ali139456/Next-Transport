@@ -25,30 +25,30 @@ export async function POST(request: NextRequest) {
     let clientSecret: string | undefined
 
     if (isStripeEnabled) {
-      // Create or get Stripe customer
-      try {
+    // Create or get Stripe customer
+    try {
         const stripeCustomer = await createCustomer(
-          body.customer.email,
-          `${body.customer.firstName} ${body.customer.lastName}`,
-          body.customer.phone
-        )
+        body.customer.email,
+        `${body.customer.firstName} ${body.customer.lastName}`,
+        body.customer.phone
+      )
         stripeCustomerId = stripeCustomer.id
-      } catch (error) {
-        console.error('Error creating Stripe customer:', error)
-      }
+    } catch (error) {
+      console.error('Error creating Stripe customer:', error)
+    }
 
-      // Create payment intent
+    // Create payment intent
       try {
-        const paymentAmount = paymentMethod === 'full' ? pricing.totalPrice : pricing.depositAmount
-        const paymentIntent = await createPaymentIntent({
-          amount: paymentAmount,
-          customerId: stripeCustomerId,
-          metadata: {
-            bookingType: 'vehicle-transport',
-            paymentMethod,
-          },
-          paymentMethod,
-        })
+    const paymentAmount = paymentMethod === 'full' ? pricing.totalPrice : pricing.depositAmount
+    const paymentIntent = await createPaymentIntent({
+      amount: paymentAmount,
+      customerId: stripeCustomerId,
+      metadata: {
+        bookingType: 'vehicle-transport',
+        paymentMethod,
+      },
+      paymentMethod,
+    })
         paymentIntentId = paymentIntent.id
         clientSecret = paymentIntent.client_secret || undefined
       } catch (error) {

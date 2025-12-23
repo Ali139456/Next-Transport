@@ -7,7 +7,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-accent-600 backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-accent-700">
+    <nav className="bg-black backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link href="/" className="flex items-center">
@@ -21,19 +21,19 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-accent-600 font-medium transition-colors">
+            <Link href="/" className="text-white hover:text-accent-400 font-medium transition-colors">
               Home
             </Link>
-            <Link href="/quote" className="text-gray-700 hover:text-accent-600 font-medium transition-colors">
+            <Link href="/quote" className="text-white hover:text-accent-400 font-medium transition-colors">
               Get Quote
             </Link>
-            <Link href="/tracking" className="text-gray-700 hover:text-accent-600 font-medium transition-colors">
+            <Link href="/tracking" className="text-white hover:text-accent-400 font-medium transition-colors">
               Track Booking
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-accent-600 font-medium transition-colors">
+            <Link href="/about" className="text-white hover:text-accent-400 font-medium transition-colors">
               About
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-accent-600 font-medium transition-colors">
+            <Link href="/contact" className="text-white hover:text-accent-400 font-medium transition-colors">
               Contact
             </Link>
             <Link
@@ -62,24 +62,24 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2">
-            <Link href="/" className="block py-2 text-white hover:text-accent-100 font-medium">
+            <Link href="/" className="block py-2 text-white hover:text-accent-400 font-medium">
               Home
             </Link>
-            <Link href="/quote" className="block py-2 text-white hover:text-accent-100 font-medium">
+            <Link href="/quote" className="block py-2 text-white hover:text-accent-400 font-medium">
               Get Quote
             </Link>
-            <Link href="/tracking" className="block py-2 text-white hover:text-accent-100 font-medium">
+            <Link href="/tracking" className="block py-2 text-white hover:text-accent-400 font-medium">
               Track Booking
             </Link>
-            <Link href="/about" className="block py-2 text-white hover:text-accent-100 font-medium">
+            <Link href="/about" className="block py-2 text-white hover:text-accent-400 font-medium">
               About
             </Link>
-            <Link href="/contact" className="block py-2 text-white hover:text-accent-100 font-medium">
+            <Link href="/contact" className="block py-2 text-white hover:text-accent-400 font-medium">
               Contact
             </Link>
             <Link
               href="/login"
-              className="block bg-white text-accent-600 px-4 py-2 rounded-lg hover:bg-accent-50 text-center font-semibold"
+              className="block bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 text-center font-semibold"
             >
               Admin
             </Link>

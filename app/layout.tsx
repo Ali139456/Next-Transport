@@ -22,9 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ErrorBoundaryWrapper>
-          <Navbar />
-          {children}
-          <Toaster position="top-right" />
+        <Navbar />
+        {children}
+        <Toaster position="top-right" />
         </ErrorBoundaryWrapper>
       </body>
     </html>

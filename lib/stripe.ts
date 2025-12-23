@@ -3,8 +3,8 @@ import Stripe from 'stripe'
 // Stripe is optional - only initialize if STRIPE_SECRET_KEY is set
 export const stripe = process.env.STRIPE_SECRET_KEY
   ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2023-10-16',
-    })
+  apiVersion: '2023-10-16',
+})
   : null
 
 export const isStripeEnabled = !!process.env.STRIPE_SECRET_KEY
