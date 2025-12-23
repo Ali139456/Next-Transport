@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Parallax } from 'react-parallax'
 import QuoteModal from './QuoteModal'
 import Link from 'next/link'
 
@@ -29,30 +28,23 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section - Fixed background on mobile, Parallax on desktop */}
-      <div className="h-screen relative">
-        {/* Mobile: Fixed background image */}
+      {/* Hero Section - Fixed background optimized for performance */}
+      <div className="h-screen relative overflow-hidden">
+        {/* Background image - optimized with will-change and transform for GPU acceleration */}
         <div 
-          className="lg:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/images/hero-bg.jpg)' }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ 
+            backgroundImage: 'url(/images/hero-bg.jpg)',
+            willChange: 'transform',
+            transform: 'translateZ(0)'
+          }}
         />
-        {/* Desktop: Parallax */}
-        <div className="hidden lg:block absolute inset-0">
-          <Parallax
-            strength={400}
-            bgImage="/images/hero-bg.jpg"
-            bgImageAlt="Car transport"
-            className="h-full w-full"
-          >
-            <div className="h-screen" />
-          </Parallax>
-        </div>
         {/* Content overlay */}
         <div className="flex items-center justify-center h-screen bg-gradient-to-b from-black/70 via-black/60 to-black/70 relative z-10">
-          {/* Animated background elements */}
-          <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          {/* Simplified background elements - reduced blur for performance */}
+          <div className="absolute inset-0 bg-pattern-dots opacity-5"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-accent-500/15 rounded-full blur-2xl opacity-50"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-600/15 rounded-full blur-2xl opacity-50"></div>
           
           <div className="text-center text-white px-4 max-w-5xl relative z-10">
             <div className="mb-6 inline-block">
@@ -73,7 +65,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setShowQuoteModal(true)}
-                className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-all duration-300 shadow-2xl hover:shadow-accent-500/50 hover:scale-110 transform flex items-center gap-3"
+                className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-colors duration-200 shadow-2xl hover:shadow-accent-500/50 flex items-center gap-3"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -82,7 +74,7 @@ export default function HomePage() {
               </button>
               <a
                 href="/quote"
-                className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-all duration-300 border-2 border-white/30 hover:border-white/50 shadow-xl"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-colors duration-200 border-2 border-white/30 hover:border-white/50 shadow-xl"
               >
                 Learn More
               </a>
@@ -102,10 +94,9 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">Trusted by thousands of customers across Australia</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="group text-center p-10 rounded-3xl bg-white/90 backdrop-blur-lg border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-100/50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -114,10 +105,9 @@ export default function HomePage() {
                 <p className="text-gray-600 leading-relaxed text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
               </div>
             </div>
-            <div className="group text-center p-10 rounded-3xl bg-white/90 backdrop-blur-lg border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-100/50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
@@ -126,10 +116,9 @@ export default function HomePage() {
                 <p className="text-gray-600 leading-relaxed text-lg">Safe and secure online payments with Stripe. Your financial data is protected.</p>
               </div>
             </div>
-            <div className="group text-center p-10 rounded-3xl bg-white/90 backdrop-blur-lg border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-100/50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -156,37 +145,37 @@ export default function HomePage() {
             <div className="hidden md:block absolute top-16 left-0 right-0 h-1 bg-gradient-to-r from-accent-300 via-accent-400 to-accent-300 opacity-30"></div>
             
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl group-hover:scale-125 transition-transform duration-300 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 1
               </div>
-              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-all">
+              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Book</h3>
                 <p className="text-gray-600 leading-relaxed text-lg">Get an instant quote and book online in just a few clicks</p>
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl group-hover:scale-125 transition-transform duration-300 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 2
               </div>
-              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-all">
+              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Pickup</h3>
                 <p className="text-gray-600 leading-relaxed text-lg">We collect your vehicle at your preferred location</p>
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl group-hover:scale-125 transition-transform duration-300 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 3
               </div>
-              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-all">
+              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Track</h3>
                 <p className="text-gray-600 leading-relaxed text-lg">Monitor your vehicle&apos;s journey in real-time with GPS</p>
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl group-hover:scale-125 transition-transform duration-300 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 4
               </div>
-              <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-all">
+              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
                 <h3 className="text-2xl font-bold mb-4 text-gray-900">Delivered</h3>
                 <p className="text-gray-600 leading-relaxed text-lg">Your vehicle arrives safely at its destination</p>
               </div>
@@ -204,7 +193,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 backdrop-blur-sm p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-all card-shadow">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
                 <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
                   1000+
                 </div>
@@ -213,7 +202,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 backdrop-blur-sm p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-all card-shadow">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
                 <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
                   98%
                 </div>
@@ -222,7 +211,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 backdrop-blur-sm p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-all card-shadow">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
                 <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
                   24/7
                 </div>
@@ -340,8 +329,8 @@ export default function HomePage() {
       <section className="py-32 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-accent-600/10 via-transparent to-accent-500/10"></div>
-        <div className="absolute top-20 left-20 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-20 w-72 h-72 bg-accent-500/10 rounded-full blur-2xl opacity-50"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent-600/10 rounded-full blur-2xl opacity-50"></div>
         
         <div className="container mx-auto px-4 text-center max-w-5xl relative z-10">
           <h2 className="text-5xl md:text-7xl font-extrabold mb-8">

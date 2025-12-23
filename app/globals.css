@@ -9,7 +9,6 @@
       radial-gradient(circle at 20% 50%, rgba(80, 160, 200, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 80% 80%, rgba(60, 120, 160, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 40% 20%, rgba(80, 140, 200, 0.03) 0%, transparent 50%);
-    background-attachment: fixed;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -59,9 +58,32 @@
   }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling - only for anchor links, not general scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Performance optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for transforms */
+[class*="transition"] {
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom scrollbar */
