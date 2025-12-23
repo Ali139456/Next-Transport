@@ -96,9 +96,9 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
     if (!quote) return
     
     // Dynamic import to avoid SSR issues
-    import('jspdf').then((jsPDF) => {
-      const { jsPDF: JsPDF } = jsPDF
-      const doc = new JsPDF()
+    import('jspdf').then((jsPDFModule) => {
+      const { default: jsPDF } = jsPDFModule
+      const doc = new jsPDF()
       
       const pageWidth = doc.internal.pageSize.getWidth()
       const pageHeight = doc.internal.pageSize.getHeight()
@@ -112,18 +112,18 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       const lightGray = [243, 244, 246]
       
       // Header with colored background
-      doc.setFillColor(...accentColor)
+      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2])
       doc.rect(0, 0, pageWidth, 50, 'F')
       
       // Company name in header
       doc.setTextColor(255, 255, 255)
       doc.setFontSize(24)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.text('NextTransport.com.au', margin, 30)
       
       // Quote title
       doc.setFontSize(18)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.text('VEHICLE TRANSPORT QUOTE', margin, 45)
       
       // Quote date
@@ -138,98 +138,98 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       let yPos = 70
       
       // Quote Summary Box
-      doc.setFillColor(...lightGray)
+      doc.setFillColor(lightGray[0], lightGray[1], lightGray[2])
       doc.roundedRect(margin, yPos, contentWidth, 80, 3, 3, 'F')
       
       doc.setFontSize(16)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.setTextColor(31, 41, 55) // gray-800
       doc.text('Quote Summary', margin + 10, yPos + 15)
       
       yPos += 25
       doc.setFontSize(11)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.setTextColor(55, 65, 81) // gray-700
       
       // Base Price
       doc.text('Base Price', margin + 15, yPos)
       doc.setTextColor(0, 0, 0)
-      doc.setFont(undefined, 'bold')
-      doc.text(`$${quote.basePrice.toFixed(2)}`, pageWidth - margin - 10, yPos, { align: 'right' })
+      doc.setFont('helvetica', 'bold')
+      doc.text(`$${quote.basePrice?.toFixed(2) || '0.00'}`, pageWidth - margin - 10, yPos, { align: 'right' })
       yPos += 10
       
       // Insurance (if applicable)
       if (quote.addOns?.insurance) {
         doc.setTextColor(55, 65, 81)
-        doc.setFont(undefined, 'normal')
+        doc.setFont('helvetica', 'normal')
         doc.text('Insurance Coverage', margin + 15, yPos)
         doc.setTextColor(0, 0, 0)
-        doc.setFont(undefined, 'bold')
+        doc.setFont('helvetica', 'bold')
         doc.text(`$${quote.addOns.insurance.toFixed(2)}`, pageWidth - margin - 10, yPos, { align: 'right' })
         yPos += 10
       }
       
       // GST
       doc.setTextColor(55, 65, 81)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.text('GST (10%)', margin + 15, yPos)
       doc.setTextColor(0, 0, 0)
-      doc.setFont(undefined, 'bold')
-      doc.text(`$${quote.gst.toFixed(2)}`, pageWidth - margin - 10, yPos, { align: 'right' })
+      doc.setFont('helvetica', 'bold')
+      doc.text(`$${quote.gst?.toFixed(2) || '0.00'}`, pageWidth - margin - 10, yPos, { align: 'right' })
       yPos += 12
       
       // Divider line
-      doc.setDrawColor(...accentColor)
+      doc.setDrawColor(accentColor[0], accentColor[1], accentColor[2])
       doc.setLineWidth(0.5)
       doc.line(margin + 15, yPos, pageWidth - margin - 10, yPos)
       yPos += 10
       
       // Total Price - highlighted
-      doc.setFillColor(...accentColor)
+      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2])
       doc.roundedRect(margin + 10, yPos - 8, contentWidth - 20, 12, 2, 2, 'F')
       doc.setTextColor(255, 255, 255)
       doc.setFontSize(14)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.text('Total Price', margin + 15, yPos + 2)
-      doc.text(`$${quote.totalPrice.toFixed(2)}`, pageWidth - margin - 10, yPos + 2, { align: 'right' })
+      doc.text(`$${quote.totalPrice?.toFixed(2) || '0.00'}`, pageWidth - margin - 10, yPos + 2, { align: 'right' })
       
       yPos += 35
       
       // Timeline Section
-      doc.setFillColor(...lightGray)
+      doc.setFillColor(lightGray[0], lightGray[1], lightGray[2])
       doc.roundedRect(margin, yPos, contentWidth, 50, 3, 3, 'F')
       
       doc.setFontSize(14)
-      doc.setFont(undefined, 'bold')
+      doc.setFont('helvetica', 'bold')
       doc.setTextColor(31, 41, 55)
       doc.text('Estimated Timeline', margin + 10, yPos + 15)
       
       yPos += 25
       doc.setFontSize(10)
-      doc.setFont(undefined, 'normal')
+      doc.setFont('helvetica', 'normal')
       doc.setTextColor(55, 65, 81)
       
       // Timeline items with icons (represented as bullets)
-      doc.setFillColor(...accentColor)
+      doc.setFillColor(accentColor[0], accentColor[1], accentColor[2])
       doc.circle(margin + 15, yPos - 2, 2, 'F')
-      doc.text(`Pickup Window: ${quote.estimatedPickupWindow}`, margin + 22, yPos)
+      doc.text(`Pickup Window: ${quote.estimatedPickupWindow || 'TBD'}`, margin + 22, yPos)
       yPos += 10
       
       doc.circle(margin + 15, yPos - 2, 2, 'F')
-      doc.text(`Delivery Timeframe: ${quote.estimatedDeliveryTimeframe}`, margin + 22, yPos)
+      doc.text(`Delivery Timeframe: ${quote.estimatedDeliveryTimeframe || 'TBD'}`, margin + 22, yPos)
       
       yPos += 30
       
       // Quote Details (if available)
       if (quote.input) {
         doc.setFontSize(12)
-        doc.setFont(undefined, 'bold')
+        doc.setFont('helvetica', 'bold')
         doc.setTextColor(31, 41, 55)
         doc.text('Transport Details', margin, yPos)
         yPos += 10
         
         doc.setFontSize(9)
-        doc.setFont(undefined, 'normal')
+        doc.setFont('helvetica', 'normal')
         doc.setTextColor(55, 65, 81)
         
         const vehicleTypeMap: { [key: string]: string } = {
@@ -241,7 +241,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           'bike': 'Bike'
         }
         
-        doc.text(`Vehicle Type: ${vehicleTypeMap[quote.input.vehicleType] || quote.input.vehicleType}`, margin, yPos)
+        doc.text(`Vehicle Type: ${vehicleTypeMap[quote.input.vehicleType] || quote.input.vehicleType || 'N/A'}`, margin, yPos)
         yPos += 7
         doc.text(`Condition: ${quote.input.isRunning ? 'Running' : 'Non-Running'}`, margin, yPos)
         yPos += 7
@@ -258,13 +258,13 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       doc.rect(0, yPos, pageWidth, 25, 'F')
       
       doc.setFontSize(8)
-      doc.setTextColor(...grayColor)
-      doc.setFont(undefined, 'normal')
+      doc.setTextColor(grayColor[0], grayColor[1], grayColor[2])
+      doc.setFont('helvetica', 'normal')
       doc.text('This quote is valid for 30 days from the date of generation.', margin, yPos + 10)
       doc.text('Terms and conditions apply. For questions, contact support@nexttransport.com.au', margin, yPos + 17)
       
       // Page border (optional decorative element)
-      doc.setDrawColor(...accentColor)
+      doc.setDrawColor(accentColor[0], accentColor[1], accentColor[2])
       doc.setLineWidth(0.5)
       doc.rect(5, 5, pageWidth - 10, pageHeight - 10)
       
