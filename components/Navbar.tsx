@@ -7,19 +7,16 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-gray-100">
+    <nav className="bg-accent-600 backdrop-blur-sm shadow-lg sticky top-0 z-40 border-b border-accent-700">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center space-x-3">
+          <Link href="/" className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/images/logo.png" 
               alt="NextTransport Logo" 
-              className="h-12 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
-            <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-accent-600 to-accent-700 bg-clip-text text-transparent hidden sm:inline">
-              NextTransport
-            </span>
           </Link>
 
           {/* Desktop Menu */}
@@ -50,7 +47,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-gray-700"
+            className="md:hidden text-white"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
@@ -65,24 +62,24 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2">
-            <Link href="/" className="block py-2 text-gray-700 hover:text-accent-600 font-medium">
+            <Link href="/" className="block py-2 text-white hover:text-accent-100 font-medium">
               Home
             </Link>
-            <Link href="/quote" className="block py-2 text-gray-700 hover:text-accent-600 font-medium">
+            <Link href="/quote" className="block py-2 text-white hover:text-accent-100 font-medium">
               Get Quote
             </Link>
-            <Link href="/tracking" className="block py-2 text-gray-700 hover:text-accent-600 font-medium">
+            <Link href="/tracking" className="block py-2 text-white hover:text-accent-100 font-medium">
               Track Booking
             </Link>
-            <Link href="/about" className="block py-2 text-gray-700 hover:text-accent-600 font-medium">
+            <Link href="/about" className="block py-2 text-white hover:text-accent-100 font-medium">
               About
             </Link>
-            <Link href="/contact" className="block py-2 text-gray-700 hover:text-accent-600 font-medium">
+            <Link href="/contact" className="block py-2 text-white hover:text-accent-100 font-medium">
               Contact
             </Link>
             <Link
               href="/login"
-              className="block bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 text-center font-semibold"
+              className="block bg-white text-accent-600 px-4 py-2 rounded-lg hover:bg-accent-50 text-center font-semibold"
             >
               Admin
             </Link>

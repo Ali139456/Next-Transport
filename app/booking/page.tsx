@@ -609,7 +609,7 @@ export default function BookingPage() {
                 {...register('paymentMethod')}
                 value="full"
                 defaultChecked
-                className="w-5 h-5 text-accent-600 focus:ring-purple-500 focus:ring-2"
+                className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
               />
               <div className="ml-4">
                 <span className="font-semibold text-gray-900 group-hover:text-purple-700">Pay Full Amount</span>
@@ -621,7 +621,7 @@ export default function BookingPage() {
                 type="radio"
                 {...register('paymentMethod')}
                 value="deposit"
-                className="w-5 h-5 text-accent-600 focus:ring-purple-500 focus:ring-2"
+                className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
               />
               <div className="ml-4">
                 <span className="font-semibold text-gray-900 group-hover:text-accent-700">Pay Deposit (15%)</span>
