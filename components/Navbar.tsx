@@ -63,7 +63,7 @@ export default function Navbar() {
 
         {/* Mobile/Tablet Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-800 animate-in slide-in-from-top-2">
+          <div className="lg:hidden py-4 border-t border-gray-800">
             <div className="flex flex-col space-y-1 pt-2">
               <Link 
                 href="/" 
