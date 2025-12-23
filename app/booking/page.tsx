@@ -630,6 +630,7 @@ export default function BookingPage() {
           Continue to Payment
         </button>
       </form>
+      </div>
     </div>
   )
 }
