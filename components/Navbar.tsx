@@ -16,7 +16,7 @@ export default function Navbar() {
               src="/images/logo.png" 
               alt="NextTransport Logo" 
               className="w-auto"
-              style={{ height: '7rem' }}
+              style={{ height: '8rem' }}
             />
           </Link>
 
