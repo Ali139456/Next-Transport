@@ -45,10 +45,10 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
   const onSubmit = async (data: QuoteFormData) => {
     setLoading(true)
     try {
-      // Transform form data for API - ensure boolean values are properly handled
+      // Transform form data for API - zod schema already transforms isRunning to boolean
       const payload = {
         ...data,
-        isRunning: data.isRunning === true || data.isRunning === 'true' || String(data.isRunning) === 'true',
+        isRunning: Boolean(data.isRunning),
       }
       
       const response = await fetch('/api/quote/calculate', {
