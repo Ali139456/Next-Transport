@@ -40,7 +40,7 @@ export default function Navbar() {
               Contact
             </Link>
             <Link
-              href="/admin"
+              href="/login"
               className="bg-accent-600 text-white px-5 py-2.5 rounded-lg hover:bg-accent-700 font-semibold transition-all shadow-md hover:shadow-lg"
             >
               Admin
@@ -81,7 +81,7 @@ export default function Navbar() {
               Contact
             </Link>
             <Link
-              href="/admin"
+              href="/login"
               className="block bg-accent-600 text-white px-4 py-2 rounded-lg hover:bg-accent-700 text-center font-semibold"
             >
               Admin

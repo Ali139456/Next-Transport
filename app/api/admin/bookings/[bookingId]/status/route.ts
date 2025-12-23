@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Booking from '@/models/Booking'
 import { sendEmail, getStatusUpdateEmail } from '@/lib/notifications'
+import { getAuthUser } from '@/lib/auth'
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { bookingId: string } }
 ) {
   try {
+    // Check authentication
+    const user = await getAuthUser()
+    if (!user || user.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     await connectDB()
 
     const body = await request.json()

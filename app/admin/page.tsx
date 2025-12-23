@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 interface Booking {
   _id: string
@@ -29,6 +30,37 @@ export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
+  const [authChecking, setAuthChecking] = useState(true)
+
+  // Check authentication on mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me')
+        if (!response.ok) {
+          router.push('/login')
+          return
+        }
+        setAuthChecking(false)
+      } catch (error) {
+        console.error('Auth check error:', error)
+        router.push('/login')
+      }
+    }
+    checkAuth()
+  }, [router])
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+      toast.success('Logged out successfully')
+      router.push('/login')
+      router.refresh()
+    } catch (error) {
+      console.error('Logout error:', error)
+      toast.error('Failed to logout')
+    }
+  }
 
   const fetchBookings = async () => {
     try {
@@ -62,7 +94,7 @@ export default function AdminPage() {
     }
   }
 
-  if (loading) {
+  if (authChecking || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center">
@@ -88,7 +120,7 @@ export default function AdminPage() {
             </h1>
             <p className="text-gray-600">Manage bookings and track orders</p>
           </div>
-          <div className="mt-4 md:mt-0">
+          <div className="mt-4 md:mt-0 flex items-center gap-4">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
@@ -102,6 +134,12 @@ export default function AdminPage() {
               <option value="in-transit">In Transit</option>
               <option value="delivered">Delivered</option>
             </select>
+            <button
+              onClick={handleLogout}
+              className="px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-all shadow-sm hover:shadow-md"
+            >
+              Logout
+            </button>
           </div>
         </div>
 

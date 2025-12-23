@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Booking from '@/models/Booking'
+import { getAuthUser } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check authentication
+    const user = await getAuthUser()
+    if (!user || user.role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
     await connectDB()
 
     const searchParams = request.nextUrl.searchParams
@@ -25,4 +35,3 @@ export async function GET(request: NextRequest) {
     )
   }
 }
-
