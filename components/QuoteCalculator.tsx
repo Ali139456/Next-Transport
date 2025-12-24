@@ -279,17 +279,16 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
         <div className="bg-gradient-to-br from-blue-500/20 via-blue-600/20 to-blue-500/10 backdrop-blur-md border-2 border-blue-400/30 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-all duration-500"></div>
           <div className="relative z-10">
-          <div className="relative z-10">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
               <h3 className="text-2xl sm:text-3xl font-bold text-white">
                 Your Quote
               </h3>
-              <div className="px-3 sm:px-4 py-2 bg-accent-500/20 rounded-full border border-accent-400/30">
-                <span className="text-accent-300 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
+              <div className="px-3 sm:px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30">
+                <span className="text-blue-300 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
               </div>
             </div>
             
-            <div className="space-y-4 text-base sm:text-lg bg-white/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-white/20">
+            <div className="space-y-4 text-base sm:text-lg bg-blue-500/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-blue-400/20">
               <div className="flex justify-between items-center py-2 border-b border-blue-400/20">
                 <span className="text-gray-200">Base Price</span>
                 <span className="font-semibold text-white">${quote.basePrice.toFixed(2)}</span>
@@ -306,7 +305,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
               </div>
               <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-blue-400/30">
                 <span className="text-xl font-bold text-white">Total Price</span>
-                <span className="text-3xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">
+                <span className="text-3xl font-extrabold bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
                   ${quote.totalPrice.toFixed(2)}
                 </span>
               </div>
@@ -314,7 +313,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
             
             <div className="bg-blue-500/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-blue-400/20">
               <h4 className="font-semibold text-white mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Timeline Estimates
