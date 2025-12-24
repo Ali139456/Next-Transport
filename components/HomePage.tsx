@@ -107,27 +107,29 @@ export default function HomePage() {
                 <p className="text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
               </div>
             </div>
-            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
+            <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 hover:border-accent-400/50 card-shadow-lg hover:shadow-2xl transition-all duration-200 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
-                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 shadow-xl transition-transform duration-200 group-hover:scale-110">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-gray-900">Secure Payments</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Safe and secure online payments with Stripe. Your financial data is protected.</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-white">Secure Payments</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">Safe and secure online payments with Stripe. Your financial data is protected.</p>
               </div>
             </div>
-            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
+            <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 hover:border-accent-400/50 card-shadow-lg hover:shadow-2xl transition-all duration-200 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
-                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 shadow-xl transition-transform duration-200 group-hover:scale-110">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-gray-900">Real-Time Tracking</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Track your vehicle from pickup to delivery. Stay informed every step of the way.</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-white">Real-Time Tracking</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">Track your vehicle from pickup to delivery. Stay informed every step of the way.</p>
               </div>
             </div>
           </div>
