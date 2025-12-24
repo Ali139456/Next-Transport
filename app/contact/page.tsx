@@ -79,29 +79,29 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-accent-900 to-slate-900 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      {/* Optimized background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-accent-500/10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-accent-600/10 rounded-full blur-2xl"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-16">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl md:text-7xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-accent-200">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-accent-200 px-2">
             Get In Touch
           </h1>
-          <p className="text-xl text-accent-200 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-accent-200 max-w-2xl mx-auto px-2">
             Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 max-w-7xl mx-auto">
           {/* Contact Information Section */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-4">Let&apos;s Start a Conversation</h2>
-              <p className="text-accent-200 text-lg leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Let&apos;s Start a Conversation</h2>
+              <p className="text-accent-200 text-base sm:text-lg leading-relaxed">
                 Whether you have a question about our services, pricing, or need help with an existing booking, 
                 our team is ready to assist you every step of the way.
               </p>
@@ -112,7 +112,7 @@ export default function ContactPage() {
               {contactMethods.map((method, index) => (
                 <div
                   key={index}
-                  className="group bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]"
+                  className="group bg-white/10 rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-white/20 hover:bg-white/20 transition-colors duration-200"
                 >
                   {method.link ? (
                     <a
@@ -123,9 +123,9 @@ export default function ContactPage() {
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-1">{method.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">{method.title}</h3>
                         <p className="text-accent-200 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold">{method.value}</p>
+                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </a>
                   ) : (
@@ -134,9 +134,9 @@ export default function ContactPage() {
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-1">{method.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-bold mb-1">{method.title}</h3>
                         <p className="text-accent-200 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold">{method.value}</p>
+                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </div>
                   )}
@@ -162,8 +162,8 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form Section */}
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-10 border border-white/20 shadow-2xl">
-            <h2 className="text-3xl font-bold text-white mb-8">Send Us a Message</h2>
+          <div className="bg-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-white/20 shadow-2xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">Send Us a Message</h2>
             
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Name Field */}
@@ -174,7 +174,7 @@ export default function ContactPage() {
                 <input
                   id="name"
                   {...register('name')}
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                   autoComplete="name"
                   placeholder="John Doe"
                 />
@@ -192,7 +192,7 @@ export default function ContactPage() {
                   id="email"
                   {...register('email')}
                   type="email"
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                   autoComplete="email"
                   placeholder="john@example.com"
                 />
@@ -210,7 +210,7 @@ export default function ContactPage() {
                   id="phone"
                   {...register('phone')}
                   type="tel"
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                   autoComplete="tel"
                   placeholder="+61 4XX XXX XXX"
                 />
@@ -224,7 +224,7 @@ export default function ContactPage() {
                 <input
                   id="subject"
                   {...register('subject')}
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                   autoComplete="off"
                   placeholder="What's this regarding?"
                 />

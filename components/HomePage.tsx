@@ -46,35 +46,34 @@ export default function HomePage() {
           <div className="absolute top-20 left-10 w-72 h-72 bg-accent-500/15 rounded-full blur-2xl opacity-50"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-600/15 rounded-full blur-2xl opacity-50"></div>
           
-          <div className="text-center text-white px-4 max-w-5xl relative z-10">
-            <div className="mb-6 inline-block">
-              <span className="bg-accent-600/90 backdrop-blur-sm text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider shadow-lg">
+          <div className="text-center text-white px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
+            <div className="mb-4 sm:mb-6 inline-block">
+              <span className="bg-accent-600/95 text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider shadow-lg">
                 Australia&apos;s #1 Vehicle Transport
               </span>
             </div>
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-8 leading-tight drop-shadow-2xl">
-              <span className="bg-gradient-to-r from-white via-accent-100 to-white bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-4 sm:mb-6 md:mb-8 leading-tight drop-shadow-2xl">
+              <span className="block bg-gradient-to-r from-white via-accent-100 to-white bg-clip-text text-transparent">
                 Vehicle Transport
               </span>
-              <br />
-              <span className="text-white">Made Easy</span>
+              <span className="block text-white mt-1 sm:mt-2">Made Easy</span>
             </h1>
-            <p className="text-2xl md:text-3xl mb-12 max-w-3xl mx-auto text-gray-100 leading-relaxed font-light">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-6 sm:mb-8 md:mb-12 max-w-3xl mx-auto text-gray-100 leading-relaxed font-light px-2">
               Get instant quotes, book online, and track your vehicle transport across Australia
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-2">
               <button
                 onClick={() => setShowQuoteModal(true)}
-                className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-colors duration-200 shadow-2xl hover:shadow-accent-500/50 flex items-center gap-3"
+                className="w-full sm:w-auto bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-3.5 sm:py-4 md:py-5 px-6 sm:px-8 md:px-12 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl transition-colors duration-200 shadow-2xl hover:shadow-accent-500/50 flex items-center justify-center gap-2 sm:gap-3"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 Get Instant Quote
               </button>
               <a
                 href="/quote"
-                className="bg-white/10 hover:bg-white/20 text-white font-bold py-5 px-12 rounded-2xl text-xl transition-colors duration-200 border-2 border-white/30 hover:border-white/50 shadow-xl"
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 sm:py-4 md:py-5 px-6 sm:px-8 md:px-12 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl transition-colors duration-200 border-2 border-white/30 hover:border-white/50 shadow-xl text-center"
               >
                 Learn More
               </a>
@@ -84,25 +83,25 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <section className="py-32 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-gradient-to-b from-white via-blue-50/30 to-white relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
-        <div className="container mx-auto px-4 max-w-7xl relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-gray-900 via-accent-600 to-gray-900 bg-clip-text text-transparent">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 bg-gradient-to-r from-gray-900 via-accent-600 to-gray-900 bg-clip-text text-transparent px-2">
               Why Choose NextTransport?
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Trusted by thousands of customers across Australia</p>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-2">Trusted by thousands of customers across Australia</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
               <div className="relative z-10">
-                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
-                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 shadow-xl transition-transform duration-200 group-hover:scale-105">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-3xl font-bold mb-4 text-gray-900">Instant Quotes</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Instant Quotes</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
               </div>
             </div>
             <div className="group text-center p-10 rounded-3xl bg-white/95 border-2 border-gray-100 hover:border-accent-300 card-shadow-lg hover:shadow-2xl transition-shadow duration-200 relative overflow-hidden">
@@ -133,28 +132,28 @@ export default function HomePage() {
       </section>
 
       {/* Steps Section */}
-      <section className="py-32 bg-gradient-to-br from-accent-50 via-white to-accent-50/30 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-gradient-to-br from-accent-50 via-white to-accent-50/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
-        <div className="container mx-auto px-4 max-w-7xl relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900">How It Works</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Simple, fast, and reliable - Get started in minutes</p>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 md:mb-6 text-gray-900 px-2">How It Works</h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-2">Simple, fast, and reliable - Get started in minutes</p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8 relative">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 relative">
             {/* Connecting line */}
             <div className="hidden md:block absolute top-16 left-0 right-0 h-1 bg-gradient-to-r from-accent-300 via-accent-400 to-accent-300 opacity-30"></div>
             
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 1
               </div>
-              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">Book</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Get an instant quote and book online in just a few clicks</p>
+              <div className="bg-white/90 p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-gray-900">Book</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">Get an instant quote and book online in just a few clicks</p>
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 2
               </div>
               <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
@@ -163,7 +162,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 3
               </div>
               <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
@@ -172,7 +171,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-center group relative">
-              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-8 text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
+              <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 4
               </div>
               <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
@@ -185,25 +184,25 @@ export default function HomePage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-600/10 rounded-full blur-3xl"></div>
         
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
-          <div className="grid md:grid-cols-3 gap-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
-                <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-3 sm:mb-4">
                   1000+
                 </div>
-                <div className="text-xl text-gray-200 font-semibold">Vehicles Transported</div>
-                <p className="text-gray-400 mt-2">Successfully delivered across Australia</p>
+                <div className="text-base sm:text-lg md:text-xl text-gray-200 font-semibold">Vehicles Transported</div>
+                <p className="text-sm sm:text-base text-gray-400 mt-2">Successfully delivered across Australia</p>
               </div>
             </div>
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
-                <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-3 sm:mb-4">
                   98%
                 </div>
                 <div className="text-xl text-gray-200 font-semibold">Customer Satisfaction</div>
@@ -211,8 +210,8 @@ export default function HomePage() {
               </div>
             </div>
             <div className="text-center group">
-              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-8 rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
-                <div className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-4">
+              <div className="bg-gradient-to-br from-accent-500/20 to-accent-600/20 p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border border-accent-400/30 hover:border-accent-400/50 transition-colors duration-200 card-shadow">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-3 sm:mb-4">
                   24/7
                 </div>
                 <div className="text-xl text-gray-200 font-semibold">Support Available</div>

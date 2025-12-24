@@ -1,40 +1,39 @@
 export default function AboutPage() {
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
+    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-200/30 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-300/30 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-accent-100/20 to-accent-200/20 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-pattern-grid opacity-10 sm:opacity-20"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-br from-accent-200/20 sm:from-accent-200/30 to-transparent rounded-full blur-2xl sm:blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-tr from-accent-300/20 sm:from-accent-300/30 to-transparent rounded-full blur-2xl sm:blur-3xl"></div>
       
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
         {/* Hero Section */}
-        <div className="text-center mb-16 pt-8">
-          <h1 className="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-accent-600 via-accent-700 to-accent-600 bg-clip-text text-transparent">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16 pt-4 sm:pt-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 sm:mb-5 md:mb-6 bg-gradient-to-r from-accent-600 via-accent-700 to-accent-600 bg-clip-text text-transparent px-2">
             About NextTransport
           </h1>
-          <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light">
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto font-light px-2">
             Australia&apos;s leading vehicle transport platform - Connecting customers with reliable transport services nationwide
           </p>
         </div>
         
         {/* Main Story Section */}
-        <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl card-shadow-lg p-10 md:p-16 border border-white/20 mb-12">
+        <div className="bg-white/90 rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-16 border border-white/20 mb-8 sm:mb-10 md:mb-12">
           <div className="prose max-w-none">
             <div className="mb-8">
-              <h2 className="text-4xl font-bold mb-6 text-gray-900 flex items-center">
-                <svg className="w-10 h-10 mr-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-gray-900 flex items-center flex-wrap">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 mr-3 sm:mr-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Our Story
               </h2>
             </div>
-            <p className="text-xl text-gray-700 mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 md:mb-6 leading-relaxed">
               NextTransport.com.au was founded with a simple mission: to make vehicle transport across Australia 
               as easy as booking a ride. We recognized that transporting a vehicle shouldn&apos;t be complicated, 
               time-consuming, or stressful.
             </p>
-            <p className="text-xl text-gray-700 mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 md:mb-6 leading-relaxed">
               Today, we are Australia&apos;s leading vehicle transport booking platform, serving thousands of customers 
               from individuals moving interstate to businesses managing fleet relocations. We combine cutting-edge 
               technology with a network of trusted, professional transport operators.
@@ -47,7 +46,7 @@ export default function AboutPage() {
         </div>
         
         {/* Mission & Values */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
           <div className="bg-gradient-to-br from-accent-50 via-accent-100/50 to-accent-50 rounded-3xl shadow-xl p-10 border-2 border-accent-200/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent-200/30 rounded-full blur-2xl"></div>
             <div className="relative z-10">
