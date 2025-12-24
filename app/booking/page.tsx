@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import toast from 'react-hot-toast'
+import { useAuth } from '@/hooks/useAuth'
 
 const bookingSchema = z.object({
   firstName: z.string().min(2, 'First name is required'),
@@ -91,6 +92,7 @@ function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess:
 
 export default function BookingPage() {
   const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
   const [quote, setQuote] = useState<any>(null)
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [bookingId, setBookingId] = useState<string | null>(null)
@@ -108,6 +110,18 @@ export default function BookingPage() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     
+    // Check authentication
+    if (!authLoading && !user) {
+      router.push(`/login?redirect=${encodeURIComponent('/booking')}`)
+      return
+    }
+
+    // Only allow customers to book (not admins through this route)
+    if (!authLoading && user && user.role !== 'customer') {
+      router.push('/')
+      return
+    }
+    
     try {
       const storedQuote = sessionStorage.getItem('quote')
       if (!storedQuote) {
@@ -120,7 +134,21 @@ export default function BookingPage() {
       console.error('Error parsing stored quote:', error)
       router.push('/')
     }
-  }, [router])
+  }, [router, user, authLoading])
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-accent-900">
+        <div className="text-white text-lg">Loading...</div>
+      </div>
+    )
+  }
+
+  // Show message if not authenticated
+  if (!user) {
+    return null // Will redirect in useEffect
+  }
 
   const onSubmitDetails = async (data: BookingFormData) => {
     if (!quote) {

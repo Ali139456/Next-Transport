@@ -3,10 +3,20 @@ import connectDB from '@/lib/mongodb'
 import Booking from '@/models/Booking'
 import { createPaymentIntent, createCustomer, isStripeEnabled } from '@/lib/stripe'
 import { sendEmail, getBookingConfirmationEmail } from '@/lib/notifications'
+import { getAuthUser } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
     await connectDB()
+
+    // Check authentication - require customer login
+    const authUser = await getAuthUser()
+    if (!authUser || authUser.role !== 'customer') {
+      return NextResponse.json(
+        { error: 'Authentication required. Please login to continue.' },
+        { status: 401 }
+      )
+    }
 
     const body = await request.json()
     const {
@@ -66,6 +76,7 @@ export async function POST(request: NextRequest) {
       },
       delivery,
       pricing,
+      userId: authUser.id, // Link booking to authenticated user
       payment: isStripeEnabled && paymentIntentId ? {
         stripePaymentIntentId: paymentIntentId,
         stripeCustomerId,

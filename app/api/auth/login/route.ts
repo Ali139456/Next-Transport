@@ -17,12 +17,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Find user by username
+    // Find user by username (allow both admin and customer roles)
     const user = await User.findOne({ 
       username: username.toLowerCase(),
-      role: 'admin',
       isActive: true 
-    })
+    }).select('+password')
 
     if (!user) {
       return NextResponse.json(
@@ -56,6 +55,7 @@ export async function POST(request: NextRequest) {
         username: user.username,
         name: user.name,
         role: user.role,
+        email: user.email,
       },
     })
 

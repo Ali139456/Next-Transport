@@ -31,6 +31,12 @@ const UserSchema: Schema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
+      select: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false, // Don't include password by default
     },
     email: {
       type: String,
@@ -39,10 +45,6 @@ const UserSchema: Schema = new Schema(
       sparse: true,
       lowercase: true,
       trim: true,
-    },
-    password: {
-      type: String,
-      required: true,
     },
     role: {
       type: String,
