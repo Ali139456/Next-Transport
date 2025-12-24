@@ -276,44 +276,43 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
   if (quote) {
     return (
       <div className="space-y-6">
-        <div className="bg-gradient-to-br from-blue-500/20 via-blue-600/20 to-blue-500/10 backdrop-blur-md border-2 border-blue-400/30 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-all duration-500"></div>
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border-2 border-white/20 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
               <h3 className="text-2xl sm:text-3xl font-bold text-white">
                 Your Quote
               </h3>
-              <div className="px-3 sm:px-4 py-2 bg-blue-500/20 rounded-full border border-blue-400/30">
-                <span className="text-blue-300 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
+              <div className="px-3 sm:px-4 py-2 bg-accent-500/20 rounded-full border border-accent-400/30">
+                <span className="text-accent-300 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
               </div>
             </div>
             
-            <div className="space-y-4 text-base sm:text-lg bg-blue-500/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-blue-400/20">
-              <div className="flex justify-between items-center py-2 border-b border-blue-400/20">
+            <div className="space-y-4 text-base sm:text-lg bg-white/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-white/20">
+              <div className="flex justify-between items-center py-2 border-b border-white/20">
                 <span className="text-gray-200">Base Price</span>
                 <span className="font-semibold text-white">${quote.basePrice.toFixed(2)}</span>
               </div>
               {quote.addOns?.insurance && (
-                <div className="flex justify-between items-center py-2 border-b border-blue-400/20">
+                <div className="flex justify-between items-center py-2 border-b border-white/20">
                   <span className="text-gray-200">Insurance Coverage</span>
                   <span className="font-semibold text-white">${quote.addOns.insurance.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between items-center py-2 border-b border-blue-400/20">
+              <div className="flex justify-between items-center py-2 border-b border-white/20">
                 <span className="text-gray-200">GST (10%)</span>
                 <span className="font-semibold text-white">${quote.gst.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-blue-400/30">
+              <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-white/30">
                 <span className="text-xl font-bold text-white">Total Price</span>
-                <span className="text-3xl font-extrabold bg-gradient-to-r from-blue-300 to-blue-400 bg-clip-text text-transparent">
+                <span className="text-3xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">
                   ${quote.totalPrice.toFixed(2)}
                 </span>
               </div>
             </div>
             
-            <div className="bg-blue-500/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-blue-400/20">
+            <div className="bg-white/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-white/20">
               <h4 className="font-semibold text-white mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Timeline Estimates
@@ -341,7 +340,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="px-4 sm:px-6 py-3 sm:py-4 bg-blue-500/20 hover:bg-blue-500/30 text-white font-semibold rounded-lg border-2 border-blue-400/30 hover:border-blue-400 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border-2 border-white/20 hover:border-accent-400 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -350,7 +349,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           </button>
           <button
             onClick={() => setQuote(null)}
-            className="px-4 sm:px-6 py-3 sm:py-4 bg-blue-500/20 hover:bg-blue-500/30 text-white font-semibold rounded-lg border-2 border-blue-400/30 hover:border-blue-400 transition-colors duration-200 text-sm sm:text-base"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border border-white/20 transition-colors duration-200 text-sm sm:text-base"
           >
             Get New Quote
           </button>
@@ -373,7 +372,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('pickupPostcode')}
             type="text"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-blue-500/10 border-2 border-blue-400/30 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
             placeholder="e.g., 2000"
           />
           {errors.pickupPostcode && (
@@ -391,7 +390,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('deliveryPostcode')}
             type="text"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-blue-500/10 border-2 border-blue-400/30 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
             placeholder="e.g., 3000"
           />
           {errors.deliveryPostcode && (
@@ -451,7 +450,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           Transport Type *
         </label>
         <div className="grid md:grid-cols-2 gap-4">
-          <label className="flex items-center p-4 border-2 border-blue-400/30 rounded-xl cursor-pointer hover:border-blue-400 hover:bg-blue-500/10 transition-all group">
+          <label className="flex items-center p-4 border-2 border-white/20 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-white/10 transition-all group">
             <input
               type="radio"
               {...register('transportType')}
@@ -463,7 +462,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
               <p className="text-sm text-gray-300">More economical option</p>
             </div>
           </label>
-          <label className="flex items-center p-4 border-2 border-blue-400/30 rounded-xl cursor-pointer hover:border-blue-400 hover:bg-blue-500/10 transition-all group">
+          <label className="flex items-center p-4 border-2 border-white/20 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-white/10 transition-all group">
             <input
               type="radio"
               {...register('transportType')}
@@ -478,12 +477,12 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
         </div>
       </div>
 
-      <div className="bg-blue-500/10 border-2 border-blue-400/30 rounded-lg sm:rounded-xl p-4 sm:p-5">
+      <div className="bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl p-4 sm:p-5">
         <label className="flex items-center cursor-pointer group">
           <input
             type="checkbox"
             {...register('insurance')}
-            className="w-5 h-5 text-blue-400 focus:ring-blue-400 focus:ring-2 border-blue-400/30 rounded"
+            className="w-5 h-5 text-accent-400 focus:ring-accent-400 focus:ring-2 border-white/30 rounded"
           />
           <div className="ml-3">
             <span className="font-semibold text-white group-hover:text-accent-300">Add Insurance Coverage</span>

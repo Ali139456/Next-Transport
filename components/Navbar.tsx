@@ -70,43 +70,43 @@ export default function Navbar() {
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Home
-              </Link>
+              Home
+            </Link>
               <Link 
                 href="/quote" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Get Quote
-              </Link>
+              Get Quote
+            </Link>
               <Link 
                 href="/tracking" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Track Booking
-              </Link>
+              Track Booking
+            </Link>
               <Link 
                 href="/about" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                About
-              </Link>
+              About
+            </Link>
               <Link 
                 href="/contact" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Contact
-              </Link>
-              <Link
+              Contact
+            </Link>
+            <Link
                 href="/login"
                 className="block bg-accent-600 text-white px-4 py-3 rounded-lg hover:bg-accent-700 text-center font-semibold transition-colors mt-2 text-base"
                 onClick={() => setMobileMenuOpen(false)}
-              >
-                Admin
-              </Link>
+            >
+              Admin
+            </Link>
             </div>
           </div>
         )}
