@@ -20,7 +20,7 @@ export default function QuotePage() {
           </p>
         </div>
         
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 border border-gray-200">
           <QuoteCalculator />
         </div>
       </div>

@@ -376,11 +376,11 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('pickupPostcode')}
             type="text"
-            className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
+            className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
             placeholder="e.g., 2000"
           />
           {errors.pickupPostcode && (
-            <p className="text-red-500 text-sm mt-2 font-medium">{errors.pickupPostcode.message}</p>
+            <p className="text-red-600 text-sm mt-1.5">{errors.pickupPostcode.message}</p>
           )}
         </div>
 
@@ -394,11 +394,11 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('deliveryPostcode')}
             type="text"
-            className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
+            className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
             placeholder="e.g., 3000"
           />
           {errors.deliveryPostcode && (
-            <p className="text-red-500 text-sm mt-2 font-medium">{errors.deliveryPostcode.message}</p>
+            <p className="text-red-600 text-sm mt-1.5">{errors.deliveryPostcode.message}</p>
           )}
         </div>
       </div>
@@ -412,7 +412,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
         </label>
         <select
           {...register('vehicleType')}
-          className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
+          className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
         >
           <option value="sedan">Sedan</option>
           <option value="suv">SUV</option>
@@ -506,14 +506,14 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           {...register('preferredDate')}
           type="date"
           min={new Date().toISOString().split('T')[0]}
-          className="w-full px-5 py-3.5 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all bg-white shadow-sm hover:shadow-md"
+          className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+        className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base sm:text-lg"
       >
         {loading ? (
           <>

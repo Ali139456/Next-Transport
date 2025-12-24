@@ -255,44 +255,44 @@ export default function BookingPage() {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-accent-50 via-white to-accent-50/50 relative overflow-hidden">
+    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-gray-900 via-gray-800 to-accent-900 relative overflow-hidden">
       {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-pattern-dots opacity-30"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-200/20 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-accent-300/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-600/10 rounded-full blur-3xl"></div>
       
-      <div className="container mx-auto px-4 max-w-5xl relative z-10">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-accent-500 to-accent-600 bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-white via-accent-300 to-white bg-clip-text text-transparent px-2">
             Complete Your Booking
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-2">
             Fill in your details to finalize your vehicle transport booking
           </p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 p-8 rounded-2xl card-shadow-lg mb-8 border-2 border-green-200/50">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg mb-6 sm:mb-8 border border-gray-200">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Quote Summary
           </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="bg-gray-50 p-5 sm:p-6 rounded-xl border border-gray-200">
               <div className="text-sm text-gray-600 mb-2">Total Price</div>
-              <div className="text-3xl font-extrabold text-green-700">${quote.totalPrice.toFixed(2)}</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-accent-600">${quote.totalPrice.toFixed(2)}</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl">
+            <div className="bg-gray-50 p-5 sm:p-6 rounded-xl border border-gray-200">
               <div className="text-sm text-gray-600 mb-2">Deposit (15%)</div>
-              <div className="text-3xl font-extrabold text-emerald-700">${quote.depositAmount.toFixed(2)}</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-accent-700">${quote.depositAmount.toFixed(2)}</div>
             </div>
           </div>
         </div>
 
-      <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-8">
-        <div className="bg-white/90 backdrop-blur-lg p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 flex items-center">
+      <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-6 sm:space-y-8">
+        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>

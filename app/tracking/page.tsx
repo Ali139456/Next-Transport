@@ -31,11 +31,11 @@ export default function TrackingPage() {
           </p>
         </div>
         
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-12 border border-gray-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm sm:text-base font-semibold text-white mb-3 flex items-center justify-center">
-                <svg className="w-5 h-5 mr-2 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <label className="block text-sm sm:text-base font-semibold text-gray-900 mb-3 flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                 </svg>
                 Enter Your Booking ID
@@ -45,7 +45,7 @@ export default function TrackingPage() {
                 value={bookingId}
                 onChange={(e) => setBookingId(e.target.value)}
                 placeholder="e.g., NT000001"
-                className="w-full px-5 py-4 border-2 border-white/20 bg-white/10 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all shadow-sm hover:shadow-md text-center text-base sm:text-lg font-semibold text-white placeholder-gray-400"
+                className="w-full px-5 py-4 border-2 border-gray-300 bg-gray-50 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all shadow-sm hover:shadow-md text-center text-base sm:text-lg font-semibold text-gray-900 placeholder-gray-400"
               />
             </div>
             <button

@@ -112,7 +112,7 @@ export default function ContactPage() {
               {contactMethods.map((method, index) => (
                 <div
                   key={index}
-                  className="group bg-white/10 rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-white/20 hover:bg-white/20 transition-colors duration-200"
+                  className="group bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 hover:border-accent-400/50 transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   {method.link ? (
                     <a
@@ -123,9 +123,9 @@ export default function ContactPage() {
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold mb-1">{method.title}</h3>
-                        <p className="text-accent-200 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
+                        <h3 className="text-lg sm:text-xl font-bold mb-1 text-gray-900">{method.title}</h3>
+                        <p className="text-gray-600 text-sm mb-2">{method.description}</p>
+                        <p className="text-gray-900 font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </a>
                   ) : (
@@ -134,9 +134,9 @@ export default function ContactPage() {
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold mb-1">{method.title}</h3>
-                        <p className="text-accent-200 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
+                        <h3 className="text-lg sm:text-xl font-bold mb-1 text-gray-900">{method.title}</h3>
+                        <p className="text-gray-600 text-sm mb-2">{method.description}</p>
+                        <p className="text-gray-900 font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </div>
                   )}
@@ -162,55 +162,55 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form Section */}
-          <div className="bg-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-white/20 shadow-2xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">Send Us a Message</h2>
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-gray-200 shadow-2xl">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">Send Us a Message</h2>
             
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-accent-200 mb-2">
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                   Full Name *
                 </label>
                 <input
                   id="name"
                   {...register('name')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
                   autoComplete="name"
                   placeholder="John Doe"
                 />
                 {errors.name && (
-                  <p className="text-red-300 text-sm mt-2">{errors.name.message}</p>
+                  <p className="text-red-600 text-sm mt-1.5">{errors.name.message}</p>
                 )}
               </div>
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-purple-200 mb-2">
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
                   Email Address *
                 </label>
                 <input
                   id="email"
                   {...register('email')}
                   type="email"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
                   autoComplete="email"
                   placeholder="john@example.com"
                 />
                 {errors.email && (
-                  <p className="text-red-300 text-sm mt-2">{errors.email.message}</p>
+                  <p className="text-red-600 text-sm mt-1.5">{errors.email.message}</p>
                 )}
               </div>
 
               {/* Phone Field */}
               <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-purple-200 mb-2">
-                  Phone Number <span className="text-accent-300 text-xs">(Optional)</span>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                 </label>
                 <input
                   id="phone"
                   {...register('phone')}
                   type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
                   autoComplete="tel"
                   placeholder="+61 4XX XXX XXX"
                 />
@@ -218,35 +218,35 @@ export default function ContactPage() {
 
               {/* Subject Field */}
               <div>
-                <label htmlFor="subject" className="block text-sm font-semibold text-purple-200 mb-2">
+                <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
                   Subject *
                 </label>
                 <input
                   id="subject"
                   {...register('subject')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl text-white placeholder-accent-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
                   autoComplete="off"
                   placeholder="What's this regarding?"
                 />
                 {errors.subject && (
-                  <p className="text-red-300 text-sm mt-2">{errors.subject.message}</p>
+                  <p className="text-red-600 text-sm mt-1.5">{errors.subject.message}</p>
                 )}
               </div>
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-purple-200 mb-2">
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
                   Message *
                 </label>
                 <textarea
                   id="message"
                   {...register('message')}
                   rows={6}
-                  className="w-full px-5 py-3.5 bg-white/10 border-2 border-white/20 rounded-xl text-white placeholder-purple-300 focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition-all outline-none resize-none"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none resize-none text-base"
                   placeholder="Tell us more about your inquiry..."
                 />
                 {errors.message && (
-                  <p className="text-red-300 text-sm mt-2">{errors.message.message}</p>
+                  <p className="text-red-600 text-sm mt-1.5">{errors.message.message}</p>
                 )}
               </div>
 
@@ -254,7 +254,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
+                className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl text-base sm:text-lg"
               >
                 {submitting ? (
                   <span className="flex items-center justify-center">
