@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { user, loading: authLoading } = useAuth()
+  const { user, loading: authLoading, logout } = useAuth()
 
   return (
     <nav className="bg-black shadow-lg sticky top-0 z-40 border-b border-gray-800">
@@ -43,12 +43,26 @@ export default function Navbar() {
                 Dashboard
               </Link>
             )}
-            <Link
-              href="/login"
-              className="bg-accent-600 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg hover:bg-accent-700 font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
-            >
-              Login
-            </Link>
+            {!authLoading && user ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-white font-medium text-sm xl:text-base">
+                  {user.name || user.username}
+                </span>
+                <button
+                  onClick={logout}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-accent-600 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg hover:bg-accent-700 font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
           {/* Mobile/Tablet Menu Button */}
@@ -116,13 +130,30 @@ export default function Navbar() {
                   Dashboard
                 </Link>
               )}
-              <Link
-                href="/login"
-                className="block bg-accent-600 text-white px-4 py-3 rounded-lg hover:bg-accent-700 text-center font-semibold transition-colors mt-2 text-base"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Login
-              </Link>
+              {!authLoading && user ? (
+                <>
+                  <div className="px-4 py-3 text-white font-medium text-base border-b border-gray-700">
+                    {user.name || user.username}
+                  </div>
+                  <button
+                    onClick={() => {
+                      logout()
+                      setMobileMenuOpen(false)
+                    }}
+                    className="block bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 text-center font-semibold transition-colors mt-2 text-base"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block bg-accent-600 text-white px-4 py-3 rounded-lg hover:bg-accent-700 text-center font-semibold transition-colors mt-2 text-base"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         )}

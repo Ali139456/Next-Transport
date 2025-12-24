@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 
 interface User {
   id: string
@@ -15,12 +15,9 @@ export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const pathname = usePathname()
 
-  useEffect(() => {
-    checkAuth()
-  }, [])
-
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     try {
       const response = await fetch('/api/auth/user')
       if (response.ok) {
@@ -35,7 +32,20 @@ export function useAuth() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  // Refresh auth state when route changes (useful after login/logout)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      checkAuth()
+    }, 100) // Small delay to ensure cookie is set
+
+    return () => clearTimeout(timer)
+  }, [pathname, checkAuth])
 
   const logout = async () => {
     try {
