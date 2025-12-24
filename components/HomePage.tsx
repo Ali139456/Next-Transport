@@ -95,15 +95,16 @@ export default function HomePage() {
             <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-2">Trusted by thousands of customers across Australia</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-white border border-gray-200 hover:border-accent-400/50 card-shadow-lg hover:shadow-2xl transition-all duration-200 relative overflow-hidden">
+            <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 hover:border-accent-400/50 card-shadow-lg hover:shadow-2xl transition-all duration-200 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
               <div className="relative z-10">
                 <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 shadow-xl transition-transform duration-200 group-hover:scale-110">
                   <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Instant Quotes</h3>
-                <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-white">Instant Quotes</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">Get accurate pricing in seconds with our smart calculator. No waiting, no hassle.</p>
               </div>
             </div>
             <div className="group text-center p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/20 hover:border-accent-400/50 card-shadow-lg hover:shadow-2xl transition-all duration-200 relative overflow-hidden">
@@ -153,18 +154,18 @@ export default function HomePage() {
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 1
               </div>
-              <div className="bg-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl card-shadow border border-gray-200 group-hover:border-accent-400/50 transition-all duration-200">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-gray-900">Book</h3>
-                <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">Get an instant quote and book online in just a few clicks</p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl card-shadow border border-white/20 group-hover:border-accent-400/50 transition-all duration-200">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 md:mb-4 text-white">Book</h3>
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-base md:text-lg">Get an instant quote and book online in just a few clicks</p>
               </div>
             </div>
             <div className="text-center group relative">
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 2
               </div>
-              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">Pickup</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">We collect your vehicle at your preferred location</p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow border border-white/20 group-hover:border-accent-400/50 transition-colors duration-200">
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Pickup</h3>
+                <p className="text-gray-300 leading-relaxed text-base sm:text-lg">We collect your vehicle at your preferred location</p>
               </div>
             </div>
             <div className="text-center group relative">
@@ -202,8 +203,8 @@ export default function HomePage() {
                 <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-accent-400 to-accent-300 bg-clip-text text-transparent mb-3 sm:mb-4">
                   1000+
                 </div>
-                <div className="text-base sm:text-lg md:text-xl text-gray-900 font-semibold">Vehicles Transported</div>
-                <p className="text-sm sm:text-base text-gray-600 mt-2">Successfully delivered across Australia</p>
+                <div className="text-base sm:text-lg md:text-xl text-white font-semibold">Vehicles Transported</div>
+                <p className="text-sm sm:text-base text-gray-300 mt-2">Successfully delivered across Australia</p>
               </div>
             </div>
             <div className="text-center group">
@@ -271,14 +272,14 @@ export default function HomePage() {
             </div>
             
             {/* Right: Testimonial Block */}
-            <div className="bg-white p-6 sm:p-8 md:p-12 rounded-2xl border border-gray-200 relative order-1 lg:order-2">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 md:p-12 rounded-2xl border border-white/20 relative order-1 lg:order-2">
               {/* Client Name and Stars */}
               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
                 <div className="flex-1">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 uppercase tracking-wide sm:tracking-wider mb-1 sm:mb-2 leading-tight">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white uppercase tracking-wide sm:tracking-wider mb-1 sm:mb-2 leading-tight">
                     {reviews[currentReview].name}
                   </h3>
-                  <p className="text-base sm:text-lg text-gray-600">
+                  <p className="text-base sm:text-lg text-gray-300">
                     {reviews[currentReview].title}
                   </p>
                 </div>
@@ -300,7 +301,7 @@ export default function HomePage() {
                 </div>
                 
                 {/* Testimonial Text */}
-                <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed sm:leading-relaxed italic pl-6 sm:pl-8 pr-4 sm:pr-8 pt-2 sm:pt-4 relative z-10">
+                <p className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed sm:leading-relaxed italic pl-6 sm:pl-8 pr-4 sm:pr-8 pt-2 sm:pt-4 relative z-10">
                   {reviews[currentReview].text}
                 </p>
                 

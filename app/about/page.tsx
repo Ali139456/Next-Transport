@@ -18,17 +18,17 @@ export default function AboutPage() {
         </div>
         
         {/* Main Story Section */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-16 border border-gray-200 mb-8 sm:mb-10 md:mb-12">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl card-shadow-lg p-6 sm:p-8 md:p-10 lg:p-16 border border-white/20 mb-8 sm:mb-10 md:mb-12">
           <div className="prose max-w-none">
             <div className="mb-8">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-gray-900 flex items-center flex-wrap">
-                <svg className="w-8 h-8 sm:w-10 sm:h-10 mr-3 sm:mr-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-5 md:mb-6 text-white flex items-center flex-wrap">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 mr-3 sm:mr-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Our Story
               </h2>
             </div>
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-5 md:mb-6 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-4 sm:mb-5 md:mb-6 leading-relaxed">
               NextTransport.com.au was founded with a simple mission: to make vehicle transport across Australia 
               as easy as booking a ride. We recognized that transporting a vehicle shouldn&apos;t be complicated, 
               time-consuming, or stressful.
@@ -47,15 +47,15 @@ export default function AboutPage() {
         
         {/* Mission & Values */}
         <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
-          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 border border-gray-200 hover:border-accent-400/50 transition-all duration-200 relative overflow-hidden group">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 border border-white/20 hover:border-accent-400/50 transition-all duration-200 relative overflow-hidden group">
             <div className="relative z-10">
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg">
                 <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Our Mission</h2>
-              <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-white">Our Mission</h2>
+              <p className="text-base sm:text-lg text-gray-200 leading-relaxed">
                 To provide a seamless, transparent, and reliable vehicle transport experience 
                 for all Australians, from individuals to businesses. We believe everyone deserves 
                 peace of mind when moving their vehicle.
@@ -70,10 +70,10 @@ export default function AboutPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-gray-900">Our Values</h2>
-              <ul className="space-y-3 text-base sm:text-lg text-gray-700">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-white">Our Values</h2>
+              <ul className="space-y-3 text-base sm:text-lg text-gray-200">
                 <li className="flex items-start">
-                  <span className="text-accent-600 mr-3 mt-1 font-bold">✓</span>
+                  <span className="text-accent-400 mr-3 mt-1 font-bold">✓</span>
                   <span><strong>Transparency:</strong> Clear pricing with no hidden fees</span>
                 </li>
                 <li className="flex items-start">
@@ -97,15 +97,15 @@ export default function AboutPage() {
         <div className="mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-10 md:mb-12 text-white px-2">Why Choose Us?</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-shadow-lg border border-gray-200 hover:border-accent-400/50 transition-all duration-200 relative overflow-hidden group">
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 card-shadow-lg border border-white/20 hover:border-accent-400/50 transition-all duration-200 relative overflow-hidden group">
               <div className="relative z-10">
                 <div className="bg-gradient-to-br from-accent-500 to-accent-600 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-xl">
                   <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">Fast & Efficient</h3>
-                <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">Get instant quotes in seconds and complete your booking in minutes. Our streamlined process saves you time.</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Fast & Efficient</h3>
+                <p className="text-gray-200 leading-relaxed text-sm sm:text-base md:text-lg">Get instant quotes in seconds and complete your booking in minutes. Our streamlined process saves you time.</p>
               </div>
             </div>
             

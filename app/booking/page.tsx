@@ -225,10 +225,10 @@ export default function BookingPage() {
             </h1>
           </div>
           
-          <div className="bg-white p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl card-shadow-lg mb-6 border border-gray-200">
-            <div className="mb-6 p-6 bg-gradient-to-r from-accent-50 to-accent-100 rounded-xl border border-accent-200/50">
-              <p className="text-lg font-semibold text-gray-900 mb-2">Booking ID: <span className="text-accent-600">{bookingId}</span></p>
-              <p className="text-xl font-bold text-gray-900">
+          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl card-shadow-lg mb-6 border border-white/20">
+            <div className="mb-6 p-6 bg-white/10 rounded-xl border border-white/20">
+              <p className="text-lg font-semibold text-white mb-2">Booking ID: <span className="text-accent-300">{bookingId}</span></p>
+              <p className="text-xl font-bold text-white">
                 Payment Amount: <span className="text-accent-600">${quote && (watch('paymentMethod') === 'full' ? (quote.totalPrice || 0) : (quote.depositAmount || 0)).toFixed(2)}</span>
               </p>
             </div>
@@ -271,27 +271,27 @@ export default function BookingPage() {
           </p>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg mb-6 sm:mb-8 border border-gray-200">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg mb-6 sm:mb-8 border border-white/20">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
             <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Quote Summary
           </h2>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            <div className="bg-gray-50 p-5 sm:p-6 rounded-xl border border-gray-200">
-              <div className="text-sm text-gray-600 mb-2">Total Price</div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-accent-600">${quote.totalPrice.toFixed(2)}</div>
+            <div className="bg-white/10 p-5 sm:p-6 rounded-xl border border-white/20">
+              <div className="text-sm text-gray-300 mb-2">Total Price</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-accent-300">${quote.totalPrice.toFixed(2)}</div>
             </div>
-            <div className="bg-gray-50 p-5 sm:p-6 rounded-xl border border-gray-200">
-              <div className="text-sm text-gray-600 mb-2">Deposit (15%)</div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-accent-700">${quote.depositAmount.toFixed(2)}</div>
+            <div className="bg-white/10 p-5 sm:p-6 rounded-xl border border-white/20">
+              <div className="text-sm text-gray-300 mb-2">Deposit (15%)</div>
+              <div className="text-2xl sm:text-3xl font-extrabold text-accent-300">${quote.depositAmount.toFixed(2)}</div>
             </div>
           </div>
         </div>
 
       <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-6 sm:space-y-8">
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -300,50 +300,50 @@ export default function BookingPage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 First Name *
               </label>
               <input
                 {...register('firstName')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.firstName && (
-                <p className="text-red-600 text-sm mt-1.5">{errors.firstName.message}</p>
+                <p className="text-red-300 text-sm mt-1.5">{errors.firstName.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Last Name *
               </label>
               <input
                 {...register('lastName')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.lastName && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.lastName.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Email *
               </label>
               <input
                 {...register('email')}
                 type="email"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.email.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Phone *
               </label>
               <input
                 {...register('phone')}
                 type="tel"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.phone && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.phone.message}</p>
@@ -352,7 +352,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -361,31 +361,31 @@ export default function BookingPage() {
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Make *
               </label>
               <input
                 {...register('vehicleMake')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.vehicleMake && (
                 <p className="text-red-500 text-sm mt-2 font-medium">{errors.vehicleMake.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Model *
               </label>
               <input
                 {...register('vehicleModel')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.vehicleModel && (
                 <p className="text-red-500 text-sm mt-1">{errors.vehicleModel.message}</p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Year *
               </label>
               <input
@@ -393,7 +393,7 @@ export default function BookingPage() {
                 type="number"
                 min="1900"
                 max={new Date().getFullYear() + 1}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.vehicleYear && (
                 <p className="text-red-500 text-sm mt-1">{errors.vehicleYear.message}</p>
@@ -402,7 +402,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -412,12 +412,12 @@ export default function BookingPage() {
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Address *
               </label>
               <input
                 {...register('pickupAddress')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.pickupAddress && (
                 <p className="text-red-500 text-sm mt-1">{errors.pickupAddress.message}</p>
@@ -425,36 +425,36 @@ export default function BookingPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Suburb *
                 </label>
                 <input
                   {...register('pickupSuburb')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.pickupSuburb && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupSuburb.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Postcode *
                 </label>
                 <input
                   {...register('pickupPostcode')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.pickupPostcode && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupPostcode.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   State *
                 </label>
                 <input
                   {...register('pickupState')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.pickupState && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupState.message}</p>
@@ -463,25 +463,25 @@ export default function BookingPage() {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Contact Name *
                 </label>
                 <input
                   {...register('pickupContactName')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.pickupContactName && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupContactName.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Contact Phone *
                 </label>
                 <input
                   {...register('pickupContactPhone')}
                   type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.pickupContactPhone && (
                   <p className="text-red-500 text-sm mt-1">{errors.pickupContactPhone.message}</p>
@@ -489,12 +489,12 @@ export default function BookingPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Preferred Time *
               </label>
               <select
                 {...register('preferredTime')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               >
                 <option value="morning">Morning (8am - 12pm)</option>
                 <option value="afternoon">Afternoon (12pm - 5pm)</option>
@@ -507,7 +507,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -516,12 +516,12 @@ export default function BookingPage() {
           </h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2">
                 Address *
               </label>
               <input
                 {...register('deliveryAddress')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
               />
               {errors.deliveryAddress && (
                 <p className="text-red-500 text-sm mt-1">{errors.deliveryAddress.message}</p>
@@ -529,36 +529,36 @@ export default function BookingPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Suburb *
                 </label>
                 <input
                   {...register('deliverySuburb')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.deliverySuburb && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliverySuburb.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Postcode *
                 </label>
                 <input
                   {...register('deliveryPostcode')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.deliveryPostcode && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryPostcode.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   State *
                 </label>
                 <input
                   {...register('deliveryState')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.deliveryState && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryState.message}</p>
@@ -567,25 +567,25 @@ export default function BookingPage() {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Contact Name *
                 </label>
                 <input
                   {...register('deliveryContactName')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.deliveryContactName && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryContactName.message}</p>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2">
                   Contact Phone *
                 </label>
                 <input
                   {...register('deliveryContactPhone')}
                   type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 />
                 {errors.deliveryContactPhone && (
                   <p className="text-red-500 text-sm mt-1">{errors.deliveryContactPhone.message}</p>
@@ -595,7 +595,7 @@ export default function BookingPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 sm:p-8 rounded-2xl card-shadow-lg border border-gray-200">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
             <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />

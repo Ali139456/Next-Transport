@@ -62,7 +62,7 @@ export default function LoginPage() {
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-md">
         {/* Login Card */}
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 border border-white/20">
           {/* Header */}
           <div className="text-center mb-6 sm:mb-8">
             <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl mb-4 sm:mb-5 shadow-lg">
@@ -70,47 +70,47 @@ export default function LoginPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
               Admin Login
             </h1>
-            <p className="text-sm sm:text-base text-gray-600">Enter your credentials to access the admin panel</p>
+            <p className="text-sm sm:text-base text-gray-300">Enter your credentials to access the admin panel</p>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
             {/* Username Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="username" className="block text-sm font-semibold text-white mb-2">
                 Username
               </label>
               <input
                 id="username"
                 {...register('username')}
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 placeholder="Enter your username"
                 autoComplete="username"
                 autoFocus
               />
               {errors.username && (
-                <p className="text-red-600 text-sm mt-1.5">{errors.username.message}</p>
+                <p className="text-red-300 text-sm mt-1.5">{errors.username.message}</p>
               )}
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">
                 Password
               </label>
               <input
                 id="password"
                 {...register('password')}
                 type="password"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
                 placeholder="Enter your password"
                 autoComplete="current-password"
               />
               {errors.password && (
-                <p className="text-red-600 text-sm mt-1.5">{errors.password.message}</p>
+                <p className="text-red-300 text-sm mt-1.5">{errors.password.message}</p>
               )}
             </div>
 
@@ -138,7 +138,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <a
               href="/"
-              className="inline-flex items-center text-sm sm:text-base text-gray-600 hover:text-accent-600 transition-colors font-medium"
+              className="inline-flex items-center text-sm sm:text-base text-gray-300 hover:text-accent-300 transition-colors font-medium"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

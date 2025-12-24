@@ -276,48 +276,48 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
   if (quote) {
     return (
       <div className="space-y-6">
-        <div className="bg-white border-2 border-accent-200/50 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border-2 border-white/20 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden">
           <div className="relative z-10">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white">
                 Your Quote
               </h3>
-              <div className="px-3 sm:px-4 py-2 bg-accent-100 rounded-full">
-                <span className="text-accent-700 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
+              <div className="px-3 sm:px-4 py-2 bg-accent-500/20 rounded-full border border-accent-400/30">
+                <span className="text-accent-300 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
               </div>
             </div>
             
-            <div className="space-y-4 text-base sm:text-lg bg-gray-50 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-gray-200">
-              <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                <span className="text-gray-700">Base Price</span>
-                <span className="font-semibold text-gray-900">${quote.basePrice.toFixed(2)}</span>
+            <div className="space-y-4 text-base sm:text-lg bg-white/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-white/20">
+              <div className="flex justify-between items-center py-2 border-b border-white/20">
+                <span className="text-gray-200">Base Price</span>
+                <span className="font-semibold text-white">${quote.basePrice.toFixed(2)}</span>
               </div>
               {quote.addOns?.insurance && (
-                <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                  <span className="text-gray-700">Insurance Coverage</span>
-                  <span className="font-semibold text-gray-900">${quote.addOns.insurance.toFixed(2)}</span>
+                <div className="flex justify-between items-center py-2 border-b border-white/20">
+                  <span className="text-gray-200">Insurance Coverage</span>
+                  <span className="font-semibold text-white">${quote.addOns.insurance.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                <span className="text-gray-700">GST (10%)</span>
-                <span className="font-semibold text-gray-900">${quote.gst.toFixed(2)}</span>
+              <div className="flex justify-between items-center py-2 border-b border-white/20">
+                <span className="text-gray-200">GST (10%)</span>
+                <span className="font-semibold text-white">${quote.gst.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-gray-300">
-                <span className="text-xl font-bold text-gray-900">Total Price</span>
-                <span className="text-3xl font-extrabold bg-gradient-to-r from-accent-600 to-accent-700 bg-clip-text text-transparent">
+              <div className="flex justify-between items-center pt-4 mt-2 border-t-2 border-white/30">
+                <span className="text-xl font-bold text-white">Total Price</span>
+                <span className="text-3xl font-extrabold bg-gradient-to-r from-accent-300 to-accent-400 bg-clip-text text-transparent">
                   ${quote.totalPrice.toFixed(2)}
                 </span>
               </div>
             </div>
             
-            <div className="bg-gray-50 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-gray-200">
-              <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white/10 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-white/20">
+              <h4 className="font-semibold text-white mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Timeline Estimates
               </h4>
-              <div className="space-y-2 text-gray-700 text-sm sm:text-base">
+              <div className="space-y-2 text-gray-200 text-sm sm:text-base">
                 <p className="flex justify-between">
                   <span className="font-medium">Estimated Pickup:</span>
                   <span>{quote.estimatedPickupWindow}</span>
@@ -340,7 +340,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="px-4 sm:px-6 py-3 sm:py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg border-2 border-gray-200 hover:border-accent-400 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border-2 border-white/20 hover:border-accent-400 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -349,7 +349,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           </button>
           <button
             onClick={() => setQuote(null)}
-            className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200 text-sm sm:text-base"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg border border-white/20 transition-colors duration-200 text-sm sm:text-base"
           >
             Get New Quote
           </button>
@@ -372,7 +372,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('pickupPostcode')}
             type="text"
-            className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
             placeholder="e.g., 2000"
           />
           {errors.pickupPostcode && (
@@ -390,7 +390,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           <input
             {...register('deliveryPostcode')}
             type="text"
-            className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-gray-50 border-2 border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all outline-none text-base"
+                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
             placeholder="e.g., 3000"
           />
           {errors.deliveryPostcode && (
@@ -400,7 +400,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+        <label className="block text-sm font-semibold text-white mb-2 flex items-center">
           <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
@@ -431,16 +431,16 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
               value="true"
               className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2 border-gray-300"
             />
-            <span className="ml-3 text-gray-700 font-medium group-hover:text-accent-600">Running</span>
+            <span className="ml-3 text-gray-200 font-medium group-hover:text-accent-300">Running</span>
           </label>
           <label className="flex items-center cursor-pointer group">
             <input
               type="radio"
               {...register('isRunning', { valueAsNumber: false })}
               value="false"
-              className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2 border-gray-300"
+              className="w-5 h-5 text-accent-400 focus:ring-accent-400 focus:ring-2 border-white/30"
             />
-            <span className="ml-3 text-gray-700 font-medium group-hover:text-accent-600">Non-Running</span>
+            <span className="ml-3 text-gray-200 font-medium group-hover:text-accent-300">Non-Running</span>
           </label>
         </div>
       </div>
@@ -450,49 +450,49 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           Transport Type *
         </label>
         <div className="grid md:grid-cols-2 gap-4">
-          <label className="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-accent-50/50 transition-all group">
+          <label className="flex items-center p-4 border-2 border-white/20 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-white/10 transition-all group">
             <input
               type="radio"
               {...register('transportType')}
               value="open"
-              className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
+              className="w-5 h-5 text-accent-400 focus:ring-accent-400 focus:ring-2"
             />
             <div className="ml-3">
-              <span className="font-semibold text-gray-900 group-hover:text-accent-700">Open Transport</span>
-              <p className="text-sm text-gray-600">More economical option</p>
+              <span className="font-semibold text-white group-hover:text-accent-300">Open Transport</span>
+              <p className="text-sm text-gray-300">More economical option</p>
             </div>
           </label>
-          <label className="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-accent-50/50 transition-all group">
+          <label className="flex items-center p-4 border-2 border-white/20 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-white/10 transition-all group">
             <input
               type="radio"
               {...register('transportType')}
               value="enclosed"
-              className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
+              className="w-5 h-5 text-accent-400 focus:ring-accent-400 focus:ring-2"
             />
             <div className="ml-3">
-              <span className="font-semibold text-gray-900 group-hover:text-accent-700">Enclosed Transport</span>
-              <p className="text-sm text-gray-600">Maximum protection</p>
+              <span className="font-semibold text-white group-hover:text-accent-300">Enclosed Transport</span>
+              <p className="text-sm text-gray-300">Maximum protection</p>
             </div>
           </label>
         </div>
       </div>
 
-      <div className="bg-accent-50/50 border-2 border-accent-200 rounded-lg sm:rounded-xl p-4 sm:p-5">
+      <div className="bg-white/10 border-2 border-white/20 rounded-lg sm:rounded-xl p-4 sm:p-5">
         <label className="flex items-center cursor-pointer group">
           <input
             type="checkbox"
             {...register('insurance')}
-            className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2 border-gray-300 rounded"
+            className="w-5 h-5 text-accent-400 focus:ring-accent-400 focus:ring-2 border-white/30 rounded"
           />
           <div className="ml-3">
-            <span className="font-semibold text-gray-900 group-hover:text-accent-700">Add Insurance Coverage</span>
-            <p className="text-sm text-gray-600">Additional protection for your vehicle (+$150)</p>
+            <span className="font-semibold text-white group-hover:text-accent-300">Add Insurance Coverage</span>
+            <p className="text-sm text-gray-300">Additional protection for your vehicle (+$150)</p>
           </div>
         </label>
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+        <label className="block text-sm font-semibold text-white mb-2 flex items-center">
           <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
