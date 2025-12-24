@@ -2,6 +2,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose'
 
 export interface IBooking extends Document {
   bookingId: string
+  userId?: string // Link to user account
   customer: {
     firstName: string
     lastName: string
@@ -97,6 +98,11 @@ const BookingSchema: Schema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
+    },
+    userId: {
+      type: String,
+      required: false,
       index: true,
     },
     customer: {
