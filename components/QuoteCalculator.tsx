@@ -276,22 +276,18 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
   if (quote) {
     return (
       <div className="space-y-6">
-        <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 border-2 border-green-200/50 rounded-2xl p-8 card-shadow relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-green-200/20 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-200/20 rounded-full blur-xl"></div>
-          
+        <div className="bg-white border-2 border-accent-200/50 rounded-2xl p-6 sm:p-8 card-shadow relative overflow-hidden">
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-green-700 to-emerald-700 bg-clip-text text-transparent">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 Your Quote
               </h3>
-              <div className="px-4 py-2 bg-green-100 rounded-full">
-                <span className="text-green-700 font-semibold text-sm">Valid for 30 days</span>
+              <div className="px-3 sm:px-4 py-2 bg-accent-100 rounded-full">
+                <span className="text-accent-700 font-semibold text-xs sm:text-sm">Valid for 30 days</span>
               </div>
             </div>
             
-            <div className="space-y-4 text-lg bg-white/60 backdrop-blur-sm rounded-xl p-6 mb-6">
+            <div className="space-y-4 text-base sm:text-lg bg-gray-50 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-gray-200">
               <div className="flex justify-between items-center py-2 border-b border-gray-200">
                 <span className="text-gray-700">Base Price</span>
                 <span className="font-semibold text-gray-900">${quote.basePrice.toFixed(2)}</span>
@@ -314,14 +310,14 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
               </div>
             </div>
             
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 mb-6 border border-gray-200/50">
-              <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gray-50 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 border border-gray-200">
+              <h4 className="font-semibold text-gray-900 mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Timeline Estimates
               </h4>
-              <div className="space-y-2 text-gray-700">
+              <div className="space-y-2 text-gray-700 text-sm sm:text-base">
                 <p className="flex justify-between">
                   <span className="font-medium">Estimated Pickup:</span>
                   <span>{quote.estimatedPickupWindow}</span>
@@ -335,25 +331,25 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <button
             onClick={handleBookNow}
-            className="flex-1 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-105 transform duration-200"
+            className="flex-1 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-3.5 sm:py-4 px-6 sm:px-8 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl text-base sm:text-lg"
           >
             Book Now
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="px-6 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-xl border-2 border-gray-300 hover:border-accent-400 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-lg border-2 border-gray-200 hover:border-accent-400 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Download PDF
           </button>
           <button
             onClick={() => setQuote(null)}
-            className="px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all"
+            className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors duration-200 text-sm sm:text-base"
           >
             Get New Quote
           </button>
@@ -363,8 +359,8 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-      <div className="grid md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
+      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
         <div>
           <label className="block text-sm font-semibold text-gray-800 mb-3 flex items-center">
             <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -404,7 +400,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-3 flex items-center">
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
           <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
@@ -424,7 +420,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-3">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
           Vehicle Condition *
         </label>
         <div className="flex gap-6">
@@ -450,7 +446,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-3">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
           Transport Type *
         </label>
         <div className="grid md:grid-cols-2 gap-4">
@@ -481,7 +477,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
         </div>
       </div>
 
-      <div className="bg-accent-50/50 border-2 border-accent-200 rounded-xl p-5">
+      <div className="bg-accent-50/50 border-2 border-accent-200 rounded-lg sm:rounded-xl p-4 sm:p-5">
         <label className="flex items-center cursor-pointer group">
           <input
             type="checkbox"
@@ -496,7 +492,7 @@ export default function QuoteCalculator({ onQuoteComplete }: QuoteCalculatorProp
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-3 flex items-center">
+        <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
           <svg className="w-4 h-4 mr-2 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
