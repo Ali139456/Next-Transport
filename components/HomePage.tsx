@@ -172,18 +172,18 @@ export default function HomePage() {
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 3
               </div>
-              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">Track</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Monitor your vehicle&apos;s journey in real-time with GPS</p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow border border-white/20 group-hover:border-accent-400/50 transition-colors duration-200">
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Track</h3>
+                <p className="text-gray-300 leading-relaxed text-base sm:text-lg">Monitor your vehicle&apos;s journey in real-time with GPS</p>
               </div>
             </div>
             <div className="text-center group relative">
               <div className="bg-gradient-to-br from-accent-500 to-accent-600 text-white w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl sm:rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 md:mb-8 text-xl sm:text-2xl md:text-3xl font-bold shadow-2xl transition-transform duration-200 group-hover:scale-110 relative z-10">
                 4
               </div>
-              <div className="bg-white/90 p-8 rounded-2xl card-shadow border-2 border-gray-100 group-hover:border-accent-300 transition-colors duration-200">
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">Delivered</h3>
-                <p className="text-gray-600 leading-relaxed text-lg">Your vehicle arrives safely at its destination</p>
+              <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow border border-white/20 group-hover:border-accent-400/50 transition-colors duration-200">
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Delivered</h3>
+                <p className="text-gray-300 leading-relaxed text-base sm:text-lg">Your vehicle arrives safely at its destination</p>
               </div>
             </div>
           </div>
