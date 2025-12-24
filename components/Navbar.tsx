@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, loading: authLoading } = useAuth()
 
   return (
     <nav className="bg-black shadow-lg sticky top-0 z-40 border-b border-gray-800">
@@ -36,11 +38,16 @@ export default function Navbar() {
             <Link href="/contact" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
               Contact
             </Link>
+            {!authLoading && user && user.role === 'admin' && (
+              <Link href="/admin" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
+                Dashboard
+              </Link>
+            )}
             <Link
               href="/login"
               className="bg-accent-600 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg hover:bg-accent-700 font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
             >
-              Admin
+              Login
             </Link>
           </div>
 
@@ -70,43 +77,52 @@ export default function Navbar() {
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-              Home
-            </Link>
+                Home
+              </Link>
               <Link 
                 href="/quote" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-              Get Quote
-            </Link>
+                Get Quote
+              </Link>
               <Link 
                 href="/tracking" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-              Track Booking
-            </Link>
+                Track Booking
+              </Link>
               <Link 
                 href="/about" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-              About
-            </Link>
+                About
+              </Link>
               <Link 
                 href="/contact" 
                 className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
                 onClick={() => setMobileMenuOpen(false)}
               >
-              Contact
-            </Link>
-            <Link
+                Contact
+              </Link>
+              {!authLoading && user && user.role === 'admin' && (
+                <Link 
+                  href="/admin" 
+                  className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
+              <Link
                 href="/login"
                 className="block bg-accent-600 text-white px-4 py-3 rounded-lg hover:bg-accent-700 text-center font-semibold transition-colors mt-2 text-base"
                 onClick={() => setMobileMenuOpen(false)}
-            >
-              Admin
-            </Link>
+              >
+                Login
+              </Link>
             </div>
           </div>
         )}

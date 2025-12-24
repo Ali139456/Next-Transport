@@ -38,12 +38,14 @@ export default function AdminPage() {
       try {
         const response = await fetch('/api/auth/me')
         if (!response.ok) {
+          toast.error('Please login as admin to access the dashboard')
           router.push('/login')
           return
         }
         setAuthChecking(false)
       } catch (error) {
         console.error('Auth check error:', error)
+        toast.error('Please login as admin to access the dashboard')
         router.push('/login')
       }
     }
