@@ -274,7 +274,7 @@ export default function FAQPage() {
             Still have questions?
           </h3>
           <p className="text-gray-700 mb-6">
-            Our support team is here to help. Get in touch and we'll respond as soon as possible.
+            Our support team is here to help. Get in touch and we&apos;ll respond as soon as possible.
           </p>
           <a
             href="/contact"

@@ -127,6 +127,28 @@ export default function TrackingPage() {
     return () => clearInterval(interval)
   }, [fetchBooking])
 
+  const specialStatuses = useMemo(
+    () => [
+      'cancelled',
+      'refunded',
+      'on_hold_customer',
+      'on_hold_operations',
+      'failed_pickup',
+      'failed_delivery',
+      'rebook_required',
+    ],
+    []
+  )
+
+  const isSpecialStatus = booking ? specialStatuses.includes(booking.status) : false
+  const currentStatusIndex = isSpecialStatus ? -1 : booking ? statusSteps.findIndex((step) => step.key === booking.status) : -1
+
+  const statusDisplay = useMemo(() => {
+    if (!booking) return { key: '', label: '', icon: '⚠️' }
+    if (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) return statusSteps[currentStatusIndex]
+    return { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' }
+  }, [booking?.status, currentStatusIndex])
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -142,27 +164,6 @@ export default function TrackingPage() {
       </div>
     )
   }
-
-  const specialStatuses = useMemo(
-    () => [
-      'cancelled',
-      'refunded',
-      'on_hold_customer',
-      'on_hold_operations',
-      'failed_pickup',
-      'failed_delivery',
-      'rebook_required',
-    ],
-    []
-  )
-
-  const isSpecialStatus = specialStatuses.includes(booking.status)
-  const currentStatusIndex = isSpecialStatus ? -1 : statusSteps.findIndex((step) => step.key === booking.status)
-
-  const statusDisplay = useMemo(() => {
-    if (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) return statusSteps[currentStatusIndex]
-    return { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' }
-  }, [booking.status, currentStatusIndex])
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
