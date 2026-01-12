@@ -133,7 +133,7 @@ export default function TrackingPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">Loading...</div>
       </div>
-    )
+    );
   }
 
   if (error || !booking) {
@@ -141,29 +141,14 @@ export default function TrackingPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center text-red-600">{error || 'Booking not found'}</div>
       </div>
-    )
+    );
   }
 
   // Handle special statuses that aren't in the main flow
-  const specialStatuses = [
-    'cancelled',
-    'refunded',
-    'on_hold_customer',
-    'on_hold_operations',
-    'failed_pickup',
-    'failed_delivery',
-    'rebook_required',
-  ]
-  
-  const isSpecialStatus = specialStatuses.includes(booking.status)
-  const currentStatusIndex = isSpecialStatus 
-    ? -1 
-    : statusSteps.findIndex((step) => step.key === booking.status)
-  const statusDisplay = statusSteps[currentStatusIndex] || { 
-    key: booking.status, 
-    label: formatStatus(booking.status), 
-    icon: '⚠️' 
-  }
+  const specialStatuses = ['cancelled', 'refunded', 'on_hold_customer', 'on_hold_operations', 'failed_pickup', 'failed_delivery', 'rebook_required'];
+  const isSpecialStatus = specialStatuses.includes(booking.status);
+  const currentStatusIndex = isSpecialStatus ? -1 : statusSteps.findIndex((step) => step.key === booking.status);
+  const statusDisplay = (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) ? statusSteps[currentStatusIndex] : { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' };
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
