@@ -6,23 +6,27 @@ import toast from 'react-hot-toast'
 
 interface Booking {
   _id: string
-  bookingId: string
+  booking_number: string
+  tracking_token?: string
+  source_channel?: string
   customer: {
-    firstName: string
-    lastName: string
+    name: string
     email: string
-    phone: string
-  }
+    phone?: string
+  } | null
   vehicle: {
     type: string
     make: string
     model: string
-  }
+    year?: string
+  } | null
   status: string
-  pricing: {
-    totalPrice: number
-  }
-  createdAt: string
+  total_inc_gst: number
+  deposit_required_amount: number
+  balance_due_amount: number
+  internal_cost_ex_gst?: number
+  internal_margin_ex_gst?: number
+  created_at: string
 }
 
 export default function AdminPage() {
@@ -30,6 +34,7 @@ export default function AdminPage() {
   const [bookings, setBookings] = useState<Booking[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
+  const [sourceChannelFilter, setSourceChannelFilter] = useState<string>('all')
   const [authChecking, setAuthChecking] = useState(true)
 
   // Check authentication on mount
@@ -66,7 +71,10 @@ export default function AdminPage() {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch(`/api/admin/bookings?filter=${filter}`)
+      const params = new URLSearchParams()
+      if (filter !== 'all') params.append('filter', filter)
+      if (sourceChannelFilter !== 'all') params.append('source_channel', sourceChannelFilter)
+      const response = await fetch(`/api/admin/bookings?${params.toString()}`)
       if (!response.ok) throw new Error('Failed to fetch bookings')
       const data = await response.json()
       setBookings(data)
@@ -80,19 +88,21 @@ export default function AdminPage() {
   useEffect(() => {
     fetchBookings()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter])
+  }, [filter, sourceChannelFilter])
 
-  const updateStatus = async (bookingId: string, newStatus: string) => {
+  const updateStatus = async (bookingNumber: string, newStatus: string) => {
     try {
-      const response = await fetch(`/api/admin/bookings/${bookingId}/status`, {
+      const response = await fetch(`/api/admin/bookings/${bookingNumber}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       })
       if (!response.ok) throw new Error('Failed to update status')
       fetchBookings()
+      toast.success('Status updated successfully')
     } catch (error) {
       console.error('Error updating status:', error)
+      toast.error('Failed to update status')
     }
   }
 
@@ -108,7 +118,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 relative overflow-hidden">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-slate-200/20 to-transparent rounded-full blur-3xl"></div>
@@ -122,19 +132,37 @@ export default function AdminPage() {
             </h1>
             <p className="text-gray-600">Manage bookings and track orders</p>
           </div>
-          <div className="mt-4 md:mt-0 flex items-center gap-4">
+          <div className="mt-4 md:mt-0 flex flex-wrap items-center gap-4">
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               className="px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all bg-white shadow-sm hover:shadow-md font-medium"
             >
-              <option value="all">All Bookings</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="driver-assigned">Driver Assigned</option>
-              <option value="picked-up">Picked Up</option>
-              <option value="in-transit">In Transit</option>
+              <option value="all">All Statuses</option>
+              <option value="quote_created">Quote Created</option>
+              <option value="booking_pending_payment">Pending Payment</option>
+              <option value="booked_confirmed">Booked & Confirmed</option>
+              <option value="awaiting_driver_assignment">Awaiting Driver</option>
+              <option value="driver_assigned">Driver Assigned</option>
+              <option value="driver_en_route">Driver En Route</option>
+              <option value="picked_up">Picked Up</option>
+              <option value="in_depot">In Depot</option>
+              <option value="in_transit">In Transit</option>
               <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="on_hold_customer">On Hold (Customer)</option>
+              <option value="on_hold_operations">On Hold (Operations)</option>
+            </select>
+            <select
+              value={sourceChannelFilter}
+              onChange={(e) => setSourceChannelFilter(e.target.value)}
+              className="px-5 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all bg-white shadow-sm hover:shadow-md font-medium"
+            >
+              <option value="all">All Channels</option>
+              <option value="nexttransport">NextTransport</option>
+              <option value="intraffic">InTraffic</option>
+              <option value="dealer">Dealer</option>
+              <option value="fleet">Fleet</option>
             </select>
             <button
               onClick={handleLogout}
@@ -145,12 +173,15 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl card-shadow-lg overflow-hidden border border-white/20">
+        <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden border-2 border-white/30">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gradient-to-r from-slate-100 to-gray-100">
             <tr>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Booking ID
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Source
               </th>
               <th className="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">
                 Customer
@@ -177,47 +208,73 @@ export default function AdminPage() {
               <tr key={booking._id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <a
-                    href={`/tracking/${booking.bookingId}`}
+                    href={`/tracking/${booking.tracking_token || booking.booking_number}`}
                     className="text-accent-600 hover:text-accent-700 hover:underline font-bold"
                   >
-                    {booking.bookingId}
+                    {booking.booking_number}
                   </a>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    booking.source_channel === 'nexttransport' ? 'bg-blue-100 text-blue-800' :
+                    booking.source_channel === 'intraffic' ? 'bg-purple-100 text-purple-800' :
+                    booking.source_channel === 'dealer' ? 'bg-green-100 text-green-800' :
+                    booking.source_channel === 'fleet' ? 'bg-orange-100 text-orange-800' :
+                    'bg-gray-100 text-gray-800'
+                  }`}>
+                    {booking.source_channel ? booking.source_channel.toUpperCase() : 'N/A'}
+                  </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
                     <div className="font-semibold text-gray-900">
-                      {booking.customer.firstName} {booking.customer.lastName}
+                      {booking.customer?.name || 'N/A'}
                     </div>
-                    <div className="text-sm text-gray-500">{booking.customer.email}</div>
+                    <div className="text-sm text-gray-500">{booking.customer?.email || 'N/A'}</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                  {booking.vehicle.make} {booking.vehicle.model}
+                  {booking.vehicle ? `${booking.vehicle.make} ${booking.vehicle.model}${booking.vehicle.year ? ` (${booking.vehicle.year})` : ''}` : 'N/A'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
                     value={booking.status}
-                    onChange={(e) => updateStatus(booking.bookingId, e.target.value)}
+                    onChange={(e) => updateStatus(booking.booking_number, e.target.value)}
                     className="px-3 py-2 border-2 border-gray-300 rounded-lg text-sm font-medium focus:ring-2 focus:ring-slate-500 focus:border-slate-500 transition-all"
                   >
-                    <option value="pending">Pending</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="driver-assigned">Driver Assigned</option>
-                    <option value="picked-up">Picked Up</option>
-                    <option value="in-transit">In Transit</option>
+                    <option value="quote_created">Quote Created</option>
+                    <option value="booking_pending_payment">Pending Payment</option>
+                    <option value="booked_confirmed">Booked & Confirmed</option>
+                    <option value="awaiting_driver_assignment">Awaiting Driver</option>
+                    <option value="driver_assigned">Driver Assigned</option>
+                    <option value="driver_en_route">Driver En Route</option>
+                    <option value="picked_up">Picked Up</option>
+                    <option value="in_depot">In Depot</option>
+                    <option value="in_transit">In Transit</option>
                     <option value="delivered">Delivered</option>
                     <option value="cancelled">Cancelled</option>
+                    <option value="refunded">Refunded</option>
+                    <option value="on_hold_customer">On Hold (Customer)</option>
+                    <option value="on_hold_operations">On Hold (Operations)</option>
+                    <option value="failed_pickup">Failed Pickup</option>
+                    <option value="failed_delivery">Failed Delivery</option>
+                    <option value="rebook_required">Rebook Required</option>
                   </select>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-bold text-gray-900">
-                  ${booking.pricing.totalPrice.toFixed(2)}
+                  ${booking.total_inc_gst.toFixed(2)}
+                  {booking.internal_cost_ex_gst && (
+                    <div className="text-xs text-gray-500 mt-1">
+                      Cost: ${booking.internal_cost_ex_gst.toFixed(2)}
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">
-                  {new Date(booking.createdAt).toLocaleDateString()}
+                  {new Date(booking.created_at).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <button
-                    onClick={() => router.push(`/admin/bookings/${booking.bookingId}`)}
+                    onClick={() => router.push(`/admin/bookings/${booking.booking_number}`)}
                     className="text-accent-600 hover:text-accent-700 hover:underline font-semibold"
                   >
                     View Details

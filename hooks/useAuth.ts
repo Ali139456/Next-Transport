@@ -24,9 +24,14 @@ export function useAuth() {
         const data = await response.json()
         setUser(data.user)
       } else {
+        // 401 is expected when user is not logged in, don't log as error
+        if (response.status !== 401) {
+          console.error('Auth check failed with status:', response.status)
+        }
         setUser(null)
       }
     } catch (error) {
+      // Only log network errors, not expected 401s
       console.error('Auth check failed:', error)
       setUser(null)
     } finally {

@@ -22,35 +22,71 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            <Link href="/" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-              Home
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+            <Link 
+              href="/" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">Home</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/quote" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-              Get Quote
+            <Link 
+              href="/quote" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">Get Quote</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/tracking" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-              Track Booking
+            <Link 
+              href="/tracking" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">Track Booking</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/about" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-              About
+            <Link 
+              href="/about" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">About</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
-            <Link href="/contact" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-              Contact
+            <Link 
+              href="/faq" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">FAQ</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
+            </Link>
+            <Link 
+              href="/contact" 
+              className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+            >
+              <span className="relative z-10">Contact</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
             </Link>
             {!authLoading && user && user.role === 'admin' && (
-              <Link href="/admin" className="text-white hover:text-accent-400 font-medium transition-colors text-sm xl:text-base">
-                Dashboard
+              <Link 
+                href="/admin" 
+                className="relative text-white font-medium transition-all text-sm xl:text-base px-3 py-2 rounded-lg group hover:bg-white/10"
+              >
+                <span className="relative z-10">Dashboard</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-400 to-accent-500 group-hover:w-full transition-all duration-300"></span>
               </Link>
             )}
             {!authLoading && user ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-white font-medium text-sm xl:text-base">
-                  {user.name || user.username}
-                </span>
+              <div className="flex items-center space-x-4 ml-2">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-accent-500 to-accent-600 shadow-lg border border-accent-400/30">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <span className="text-white font-semibold text-sm xl:text-base">
+                    {user.name || user.username}
+                  </span>
+                </div>
                 <button
                   onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 text-sm xl:text-base"
                 >
                   Logout
                 </button>
@@ -58,7 +94,7 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="bg-accent-600 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg hover:bg-accent-700 font-semibold transition-all shadow-md hover:shadow-lg text-sm xl:text-base"
+                className="bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 text-sm xl:text-base"
               >
                 Login
               </Link>
@@ -88,59 +124,92 @@ export default function Navbar() {
             <div className="flex flex-col space-y-1 pt-2">
               <Link 
                 href="/" 
-                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Home
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Home
+                </span>
               </Link>
               <Link 
                 href="/quote" 
-                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Get Quote
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Get Quote
+                </span>
               </Link>
               <Link 
                 href="/tracking" 
-                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Track Booking
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Track Booking
+                </span>
               </Link>
               <Link 
                 href="/about" 
-                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                About
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  About
+                </span>
+              </Link>
+              <Link 
+                href="/faq" 
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  FAQ
+                </span>
               </Link>
               <Link 
                 href="/contact" 
-                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Contact
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Contact
+                </span>
               </Link>
               {!authLoading && user && user.role === 'admin' && (
                 <Link 
                   href="/admin" 
-                  className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gray-900 font-medium transition-colors rounded-lg text-base"
+                  className="block px-4 py-3 text-white hover:text-accent-400 hover:bg-gradient-to-r hover:from-white/10 hover:to-accent-500/20 font-medium transition-all rounded-lg text-base relative group"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Dashboard
+                  <span className="relative z-10 flex items-center gap-2">
+                    <span className="w-1 h-1 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    Dashboard
+                  </span>
                 </Link>
               )}
               {!authLoading && user ? (
                 <>
-                  <div className="px-4 py-3 text-white font-medium text-base border-b border-gray-700">
-                    {user.name || user.username}
+                  <div className="px-4 py-3 mx-4 my-2 rounded-full bg-gradient-to-r from-accent-500 to-accent-600 shadow-lg border border-accent-400/30 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span className="text-white font-semibold text-base">
+                      {user.name || user.username}
+                    </span>
                   </div>
                   <button
                     onClick={() => {
                       logout()
                       setMobileMenuOpen(false)
                     }}
-                    className="block bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 text-center font-semibold transition-colors mt-2 text-base"
+                    className="block bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-3 rounded-lg text-center font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 mt-2 mx-4 text-base"
                   >
                     Logout
                   </button>
@@ -148,7 +217,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
-                  className="block bg-accent-600 text-white px-4 py-3 rounded-lg hover:bg-accent-700 text-center font-semibold transition-colors mt-2 text-base"
+                  className="block bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-4 py-3 rounded-lg text-center font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 mt-2 mx-4 text-base"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Login

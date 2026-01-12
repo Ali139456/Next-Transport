@@ -78,30 +78,29 @@ export default function ContactPage() {
   }, [reset])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-accent-900 to-slate-900 relative overflow-hidden">
-      {/* Optimized background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-accent-500/10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-accent-600/10 rounded-full blur-2xl"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float-slow"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-300/20 rounded-full blur-3xl animate-float-slow-reverse"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Header */}
         <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-5 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-accent-200 px-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-white drop-shadow-lg">
             Get In Touch
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-accent-200 max-w-2xl mx-auto px-2">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
           {/* Contact Information Section */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Let&apos;s Start a Conversation</h2>
-              <p className="text-accent-200 text-base sm:text-lg leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-3 sm:mb-4">Let&apos;s Start a Conversation</h2>
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed">
                 Whether you have a question about our services, pricing, or need help with an existing booking, 
                 our team is ready to assist you every step of the way.
               </p>
@@ -112,31 +111,31 @@ export default function ContactPage() {
               {contactMethods.map((method, index) => (
                 <div
                   key={index}
-                  className="group bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-white/20 hover:border-accent-400/50 transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="group bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-xl p-5 sm:p-6 border-2 border-white/30 hover:border-white/50 transition-all duration-200 shadow-xl hover:shadow-2xl hover:scale-[1.02]"
                 >
                   {method.link ? (
                     <a
                       href={method.link}
-                      className="flex items-start space-x-4 text-white hover:text-accent-200 transition-colors"
+                      className="flex items-start space-x-4 text-accent-900 hover:text-accent-700 transition-colors"
                     >
-                      <div className="flex-shrink-0 text-accent-300 group-hover:text-accent-200 transition-colors">
+                      <div className="flex-shrink-0 text-accent-600 group-hover:text-accent-700 transition-colors">
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold mb-1 text-white">{method.title}</h3>
-                        <p className="text-gray-300 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-1 text-accent-900">{method.title}</h3>
+                        <p className="text-gray-700 text-sm mb-2">{method.description}</p>
+                        <p className="text-accent-600 font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </a>
                   ) : (
-                    <div className="flex items-start space-x-4 text-white">
-                      <div className="flex-shrink-0 text-accent-300">
+                    <div className="flex items-start space-x-4 text-accent-900">
+                      <div className="flex-shrink-0 text-accent-600">
                         {method.icon}
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold mb-1 text-white">{method.title}</h3>
-                        <p className="text-gray-300 text-sm mb-2">{method.description}</p>
-                        <p className="text-white font-semibold text-sm sm:text-base">{method.value}</p>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-1 text-accent-900">{method.title}</h3>
+                        <p className="text-gray-700 text-sm mb-2">{method.description}</p>
+                        <p className="text-accent-900 font-semibold text-sm sm:text-base">{method.value}</p>
                       </div>
                     </div>
                   )}
@@ -145,14 +144,14 @@ export default function ContactPage() {
             </div>
 
             {/* Response Time Card */}
-            <div className="bg-gradient-to-r from-purple-600/30 to-blue-600/30 backdrop-blur-md rounded-2xl p-6 border border-purple-400/30">
+            <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-xl p-6 border-2 border-white/30 shadow-xl">
               <div className="flex items-start space-x-3">
-                <svg className="w-6 h-6 text-accent-200 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-accent-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                  <h3 className="text-white font-bold mb-2">Quick Response Guarantee</h3>
-                  <p className="text-accent-100 text-sm">
+                  <h3 className="text-accent-900 font-semibold mb-2">Quick Response Guarantee</h3>
+                  <p className="text-gray-700 text-sm">
                     We typically respond to all inquiries within 24 hours during business days. 
                     For urgent matters, please call us directly.
                   </p>
@@ -162,55 +161,55 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form Section */}
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-white/20 shadow-2xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8">Send Us a Message</h2>
+          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-xl shadow-2xl p-6 sm:p-8 md:p-10 border-2 border-white/30">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-accent-900 mb-6 sm:mb-8">Send Us a Message</h2>
             
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-white mb-2">
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
                   Full Name *
                 </label>
                 <input
                   id="name"
                   {...register('name')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="form-input-light"
                   autoComplete="name"
                   placeholder="John Doe"
                 />
                 {errors.name && (
-                  <p className="text-red-300 text-sm mt-1.5">{errors.name.message}</p>
+                  <p className="text-red-500 text-sm mt-1.5">{errors.name.message}</p>
                 )}
               </div>
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
                   Email Address *
                 </label>
                 <input
                   id="email"
                   {...register('email')}
                   type="email"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="form-input-light"
                   autoComplete="email"
                   placeholder="john@example.com"
                 />
                 {errors.email && (
-                  <p className="text-red-300 text-sm mt-1.5">{errors.email.message}</p>
+                  <p className="text-red-500 text-sm mt-1.5">{errors.email.message}</p>
                 )}
               </div>
 
               {/* Phone Field */}
               <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-white mb-2">
-                  Phone Number <span className="text-gray-300 text-xs font-normal">(Optional)</span>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                 </label>
                 <input
                   id="phone"
                   {...register('phone')}
                   type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="form-input-light"
                   autoComplete="tel"
                   placeholder="+61 4XX XXX XXX"
                 />
@@ -218,35 +217,35 @@ export default function ContactPage() {
 
               {/* Subject Field */}
               <div>
-                <label htmlFor="subject" className="block text-sm font-semibold text-white mb-2">
+                <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
                   Subject *
                 </label>
                 <input
                   id="subject"
                   {...register('subject')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                  className="form-input-light"
                   autoComplete="off"
                   placeholder="What's this regarding?"
                 />
                 {errors.subject && (
-                  <p className="text-red-300 text-sm mt-1.5">{errors.subject.message}</p>
+                  <p className="text-red-500 text-sm mt-1.5">{errors.subject.message}</p>
                 )}
               </div>
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-white mb-2">
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
                   Message *
                 </label>
                 <textarea
                   id="message"
                   {...register('message')}
                   rows={6}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none resize-none text-base"
+                  className="form-input-light resize-none"
                   placeholder="Tell us more about your inquiry..."
                 />
                 {errors.message && (
-                  <p className="text-red-300 text-sm mt-1.5">{errors.message.message}</p>
+                  <p className="text-red-500 text-sm mt-1.5">{errors.message.message}</p>
                 )}
               </div>
 
@@ -254,7 +253,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl text-base sm:text-lg"
+                className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-[1.02] text-base sm:text-lg"
               >
                 {submitting ? (
                   <span className="flex items-center justify-center">

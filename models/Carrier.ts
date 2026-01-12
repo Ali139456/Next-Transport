@@ -1,40 +1,42 @@
 import mongoose, { Schema, Document, Model } from 'mongoose'
+import crypto from 'crypto'
 
-/**
- * Carrier Model
- * INTERNAL ONLY - Used by ops/dispatch/finance teams
- * Never exposed to retail customers
- * MongoDB automatically generates _id field (accessible as id in JSON)
- */
 export interface ICarrier extends Document {
+  id: string // UUID
   legal_name: string
   trading_name: string
   abn: string
   insurance_certificate_url?: string
-  service_states: string[] // Array of Australian states (e.g., "NSW", "VIC", "QLD")
-  vehicle_types_supported: Array<'sedan' | 'suv' | 'ute' | 'van' | 'light-truck' | 'bike'>
+  service_states: string[]
+  vehicle_types_supported: string[]
   active: boolean
-  createdAt: Date
-  updatedAt: Date
+  visibility: 'INTERNAL_ONLY'
+  created_at: Date
+  updated_at: Date
 }
 
 const CarrierSchema: Schema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+      default: () => crypto.randomUUID(),
+      index: true,
+    },
     legal_name: {
       type: String,
       required: true,
-      trim: true,
     },
     trading_name: {
       type: String,
       required: true,
-      trim: true,
+      index: true,
     },
     abn: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
       index: true,
     },
     insurance_certificate_url: {
@@ -48,7 +50,6 @@ const CarrierSchema: Schema = new Schema(
     },
     vehicle_types_supported: {
       type: [String],
-      enum: ['sedan', 'suv', 'ute', 'van', 'light-truck', 'bike'],
       required: true,
       default: [],
     },
@@ -58,16 +59,19 @@ const CarrierSchema: Schema = new Schema(
       default: true,
       index: true,
     },
+    visibility: {
+      type: String,
+      enum: ['INTERNAL_ONLY'],
+      required: true,
+      default: 'INTERNAL_ONLY',
+    },
   },
   {
-    timestamps: true, // Creates createdAt and updatedAt automatically
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
   }
 )
 
-// Index for common queries
-CarrierSchema.index({ active: 1, service_states: 1 })
-CarrierSchema.index({ active: 1, vehicle_types_supported: 1 })
-
-const Carrier: Model<ICarrier> = mongoose.models.Carrier || mongoose.model<ICarrier>('Carrier', CarrierSchema)
+const Carrier: Model<ICarrier> =
+  mongoose.models.Carrier || mongoose.model<ICarrier>('Carrier', CarrierSchema)
 
 export default Carrier

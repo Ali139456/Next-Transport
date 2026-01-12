@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     await connectDB()
 
     const body = await request.json()
-    const { username, email, password, name, phone } = body
+    const { username, email, password, name, phone, role } = body
 
     // Validation
     if (!username || !password || !name) {
@@ -40,14 +40,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create new user with customer role
+    // Validate role
+    const validRoles = ['customer', 'admin', 'driver']
+    const userRole = role && validRoles.includes(role) ? role : 'customer'
+
+    // Create new user with specified role
     const user = new User({
       username: username.toLowerCase(),
       email: email?.toLowerCase() || undefined,
       password,
       name,
       phone: phone || undefined,
-      role: 'customer',
+      role: userRole,
       isActive: true,
     })
 
@@ -84,9 +88,17 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+    
+    // Provide more specific error messages
+    if (error.message?.includes('MongoDB') || error.message?.includes('MONGODB_URI')) {
+      return NextResponse.json(
+        { error: 'Database connection error. Please try again later.' },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json(
-      { error: 'Failed to create account' },
+      { error: error.message || 'Failed to create account. Please try again.' },
       { status: 500 }
     )
   }

@@ -11,35 +11,30 @@ import toast from 'react-hot-toast'
 import { useAuth } from '@/hooks/useAuth'
 
 const bookingSchema = z.object({
+  // Step 2: Customer Details
   firstName: z.string().min(2, 'First name is required'),
   lastName: z.string().min(2, 'Last name is required'),
   email: z.string().email('Invalid email address'),
   phone: z.string().min(10, 'Phone number is required'),
+  // Step 3: Vehicle Details
   vehicleMake: z.string().min(1, 'Vehicle make is required'),
   vehicleModel: z.string().min(1, 'Vehicle model is required'),
   vehicleYear: z.string().min(4, 'Vehicle year is required'),
-  pickupAddress: z.string().min(5, 'Pickup address is required'),
-  pickupSuburb: z.string().min(2, 'Pickup suburb is required'),
-  pickupPostcode: z.string().min(4, 'Pickup postcode is required'),
-  pickupState: z.string().min(2, 'Pickup state is required'),
+  vehicleRegistration: z.string().optional(),
+  vehicleNotes: z.string().optional(),
+  // Step 4: Pickup & Delivery Contacts
   pickupContactName: z.string().min(2, 'Pickup contact name is required'),
   pickupContactPhone: z.string().min(10, 'Pickup contact phone is required'),
-  deliveryAddress: z.string().min(5, 'Delivery address is required'),
-  deliverySuburb: z.string().min(2, 'Delivery suburb is required'),
-  deliveryPostcode: z.string().min(4, 'Delivery postcode is required'),
-  deliveryState: z.string().min(2, 'Delivery state is required'),
   deliveryContactName: z.string().min(2, 'Delivery contact name is required'),
   deliveryContactPhone: z.string().min(10, 'Delivery contact phone is required'),
-  preferredTime: z.string().min(1, 'Preferred time is required'),
+  // Step 5: Payment
   paymentMethod: z.enum(['full', 'deposit']),
 })
 
 type BookingFormData = z.infer<typeof bookingSchema>
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 
-  (typeof window !== 'undefined' ? (window as any).__STRIPE_PUBLISHABLE_KEY__ : '') ||
-  ''
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 )
 
 function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess: () => void }) {
@@ -52,7 +47,6 @@ function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess:
     if (!stripe || !elements) return
 
     setLoading(true)
-
     try {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -70,7 +64,6 @@ function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess:
       }
     } catch (error) {
       toast.error('An error occurred during payment')
-      console.error(error)
     } finally {
       setLoading(false)
     }
@@ -82,7 +75,7 @@ function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess:
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full bg-accent-600 hover:bg-accent-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 shadow-lg hover:shadow-xl"
+        className="w-full bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-4 px-8 rounded-xl transition-all disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-[1.02]"
       >
         {loading ? 'Processing...' : `Pay $${bookingData.paymentAmount.toFixed(2)}`}
       </button>
@@ -90,13 +83,16 @@ function CheckoutForm({ bookingData, onSuccess }: { bookingData: any; onSuccess:
   )
 }
 
+type Step = 'quote' | 'customer' | 'vehicle' | 'contacts' | 'payment' | 'confirmation'
+
 export default function BookingPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
   const [quote, setQuote] = useState<any>(null)
+  const [step, setStep] = useState<Step>('quote')
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [bookingId, setBookingId] = useState<string | null>(null)
-  const [step, setStep] = useState<'details' | 'payment'>('details')
+  const [trackingToken, setTrackingToken] = useState<string | null>(null)
 
   const {
     register,
@@ -105,18 +101,19 @@ export default function BookingPage() {
     formState: { errors },
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      paymentMethod: 'full',
+    },
   })
 
   useEffect(() => {
     if (typeof window === 'undefined') return
     
-    // Check authentication
     if (!authLoading && !user) {
       router.push(`/login?redirect=${encodeURIComponent('/booking')}`)
       return
     }
 
-    // Only allow customers to book (not admins through this route)
     if (!authLoading && user && user.role !== 'customer') {
       router.push('/')
       return
@@ -125,153 +122,255 @@ export default function BookingPage() {
     try {
       const storedQuote = sessionStorage.getItem('quote')
       if (!storedQuote) {
-        router.push('/')
+        router.push('/quote')
         return
       }
       const parsedQuote = JSON.parse(storedQuote)
       setQuote(parsedQuote)
     } catch (error) {
       console.error('Error parsing stored quote:', error)
-      router.push('/')
+      router.push('/quote')
     }
   }, [router, user, authLoading])
 
-  // Show loading state while checking auth
-  if (authLoading) {
+  if (authLoading || !user || !quote) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-accent-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700">
         <div className="text-white text-lg">Loading...</div>
       </div>
     )
   }
 
-  // Show message if not authenticated
-  if (!user) {
-    return null // Will redirect in useEffect
-  }
+  const steps: { id: Step; label: string }[] = [
+    { id: 'quote', label: 'Quote Confirmation' },
+    { id: 'customer', label: 'Customer Details' },
+    { id: 'vehicle', label: 'Vehicle Details' },
+    { id: 'contacts', label: 'Pickup & Delivery' },
+    { id: 'payment', label: 'Payment' },
+  ]
 
-  const onSubmitDetails = async (data: BookingFormData) => {
-    if (!quote) {
-      toast.error('Quote data is missing. Please start over.')
-      router.push('/')
+  const currentStepIndex = steps.findIndex(s => s.id === step)
+
+  const handleStepSubmit = async (data: BookingFormData) => {
+    if (step === 'customer') {
+      setStep('vehicle')
       return
     }
 
-    try {
-      const bookingPayload = {
-        customer: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-        },
-        vehicle: {
-          ...(quote.input || {}),
-          make: data.vehicleMake,
-          model: data.vehicleModel,
-          year: data.vehicleYear,
-        },
-        pickup: {
-          address: data.pickupAddress,
-          suburb: data.pickupSuburb,
-          postcode: data.pickupPostcode,
-          state: data.pickupState,
-          contactName: data.pickupContactName,
-          contactPhone: data.pickupContactPhone,
-        },
-        delivery: {
-          address: data.deliveryAddress,
-          suburb: data.deliverySuburb,
-          postcode: data.deliveryPostcode,
-          state: data.deliveryState,
-          contactName: data.deliveryContactName,
-          contactPhone: data.deliveryContactPhone,
-        },
-        pricing: quote,
-        paymentMethod: data.paymentMethod,
-        preferredDate: quote.preferredDate || new Date(),
+    if (step === 'vehicle') {
+      setStep('contacts')
+      return
+    }
+
+    if (step === 'contacts') {
+      // Create booking
+      try {
+        const preferredDate = new Date(quote.preferredDate || new Date())
+        const startDate = new Date(preferredDate)
+        startDate.setDate(startDate.getDate() - 2)
+        const endDate = new Date(preferredDate)
+        endDate.setDate(endDate.getDate() + 2)
+
+        const bookingPayload = {
+          quote_id: quote.quote_id || quote.id,
+          pickupAddress: {
+            address: quote.pickupAddress?.address || '',
+            suburb: quote.pickupAddress?.suburb || quote.pickupSuburb || '',
+            postcode: quote.pickupAddress?.postcode || quote.pickupPostcode || '',
+            state: quote.pickupAddress?.state || quote.pickupState || '',
+            contactName: data.pickupContactName,
+            contactPhone: data.pickupContactPhone,
+          },
+          dropoffAddress: {
+            address: quote.dropoffAddress?.address || '',
+            suburb: quote.dropoffAddress?.suburb || quote.dropoffSuburb || '',
+            postcode: quote.dropoffAddress?.postcode || quote.dropoffPostcode || '',
+            state: quote.dropoffAddress?.state || quote.deliveryState || '',
+            contactName: data.deliveryContactName,
+            contactPhone: data.deliveryContactPhone,
+          },
+          vehicle: {
+            type: quote.vehicle?.type || quote.vehicleType || 'car',
+            make: data.vehicleMake,
+            model: data.vehicleModel,
+            year: data.vehicleYear,
+            registration: data.vehicleRegistration,
+            notes: data.vehicleNotes,
+            isRunning: quote.vehicle?.isRunning ?? quote.isRunning ?? true,
+            transportType: quote.vehicle?.transportType || quote.transportType || 'open',
+          },
+          pickupTimeframe: {
+            start: startDate.toISOString(),
+            end: endDate.toISOString(),
+          },
+          specialInstructions: data.vehicleNotes || '',
+          paymentMethod: data.paymentMethod,
+        }
+
+        const response = await fetch('/api/bookings/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingPayload),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.error || 'Failed to create booking')
+        }
+
+        const result = await response.json()
+        
+        setBookingId(result.booking_number || result.booking_id)
+        setTrackingToken(result.tracking_public_token || result.tracking_token)
+
+        if (result.stripeEnabled && result.clientSecret) {
+          setClientSecret(result.clientSecret)
+          setStep('payment')
+        } else {
+          setStep('confirmation')
+        }
+      } catch (error: any) {
+        toast.error(error.message || 'Failed to create booking')
       }
-
-      const response = await fetch('/api/bookings/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingPayload),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error || 'Failed to create booking')
-      }
-
-      const result = await response.json()
-      
-      if (!result.bookingId) {
-        throw new Error('Invalid response from server')
-      }
-
-      setBookingId(result.bookingId)
-
-      // Only proceed to payment if Stripe is enabled and clientSecret is provided
-      if (result.stripeEnabled && result.clientSecret) {
-        setClientSecret(result.clientSecret)
-        setStep('payment')
-        toast.success('Booking created! Please complete payment.')
-      } else {
-        // Skip payment step if Stripe is not enabled
-        toast.success('Booking created successfully!')
-        router.push(`/tracking/${result.bookingId}`)
-      }
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to create booking. Please try again.')
-      console.error('Booking error:', error)
+      return
     }
   }
 
   const handlePaymentSuccess = () => {
-    if (!bookingId) {
-      toast.error('Booking ID is missing')
-      return
-    }
-    router.push(`/tracking/${bookingId}`)
+    setStep('confirmation')
   }
 
-  if (!quote) {
-    return <div className="container mx-auto px-4 py-8">Loading...</div>
+  const handleEditQuote = () => {
+    router.push('/quote')
   }
 
+  // Progress Bar
+  const ProgressBar = () => (
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-2">
+        {steps.map((s, index) => (
+          <div key={s.id} className="flex items-center flex-1">
+            <div className="flex flex-col items-center flex-1">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
+                  index <= currentStepIndex
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-500'
+                }`}
+              >
+                {index < currentStepIndex ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  index + 1
+                )}
+              </div>
+              <div className={`text-xs mt-2 text-center ${index <= currentStepIndex ? 'text-blue-600 font-semibold' : 'text-gray-500'}`}>
+                {s.label}
+              </div>
+            </div>
+            {index < steps.length - 1 && (
+              <div
+                className={`h-1 flex-1 mx-2 transition-all ${
+                  index < currentStepIndex ? 'bg-blue-600' : 'bg-gray-200'
+                }`}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+
+  // Step 1: Quote Confirmation
+  if (step === 'quote') {
+    return (
+      <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <ProgressBar />
+          
+          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Quote Summary</h2>
+            
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
+                <span className="text-lg font-semibold text-gray-700">Total Price (incl. GST)</span>
+                <span className="text-3xl font-extrabold text-blue-600">
+                  ${quote.pricing?.total_inc_gst?.toFixed(2) || quote.total_inc_gst?.toFixed(2) || '0.00'}
+                </span>
+              </div>
+              
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="text-sm text-gray-600 mb-1">Pickup</div>
+                  <div className="font-semibold text-gray-900">
+                    {quote.pickupSuburb || quote.pickupAddress?.suburb}, {quote.pickupPostcode || quote.pickupAddress?.postcode}
+                  </div>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="text-sm text-gray-600 mb-1">Delivery</div>
+                  <div className="font-semibold text-gray-900">
+                    {quote.dropoffSuburb || quote.dropoffAddress?.suburb}, {quote.dropoffPostcode || quote.dropoffAddress?.postcode}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                onClick={handleEditQuote}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-colors"
+              >
+                Edit Quote
+              </button>
+              <button
+                onClick={() => setStep('customer')}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Step 5: Payment
   if (step === 'payment' && clientSecret) {
     return (
-      <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-gray-900 via-gray-800 to-accent-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-600/10 rounded-full blur-3xl"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl relative z-10">
-          <div className="text-center mb-8 sm:mb-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-white via-accent-300 to-white bg-clip-text text-transparent px-2">
-              Complete Payment
-            </h1>
-          </div>
+      <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+          <ProgressBar />
           
-          <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl card-shadow-lg mb-6 border border-white/20">
-            <div className="mb-6 p-6 bg-white/10 rounded-xl border border-white/20">
-              <p className="text-lg font-semibold text-white mb-2">Booking ID: <span className="text-accent-300">{bookingId}</span></p>
-              <p className="text-xl font-bold text-white">
-                Payment Amount: <span className="text-accent-600">${quote && (watch('paymentMethod') === 'full' ? (quote.totalPrice || 0) : (quote.depositAmount || 0)).toFixed(2)}</span>
+          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Complete Payment</h2>
+            
+            <div className="mb-6 p-6 bg-blue-50 rounded-xl">
+              <p className="text-sm text-gray-600 mb-1">Booking ID</p>
+              <p className="text-lg font-bold text-gray-900">{bookingId}</p>
+              <p className="text-sm text-gray-600 mt-4 mb-1">Payment Amount</p>
+              <p className="text-2xl font-bold text-blue-600">
+                ${watch('paymentMethod') === 'full' 
+                  ? (quote.pricing?.total_inc_gst || quote.total_inc_gst || 0).toFixed(2)
+                  : ((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15).toFixed(2)
+                }
               </p>
             </div>
+
             <Elements
               stripe={stripePromise}
               options={{
                 clientSecret,
-                appearance: {
-                  theme: 'stripe',
-                },
+                appearance: { theme: 'stripe' },
               }}
             >
               <CheckoutForm
                 bookingData={{
-                  paymentAmount: quote ? (watch('paymentMethod') === 'full' ? (quote.totalPrice || 0) : (quote.depositAmount || 0)) : 0,
+                  paymentAmount: watch('paymentMethod') === 'full' 
+                    ? (quote.pricing?.total_inc_gst || quote.total_inc_gst || 0)
+                    : ((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15),
                 }}
                 onSuccess={handlePaymentSuccess}
               />
@@ -282,392 +381,203 @@ export default function BookingPage() {
     )
   }
 
-  return (
-    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-gray-900 via-gray-800 to-accent-900 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-pattern-dots opacity-10"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-600/10 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-white via-accent-300 to-white bg-clip-text text-transparent px-2">
-            Complete Your Booking
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-2">
-            Fill in your details to finalize your vehicle transport booking
-          </p>
-        </div>
+  // Step 6: Confirmation
+  if (step === 'confirmation') {
+    return (
+      <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+          <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Booking Confirmed!</h2>
+            
+            <div className="space-y-4 mb-6">
+              <div className="bg-blue-50 rounded-lg p-4">
+                <div className="text-sm text-gray-600 mb-1">Booking ID</div>
+                <div className="text-xl font-bold text-gray-900">{bookingId}</div>
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-4 text-left">
+                <div className="text-sm text-gray-600 mb-2">Confirmation sent to:</div>
+                <div className="font-semibold text-gray-900">{watch('email')}</div>
+                <div className="font-semibold text-gray-900">{watch('phone')}</div>
+              </div>
+            </div>
 
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg mb-6 sm:mb-8 border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
-            <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Quote Summary
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            <div className="bg-white/10 p-5 sm:p-6 rounded-xl border border-white/20">
-              <div className="text-sm text-gray-300 mb-2">Total Price</div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-accent-300">${quote.totalPrice.toFixed(2)}</div>
-            </div>
-            <div className="bg-white/10 p-5 sm:p-6 rounded-xl border border-white/20">
-              <div className="text-sm text-gray-300 mb-2">Deposit (15%)</div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-accent-300">${quote.depositAmount.toFixed(2)}</div>
-            </div>
-          </div>
-        </div>
-
-      <form onSubmit={handleSubmit(onSubmitDetails)} className="space-y-6 sm:space-y-8">
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            Customer Details
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                First Name *
-              </label>
-              <input
-                {...register('firstName')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.firstName && (
-                <p className="text-red-300 text-sm mt-1.5">{errors.firstName.message}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Last Name *
-              </label>
-              <input
-                {...register('lastName')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.lastName && (
-                <p className="text-red-500 text-sm mt-2 font-medium">{errors.lastName.message}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Email *
-              </label>
-              <input
-                {...register('email')}
-                type="email"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-2 font-medium">{errors.email.message}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Phone *
-              </label>
-              <input
-                {...register('phone')}
-                type="tel"
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm mt-2 font-medium">{errors.phone.message}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-            </svg>
-            Vehicle Details
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Make *
-              </label>
-              <input
-                {...register('vehicleMake')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.vehicleMake && (
-                <p className="text-red-500 text-sm mt-2 font-medium">{errors.vehicleMake.message}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Model *
-              </label>
-              <input
-                {...register('vehicleModel')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.vehicleModel && (
-                <p className="text-red-500 text-sm mt-1">{errors.vehicleModel.message}</p>
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Year *
-              </label>
-              <input
-                {...register('vehicleYear')}
-                type="number"
-                min="1900"
-                max={new Date().getFullYear() + 1}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.vehicleYear && (
-                <p className="text-red-500 text-sm mt-1">{errors.vehicleYear.message}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Pickup Details
-          </h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Address *
-              </label>
-              <input
-                {...register('pickupAddress')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.pickupAddress && (
-                <p className="text-red-500 text-sm mt-1">{errors.pickupAddress.message}</p>
-              )}
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Suburb *
-                </label>
-                <input
-                  {...register('pickupSuburb')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.pickupSuburb && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupSuburb.message}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Postcode *
-                </label>
-                <input
-                  {...register('pickupPostcode')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.pickupPostcode && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupPostcode.message}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  State *
-                </label>
-                <input
-                  {...register('pickupState')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.pickupState && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupState.message}</p>
-                )}
-              </div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Contact Name *
-                </label>
-                <input
-                  {...register('pickupContactName')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.pickupContactName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupContactName.message}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Contact Phone *
-                </label>
-                <input
-                  {...register('pickupContactPhone')}
-                  type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.pickupContactPhone && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupContactPhone.message}</p>
-                )}
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Preferred Time *
-              </label>
-              <select
-                {...register('preferredTime')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => router.push(`/tracking/${trackingToken || bookingId}`)}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg"
               >
-                <option value="morning">Morning (8am - 12pm)</option>
-                <option value="afternoon">Afternoon (12pm - 5pm)</option>
-                <option value="evening">Evening (5pm - 8pm)</option>
-              </select>
-              {errors.preferredTime && (
-                <p className="text-red-500 text-sm mt-1">{errors.preferredTime.message}</p>
-              )}
+                Track Booking
+              </button>
+              <button
+                onClick={() => router.push('/')}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-colors"
+              >
+                Back to Home
+              </button>
             </div>
           </div>
         </div>
+      </div>
+    )
+  }
 
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Delivery Details
-          </h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-white mb-2">
-                Address *
-              </label>
-              <input
-                {...register('deliveryAddress')}
-                className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-              />
-              {errors.deliveryAddress && (
-                <p className="text-red-500 text-sm mt-1">{errors.deliveryAddress.message}</p>
-              )}
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Suburb *
-                </label>
-                <input
-                  {...register('deliverySuburb')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.deliverySuburb && (
-                  <p className="text-red-500 text-sm mt-1">{errors.deliverySuburb.message}</p>
-                )}
+  // Steps 2-4: Form Steps
+  return (
+    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-gray-50 to-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+        <ProgressBar />
+        
+        <form onSubmit={handleSubmit(handleStepSubmit)} className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
+          {/* Step 2: Customer Details */}
+          {step === 'customer' && (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Customer Details</h2>
+              <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
+                  <input {...register('firstName')} className="form-input-light" />
+                  {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
+                  <input {...register('lastName')} className="form-input-light" />
+                  {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
+                  <input {...register('email')} type="email" className="form-input-light" />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile *</label>
+                  <input {...register('phone')} type="tel" className="form-input-light" />
+                  {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Postcode *
-                </label>
-                <input
-                  {...register('deliveryPostcode')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.deliveryPostcode && (
-                  <p className="text-red-500 text-sm mt-1">{errors.deliveryPostcode.message}</p>
-                )}
+            </>
+          )}
+
+          {/* Step 3: Vehicle Details */}
+          {step === 'vehicle' && (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Vehicle Details</h2>
+              <div className="space-y-4 mb-6">
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Make *</label>
+                    <input {...register('vehicleMake')} className="form-input-light" />
+                    {errors.vehicleMake && <p className="text-red-500 text-sm mt-1">{errors.vehicleMake.message}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Model *</label>
+                    <input {...register('vehicleModel')} className="form-input-light" />
+                    {errors.vehicleModel && <p className="text-red-500 text-sm mt-1">{errors.vehicleModel.message}</p>}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Year *</label>
+                    <input {...register('vehicleYear')} type="number" className="form-input-light" />
+                    {errors.vehicleYear && <p className="text-red-500 text-sm mt-1">{errors.vehicleYear.message}</p>}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Registration</label>
+                  <input {...register('vehicleRegistration')} className="form-input-light" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Notes</label>
+                  <textarea {...register('vehicleNotes')} rows={3} className="form-input-light" />
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  State *
-                </label>
-                <input
-                  {...register('deliveryState')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.deliveryState && (
-                  <p className="text-red-500 text-sm mt-1">{errors.deliveryState.message}</p>
-                )}
+            </>
+          )}
+
+          {/* Step 4: Pickup & Delivery Contacts */}
+          {step === 'contacts' && (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Pickup & Delivery Contacts</h2>
+              <div className="space-y-6 mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Pickup Contact</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                      <input {...register('pickupContactName')} className="form-input-light" />
+                      {errors.pickupContactName && <p className="text-red-500 text-sm mt-1">{errors.pickupContactName.message}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Phone *</label>
+                      <input {...register('pickupContactPhone')} type="tel" className="form-input-light" />
+                      {errors.pickupContactPhone && <p className="text-red-500 text-sm mt-1">{errors.pickupContactPhone.message}</p>}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Delivery Contact</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Name *</label>
+                      <input {...register('deliveryContactName')} className="form-input-light" />
+                      {errors.deliveryContactName && <p className="text-red-500 text-sm mt-1">{errors.deliveryContactName.message}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Phone *</label>
+                      <input {...register('deliveryContactPhone')} type="tel" className="form-input-light" />
+                      {errors.deliveryContactPhone && <p className="text-red-500 text-sm mt-1">{errors.deliveryContactPhone.message}</p>}
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-3">Payment Method</h4>
+                  <div className="space-y-3">
+                    <label className="flex items-center p-3 bg-gradient-to-br from-accent-50/80 to-white rounded-lg cursor-pointer hover:bg-accent-100/50 border border-accent-200/50">
+                      <input type="radio" {...register('paymentMethod')} value="full" className="mr-3" defaultChecked />
+                      <div>
+                        <div className="font-semibold text-gray-900">Pay in Full</div>
+                        <div className="text-sm text-gray-600">${(quote.pricing?.total_inc_gst || quote.total_inc_gst || 0).toFixed(2)}</div>
+                      </div>
+                    </label>
+                    <label className="flex items-center p-3 bg-gradient-to-br from-accent-50/80 to-white rounded-lg cursor-pointer hover:bg-accent-100/50 border border-accent-200/50">
+                      <input type="radio" {...register('paymentMethod')} value="deposit" className="mr-3" />
+                      <div>
+                        <div className="font-semibold text-gray-900">Deposit + Balance Later</div>
+                        <div className="text-sm text-gray-600">${((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15).toFixed(2)} deposit</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Contact Name *
-                </label>
-                <input
-                  {...register('deliveryContactName')}
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.deliveryContactName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.deliveryContactName.message}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-white mb-2">
-                  Contact Phone *
-                </label>
-                <input
-                  {...register('deliveryContactPhone')}
-                  type="tel"
-                  className="w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
-                />
-                {errors.deliveryContactPhone && (
-                  <p className="text-red-500 text-sm mt-1">{errors.deliveryContactPhone.message}</p>
-                )}
-              </div>
-            </div>
+            </>
+          )}
+
+          <div className="flex gap-4 pt-6 border-t border-gray-200">
+            {currentStepIndex > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  const prevStep = steps[currentStepIndex - 1].id
+                  setStep(prevStep)
+                }}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-colors"
+              >
+                Back
+              </button>
+            )}
+            <button
+              type="submit"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg"
+            >
+              {step === 'contacts' ? 'Create Booking' : 'Continue'}
+            </button>
           </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 sm:p-8 rounded-2xl card-shadow-lg border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-900 flex items-center">
-            <svg className="w-6 h-6 mr-3 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-            Payment Method
-          </h2>
-          <div className="space-y-4">
-            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-purple-50/50 transition-all group">
-              <input
-                type="radio"
-                {...register('paymentMethod')}
-                value="full"
-                defaultChecked
-                className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
-              />
-              <div className="ml-4">
-                <span className="font-semibold text-gray-900 group-hover:text-purple-700">Pay Full Amount</span>
-                <p className="text-lg font-bold text-accent-600">${quote.totalPrice.toFixed(2)}</p>
-              </div>
-            </label>
-            <label className="flex items-center p-5 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-accent-400 hover:bg-purple-50/50 transition-all group">
-              <input
-                type="radio"
-                {...register('paymentMethod')}
-                value="deposit"
-                className="w-5 h-5 text-accent-600 focus:ring-accent-500 focus:ring-2"
-              />
-              <div className="ml-4">
-                <span className="font-semibold text-gray-900 group-hover:text-accent-700">Pay Deposit (15%)</span>
-                <p className="text-lg font-bold text-accent-600">${quote.depositAmount.toFixed(2)} <span className="text-sm font-normal text-gray-600">- Balance on delivery</span></p>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] transform duration-200"
-        >
-          Continue to Payment
-        </button>
-      </form>
+        </form>
       </div>
     </div>
   )
 }
-

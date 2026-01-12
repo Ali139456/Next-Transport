@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
     }).select('+password')
 
     if (!user) {
+      console.error(`Login failed: User not found - username: ${username.toLowerCase()}`)
       return NextResponse.json(
         { error: 'Invalid username or password' },
         { status: 401 }
@@ -33,11 +34,14 @@ export async function POST(request: NextRequest) {
     // Verify password
     const isPasswordValid = await user.comparePassword(password)
     if (!isPasswordValid) {
+      console.error(`Login failed: Invalid password - username: ${username.toLowerCase()}, role: ${user.role}`)
       return NextResponse.json(
         { error: 'Invalid username or password' },
         { status: 401 }
       )
     }
+
+    console.log(`Login successful: username: ${user.username}, role: ${user.role}`)
 
     // Generate token
     const token = generateToken({
@@ -60,10 +64,19 @@ export async function POST(request: NextRequest) {
     })
 
     return setAuthCookie(response, token)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error)
+    
+    // Provide more specific error messages
+    if (error.message?.includes('MongoDB') || error.message?.includes('MONGODB_URI')) {
+      return NextResponse.json(
+        { error: 'Database connection error. Please try again later.' },
+        { status: 500 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to login' },
+      { error: error.message || 'Failed to login. Please try again.' },
       { status: 500 }
     )
   }

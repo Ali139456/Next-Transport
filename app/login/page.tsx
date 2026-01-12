@@ -19,6 +19,9 @@ const signupSchema = z.object({
   confirmPassword: z.string().min(6, 'Password confirmation is required'),
   name: z.string().min(2, 'Name must be at least 2 characters'),
   phone: z.string().optional().or(z.literal('')),
+  role: z.enum(['customer', 'admin', 'driver'], {
+    required_error: 'Please select a role',
+  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -40,6 +43,9 @@ function LoginForm() {
 
   const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
+    defaultValues: {
+      role: 'customer',
+    },
   })
 
   const onLogin = async (data: LoginFormData) => {
@@ -84,6 +90,7 @@ function LoginForm() {
           ...signupData,
           email: signupData.email || undefined,
           phone: signupData.phone || undefined,
+          role: signupData.role || 'customer',
         }),
       })
 
@@ -94,7 +101,13 @@ function LoginForm() {
       }
 
       toast.success('Account created successfully!')
-      router.push(redirectTo)
+      
+      // Redirect based on user role
+      if (result.user?.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push(redirectTo)
+      }
       router.refresh()
     } catch (error: any) {
       toast.error(error.message || 'Sign up failed. Please try again.')
@@ -167,7 +180,7 @@ function LoginForm() {
               <input
                 id="username"
                 {...loginForm.register('username')}
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="Enter your username"
                 autoComplete="username"
                 autoFocus
@@ -186,7 +199,7 @@ function LoginForm() {
                 id="password"
                 {...loginForm.register('password')}
                 type="password"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="Enter your password"
                 autoComplete="current-password"
               />
@@ -225,7 +238,7 @@ function LoginForm() {
               <input
                 id="name"
                 {...signupForm.register('name')}
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="John Doe"
                 autoComplete="name"
                 autoFocus
@@ -243,7 +256,7 @@ function LoginForm() {
               <input
                 id="signup-username"
                 {...signupForm.register('username')}
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="johndoe"
                 autoComplete="username"
               />
@@ -261,7 +274,7 @@ function LoginForm() {
                 id="email"
                 {...signupForm.register('email')}
                 type="email"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="john@example.com"
                 autoComplete="email"
               />
@@ -279,12 +292,31 @@ function LoginForm() {
                 id="phone"
                 {...signupForm.register('phone')}
                 type="tel"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="+61 4XX XXX XXX"
                 autoComplete="tel"
               />
               {signupForm.formState.errors.phone && (
                 <p className="text-red-300 text-sm mt-1.5">{signupForm.formState.errors.phone.message}</p>
+              )}
+            </div>
+
+            {/* Role Field */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-semibold text-white mb-2">
+                Account Type *
+              </label>
+              <select
+                id="role"
+                {...signupForm.register('role')}
+                className="form-input-modern [&>option]:bg-gray-800 [&>option]:text-white"
+              >
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+                <option value="driver">Driver</option>
+              </select>
+              {signupForm.formState.errors.role && (
+                <p className="text-red-300 text-sm mt-1.5">{signupForm.formState.errors.role.message}</p>
               )}
             </div>
 
@@ -297,7 +329,7 @@ function LoginForm() {
                 id="signup-password"
                 {...signupForm.register('password')}
                 type="password"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="At least 6 characters"
                 autoComplete="new-password"
               />
@@ -315,7 +347,7 @@ function LoginForm() {
                 id="confirmPassword"
                 {...signupForm.register('confirmPassword')}
                 type="password"
-                className="w-full px-4 py-3 sm:px-5 sm:py-3.5 bg-white/10 border-2 border-white/20 rounded-lg text-white placeholder-gray-300 focus:ring-2 focus:ring-accent-400 focus:border-accent-400 transition-all outline-none text-base"
+                className="form-input-modern"
                 placeholder="Confirm your password"
                 autoComplete="new-password"
               />
