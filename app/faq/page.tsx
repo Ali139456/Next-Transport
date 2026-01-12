@@ -97,7 +97,7 @@ const faqCategories = [
       },
       {
         q: 'What documents do I need for transport?',
-        a: 'You will need your vehicle registration, proof of ownership, and a valid driver\'s license. For interstate moves, you may need additional documentation. Our team will guide you through all requirements.',
+        a: "You will need your vehicle registration, proof of ownership, and a valid driver's license. For interstate moves, you may need additional documentation. Our team will guide you through all requirements.",
       },
       {
         q: 'Can you transport unregistered vehicles?',
@@ -115,19 +115,19 @@ const faqCategories = [
     questions: [
       {
         q: 'How can I track my vehicle?',
-        a: 'You can track your booking using your Booking ID and email or mobile number on our tracking page. You\'ll receive real-time updates on your vehicle\'s status, location, and estimated delivery time.',
+        a: "You can track your booking using your Booking ID and email or mobile number on our tracking page. You’ll receive real-time updates on your vehicle’s status, location, and estimated delivery time.",
       },
       {
         q: 'Will I receive updates during transport?',
-        a: 'Yes, you\'ll receive automatic updates via email and SMS at key stages: when your driver is assigned, when pickup is confirmed, during transit, and when delivery is scheduled.',
+        a: "Yes, you’ll receive automatic updates via email and SMS at key stages: when your driver is assigned, when pickup is confirmed, during transit, and when delivery is scheduled.",
       },
       {
         q: 'Can I see the driver\'s location in real-time?',
         a: 'For active bookings, you can view the driver\'s approximate location on our live map tracking feature. This is available once your vehicle has been picked up and is in transit.',
       },
       {
-        q: 'What if I don\'t receive tracking updates?',
-        a: 'If you\'re not receiving updates, please check your spam folder and ensure your contact details are correct. You can also track your booking manually using your Booking ID on our website.',
+        q: "What if I don't receive tracking updates?",
+        a: "If you’re not receiving updates, please check your spam folder and ensure your contact details are correct. You can also track your booking manually using your Booking ID on our website.",
       },
     ],
   },

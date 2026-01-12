@@ -76,7 +76,8 @@ export default function HomePage() {
       setCurrentReview((prev) => (prev + 1) % reviews.length)
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [reviews.length])
+  
 
   // Scroll-triggered animations
   useEffect(() => {
