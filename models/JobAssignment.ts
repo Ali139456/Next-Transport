@@ -17,7 +17,7 @@ const JobAssignmentSchema: Schema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Booking',
       required: true,
-      index: true,
+      // Index is defined as compound index below
     },
     carrier_id: {
       type: Schema.Types.ObjectId,
@@ -48,7 +48,7 @@ const JobAssignmentSchema: Schema = new Schema(
       enum: ['assigned', 'accepted', 'rejected', 'cancelled'],
       required: true,
       default: 'assigned',
-      index: true,
+      // Index is defined as compound index below
     },
   },
   {

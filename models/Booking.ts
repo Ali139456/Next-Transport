@@ -193,7 +193,7 @@ BookingSchema.pre('save', async function (next) {
 BookingSchema.index({ customer_id: 1, created_at: -1 })
 BookingSchema.index({ status: 1, created_at: -1 })
 BookingSchema.index({ source_channel: 1, created_at: -1 })
-BookingSchema.index({ quote_id: 1 }, { unique: false })
+// Note: quote_id already has index: true in schema definition, so no need for duplicate index
 
 const Booking: Model<IBooking> = mongoose.models.Booking || mongoose.model<IBooking>('Booking', BookingSchema)
 

@@ -17,10 +17,6 @@ const nextConfig = {
   compress: true,
   // Power optimizations
   poweredByHeader: false,
-  // Experimental features for performance
-  experimental: {
-    optimizeCss: true,
-  },
   // Webpack optimizations
   webpack: (config, { isServer }) => {
     if (!isServer) {
