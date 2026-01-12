@@ -18,6 +18,8 @@ export default function Navbar() {
               src="/images/logo.png" 
               alt="NextTransport Logo" 
               className="w-auto h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28"
+              loading="eager"
+              decoding="async"
             />
           </Link>
 

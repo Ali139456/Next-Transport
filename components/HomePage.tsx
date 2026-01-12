@@ -1,8 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import QuoteModal from './QuoteModal'
+import { useState, useEffect, useRef, useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
+
+// Lazy load QuoteModal for better performance
+const LazyQuoteModal = dynamic(() => import('./QuoteModal'), {
+  ssr: false,
+  loading: () => null,
+})
 
 export default function HomePage() {
   const [showQuoteModal, setShowQuoteModal] = useState(false)
@@ -21,7 +27,24 @@ export default function HomePage() {
   const howItWorksRef = useRef<HTMLDivElement>(null)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
   
-  const reviews = [
+  // Memoize particles for performance
+  const particles = useMemo(() => {
+    return Array.from({ length: 10 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 10 + Math.random() * 10,
+    }))
+  }, [])
+
+  // Memoize gradient overlay style to reduce re-renders
+  const gradientOverlayStyle = useMemo(() => ({
+    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(71, 131, 168, 0.2) 0%, transparent 50%), linear-gradient(to bottom, rgba(71, 131, 168, 0.85), rgba(58, 107, 138, 0.8), rgba(71, 131, 168, 0.85))`
+  }), [mousePosition.x, mousePosition.y])
+
+  // Memoize reviews to prevent recreation on every render
+  const reviews = useMemo(() => [
     {
       name: 'Wade Bartlett',
       location: 'Sydney, NSW',
@@ -52,13 +75,27 @@ export default function HomePage() {
       rating: 5,
       text: 'Best vehicle transport experience I\'ve had. Transparent pricing, easy booking process, and my vehicle arrived in perfect condition. Highly recommended!',
     },
-  ]
+  ], [])
 
-  // Scroll and mouse tracking for parallax effects
+  // Scroll and mouse tracking for parallax effects - throttled for performance
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
+    let scrollTimeout: NodeJS.Timeout
+    let mouseTimeout: NodeJS.Timeout
+    
+    const handleScroll = () => {
+      if (scrollTimeout) return
+      scrollTimeout = setTimeout(() => {
+        setScrollY(window.scrollY)
+        scrollTimeout = undefined as any
+      }, 16) // ~60fps
+    }
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+      if (mouseTimeout) return
+      mouseTimeout = setTimeout(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY })
+        mouseTimeout = undefined as any
+      }, 50) // Throttle mouse moves more aggressively
     }
     
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -67,6 +104,8 @@ export default function HomePage() {
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('mousemove', handleMouseMove)
+      if (scrollTimeout) clearTimeout(scrollTimeout)
+      if (mouseTimeout) clearTimeout(mouseTimeout)
     }
   }, [])
 
@@ -205,42 +244,41 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: 'linear-gradient(to bottom, #5a9bc8, #4783A8, #3a6b8a)' }}>
+    <div className="min-h-screen overflow-x-hidden bg-white">
       {/* Hero Section - Fixed background optimized for performance */}
       <div 
         ref={heroRef}
         data-section-id="hero"
         className="h-screen relative overflow-hidden"
       >
-        {/* Animated background image with parallax */}
+        {/* Animated background image with parallax - optimized */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-out"
           style={{ 
             backgroundImage: 'url(/images/hero-bg.jpg)',
-            transform: `translateY(${scrollY * 0.5}px) scale(1.1)`,
+            transform: `translate3d(0, ${scrollY * 0.5}px, 0) scale(1.1)`,
             willChange: 'transform',
+            backfaceVisibility: 'hidden',
           }}
         />
         
-        {/* Animated gradient overlay */}
+        {/* Animated gradient overlay - memoized for performance */}
         <div 
           className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(71, 131, 168, 0.2) 0%, transparent 50%), linear-gradient(to bottom, rgba(71, 131, 168, 0.85), rgba(58, 107, 138, 0.8), rgba(71, 131, 168, 0.85))`
-          }}
+          style={gradientOverlayStyle}
         />
         
-        {/* Floating particles */}
+        {/* Floating particles - memoized for performance */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          {particles.map((particle) => (
             <div
-              key={i}
+              key={particle.id}
               className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${10 + Math.random() * 10}s`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                animationDelay: `${particle.delay}s`,
+                animationDuration: `${particle.duration}s`,
               }}
             />
           ))}
@@ -325,9 +363,8 @@ export default function HomePage() {
       </div>
 
       {/* Trust Signals Strip */}
-      <section className="py-8 sm:py-10 relative overflow-hidden border-b-2 border-white/20" style={{ background: 'linear-gradient(to right, #4783A8, #5a9bc8, #4783A8)' }}>
-        <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-transparent to-white/5 animate-shimmer"></div>
+      <section className="py-8 sm:py-10 relative overflow-hidden border-b-2 border-gray-200 bg-gray-50">
+        <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-12 lg:gap-16">
             {[
@@ -363,8 +400,7 @@ export default function HomePage() {
       {/* Services Snapshot */}
       <section 
         data-section-id="services"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
-        style={{ background: 'linear-gradient(to bottom right, #5a9bc8, #4783A8, #3a6b8a)' }}
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
@@ -377,26 +413,26 @@ export default function HomePage() {
               visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-accent-900 drop-shadow-lg">
               Our Services
             </h2>
-            <p className="text-white/90 text-lg sm:text-xl">Comprehensive vehicle transport solutions</p>
+            <p className="text-gray-700 text-lg sm:text-xl">Comprehensive vehicle transport solutions</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
             {[
-              { icon: '🚗', title: 'Car Transport', desc: 'Safe and secure transport for all car types across Australia', link: 'Get Quote', gradient: 'from-red-400 to-red-600', bgGradient: 'from-red-50 to-white' },
-              { icon: '🚙', title: 'Light Commercials', desc: 'Professional transport for utes, vans, and light trucks', link: 'Get Quote', gradient: 'from-blue-400 to-blue-600', bgGradient: 'from-blue-50 to-white' },
-              { icon: '🏍️', title: 'Motorbike Transport', desc: 'Specialized handling for motorcycles and bikes', link: 'Get Quote', gradient: 'from-purple-400 to-purple-600', bgGradient: 'from-purple-50 to-white' },
+              { icon: '🚗', title: 'Car Transport', desc: 'Safe and secure transport for all car types across Australia', link: 'Get Quote', gradient: 'from-red-400 to-red-600', bgGradient: 'from-red-50 to-white', borderColor: 'border-red-200' },
+              { icon: '🚙', title: 'Light Commercials', desc: 'Professional transport for utes, vans, and light trucks', link: 'Get Quote', gradient: 'from-blue-400 to-blue-600', bgGradient: 'from-blue-50 to-white', borderColor: 'border-blue-200' },
+              { icon: '🏍️', title: 'Motorbike Transport', desc: 'Specialized handling for motorcycles and bikes', link: 'Get Quote', gradient: 'from-purple-400 to-purple-600', bgGradient: 'from-purple-50 to-white', borderColor: 'border-purple-200' },
             ].map((service, index) => (
               <div
                 key={index}
-                className={`bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-2xl border-2 border-white/30 group hover:scale-110 hover:shadow-3xl transition-all duration-500 relative overflow-hidden ${
+                className={`bg-gradient-to-br ${service.bgGradient} rounded-2xl p-6 sm:p-8 shadow-xl border-2 ${service.borderColor} group hover:scale-105 hover:shadow-2xl transition-all duration-500 relative overflow-hidden ${
                   visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
                 
                 <div className="relative z-10">
                   <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
@@ -434,8 +470,7 @@ export default function HomePage() {
       <section 
         ref={featuresRef}
         data-section-id="why-nexttransport"
-        className="py-16 sm:py-20 md:py-24 xl:py-32 relative overflow-hidden"
-        style={{ background: 'linear-gradient(to bottom right, #4783A8, #3a6b8a, #2d5470)' }}
+        className="py-16 sm:py-20 md:py-24 xl:py-32 relative overflow-hidden bg-gray-50"
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
@@ -450,7 +485,7 @@ export default function HomePage() {
           >
             {/* Left: Bullet Points */}
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 sm:mb-8 text-white drop-shadow-lg">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 sm:mb-8 text-accent-900 drop-shadow-lg">
                 Why NextTransport?
               </h2>
               <ul className="space-y-4 sm:space-y-5">
@@ -468,7 +503,7 @@ export default function HomePage() {
                     }`}
                     style={{ transitionDelay: `${index * 100}ms` }}
                   >
-                    <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-xl p-4 sm:p-5 shadow-xl border-2 border-white/30 hover:scale-105 hover:shadow-2xl transition-all duration-300 group">
+                    <div className="bg-white rounded-xl p-4 sm:p-5 shadow-lg border-2 border-gray-100 hover:scale-105 hover:shadow-xl transition-all duration-300 group hover:border-gray-200">
                       <div className="flex items-center gap-4">
                         <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br ${point.color} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                           <span className="text-2xl sm:text-3xl">{point.icon}</span>
@@ -558,8 +593,7 @@ export default function HomePage() {
       <section 
         ref={howItWorksRef}
         data-section-id="how-it-works"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
-        style={{ background: 'linear-gradient(to bottom right, #5a9bc8, #4783A8, #3a6b8a)' }}
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
@@ -572,28 +606,28 @@ export default function HomePage() {
               visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white drop-shadow-lg">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-accent-900 drop-shadow-lg">
               How It Works
             </h2>
-            <p className="text-white/90 text-lg sm:text-xl">Simple steps to get your vehicle transported</p>
+            <p className="text-gray-700 text-lg sm:text-xl">Simple steps to get your vehicle transported</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
-              { title: 'Get a Quote', desc: 'Instant online pricing in seconds', gradient: 'from-yellow-400 to-orange-500', icon: '💵' },
-              { title: 'Book Online', desc: 'Secure Stripe checkout', gradient: 'from-blue-400 to-blue-600', icon: '📱' },
-              { title: 'Pickup & Track', desc: 'Live updates and ETA', gradient: 'from-green-400 to-green-600', icon: '🚚' },
-              { title: 'Delivered Safely', desc: 'Door-to-door, no stress', gradient: 'from-purple-400 to-purple-600', icon: '✅' },
+              { title: 'Get a Quote', desc: 'Instant online pricing in seconds', gradient: 'from-yellow-400 to-orange-500', icon: '💵', bgGradient: 'from-yellow-50 to-orange-50', borderColor: 'border-yellow-200' },
+              { title: 'Book Online', desc: 'Secure Stripe checkout', gradient: 'from-blue-400 to-blue-600', icon: '📱', bgGradient: 'from-blue-50 to-cyan-50', borderColor: 'border-blue-200' },
+              { title: 'Pickup & Track', desc: 'Live updates and ETA', gradient: 'from-green-400 to-green-600', icon: '🚚', bgGradient: 'from-green-50 to-emerald-50', borderColor: 'border-green-200' },
+              { title: 'Delivered Safely', desc: 'Door-to-door, no stress', gradient: 'from-purple-400 to-purple-600', icon: '✅', bgGradient: 'from-purple-50 to-pink-50', borderColor: 'border-purple-200' },
             ].map((step, index) => (
               <div
                 key={index}
-                className={`text-center group transition-all duration-700 hover:scale-110 ${
+                className={`text-center group transition-all duration-700 hover:scale-105 ${
                   visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
-                <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-2xl border-2 border-white/30 group-hover:shadow-3xl transition-all duration-300 relative overflow-hidden">
+                <div className={`bg-gradient-to-br ${step.bgGradient} rounded-2xl p-6 sm:p-8 shadow-lg border-2 ${step.borderColor} group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
                   {/* Gradient overlay on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
                   
                   <div className="relative z-10">
                     <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${step.gradient} flex flex-col items-center justify-center text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 relative overflow-hidden`}>
@@ -618,8 +652,7 @@ export default function HomePage() {
       {/* Trust Badges */}
       <section 
         data-section-id="trust-badges"
-        className="py-12 sm:py-16 md:py-20 lg:py-24 text-white relative overflow-hidden"
-        style={{ background: 'linear-gradient(to bottom right, #4783A8, #3a6b8a, #2d5470)' }}
+        className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-gray-50"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5 animate-pulse-slow"></div>
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.2)' }}></div>
@@ -628,9 +661,9 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div ref={trustBadgesRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
             {[
-              { value: transportedCount.toLocaleString(), suffix: '+', title: 'Vehicles Transported', desc: 'Successfully delivered across Australia' },
-              { value: satisfactionRate, suffix: '%', title: 'Customer Satisfaction', desc: 'Highly rated by our customers' },
-              { value: '24/7', suffix: '', title: 'Support Available', desc: "We're here whenever you need us" },
+              { value: transportedCount.toLocaleString(), suffix: '+', title: 'Vehicles Transported', desc: 'Successfully delivered across Australia', gradient: 'from-blue-500 to-cyan-500', bgGradient: 'from-blue-50 to-cyan-50' },
+              { value: satisfactionRate, suffix: '%', title: 'Customer Satisfaction', desc: 'Highly rated by our customers', gradient: 'from-green-500 to-emerald-500', bgGradient: 'from-green-50 to-emerald-50' },
+              { value: '24/7', suffix: '', title: 'Support Available', desc: "We're here whenever you need us", gradient: 'from-purple-500 to-pink-500', bgGradient: 'from-purple-50 to-pink-50' },
             ].map((badge, index) => (
               <div 
                 key={index}
@@ -639,14 +672,14 @@ export default function HomePage() {
                 }`}
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
-                <div className="p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 card-shadow hover:shadow-2xl relative overflow-hidden" style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)', border: '1px solid rgba(71, 131, 168, 0.3)' }}>
-                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" style={{ background: 'linear-gradient(to right, transparent, rgba(71, 131, 168, 0.2), transparent)' }}></div>
+                <div className={`bg-gradient-to-br ${badge.bgGradient} p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 shadow-lg hover:shadow-xl relative overflow-hidden border-2 border-gray-100`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${badge.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
                   <div className="relative z-10">
-                    <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 inline-block text-white">
+                    <div className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 inline-block bg-gradient-to-br ${badge.gradient} bg-clip-text text-transparent`}>
                       {badge.value}{badge.suffix}
                     </div>
-                    <div className="text-base sm:text-lg md:text-xl text-white font-semibold group-hover:text-blue-200 transition-colors duration-300">{badge.title}</div>
-                    <p className="text-sm sm:text-base text-gray-300 mt-2">{badge.desc}</p>
+                    <div className="text-base sm:text-lg md:text-xl text-gray-900 font-semibold group-hover:text-gray-700 transition-colors duration-300">{badge.title}</div>
+                    <p className="text-sm sm:text-base text-gray-600 mt-2">{badge.desc}</p>
                   </div>
                 </div>
               </div>
@@ -658,8 +691,7 @@ export default function HomePage() {
       {/* Customer Reviews Carousel */}
       <section 
         data-section-id="reviews"
-        className="py-16 sm:py-24 md:py-32 relative overflow-hidden"
-        style={{ background: 'linear-gradient(to bottom right, #4783A8, #3a6b8a, #2d5470)' }}
+        className="py-16 sm:py-24 md:py-32 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5 animate-pulse-slow"></div>
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.2)' }}></div>
@@ -675,7 +707,7 @@ export default function HomePage() {
               <span className="text-2xl sm:text-3xl font-bold text-white">4.9</span>
               <span className="text-gray-400 text-sm sm:text-base">Google Reviews</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-accent-900">
               What Our Clients Are Saying
             </h2>
           </div>
@@ -692,17 +724,17 @@ export default function HomePage() {
                     key={index}
                     className="min-w-full px-4 sm:px-6"
                   >
-                    <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-2xl border-2 shadow-xl" style={{ borderColor: 'rgba(71, 131, 168, 0.3)' }}>
+                    <div className="bg-gradient-to-br from-blue-50 to-white p-6 sm:p-8 md:p-10 rounded-2xl border-2 border-blue-100 shadow-lg hover:shadow-xl transition-all">
                       {/* Google Star Rating */}
                       <div className="flex items-center gap-2 mb-4">
                         <div className="flex gap-1">
-                          {[...Array(5)].map((_, i) => (
+                          {[0, 1, 2, 3, 4].map((i) => (
                             <svg key={i} className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
                           ))}
                         </div>
-                        <span className="text-sm text-gray-300">Google</span>
+                        <span className="text-sm text-gray-600">Google</span>
                       </div>
                       
                       {/* Review Text */}
@@ -730,19 +762,19 @@ export default function HomePage() {
             {/* Navigation Arrows */}
             <button
               onClick={() => setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-12 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
               aria-label="Previous review"
             >
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={() => setCurrentReview((prev) => (prev + 1) % reviews.length)}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-12 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
               aria-label="Next review"
             >
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -770,12 +802,12 @@ export default function HomePage() {
       {/* CTA Banner */}
       <section 
         data-section-id="cta"
-        className="py-16 sm:py-20 md:py-24 text-white relative overflow-hidden"
-        style={{ background: 'linear-gradient(to right, #4783A8, #3a6b8a)' }}
+        className="py-16 sm:py-20 md:py-24 text-white relative overflow-hidden bg-gradient-to-r from-accent-500 via-accent-600 to-accent-700"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-10 animate-pulse-slow"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float-slow"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float-slow-reverse"></div>
+        <div className="blob-1"></div>
+        <div className="blob-2"></div>
+        <div className="blob-extra"></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative z-10">
           <div
@@ -801,9 +833,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Quote Modal */}
+      {/* Quote Modal - Lazy loaded */}
       {showQuoteModal && (
-        <QuoteModal onClose={() => setShowQuoteModal(false)} />
+        <LazyQuoteModal onClose={() => setShowQuoteModal(false)} />
       )}
     </div>
   )

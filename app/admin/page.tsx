@@ -119,10 +119,12 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-pattern-grid opacity-20"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-slate-200/20 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-zinc-200/20 to-transparent rounded-full blur-3xl"></div>
+      {/* Animated blob gradients */}
+      <div className="blob-1"></div>
+      <div className="blob-2"></div>
+      <div className="blob-extra"></div>
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-pattern-grid opacity-20 z-0"></div>
       
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">

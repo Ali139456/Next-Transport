@@ -59,10 +59,12 @@ export default function TrackingPage() {
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-float-slow"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-300/20 rounded-full blur-3xl animate-float-slow-reverse"></div>
+      {/* Animated blob gradients */}
+      <div className="blob-1"></div>
+      <div className="blob-2"></div>
+      <div className="blob-extra"></div>
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-pattern-grid opacity-10 z-0"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl relative z-10">
         <div className="text-center mb-8 sm:mb-12">

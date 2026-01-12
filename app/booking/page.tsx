@@ -135,7 +135,10 @@ export default function BookingPage() {
 
   if (authLoading || !user || !quote) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+        <div className="blob-1"></div>
+        <div className="blob-2"></div>
+        <div className="blob-extra"></div>
         <div className="text-white text-lg">Loading...</div>
       </div>
     )
@@ -287,7 +290,11 @@ export default function BookingPage() {
   if (step === 'quote') {
     return (
       <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <div className="blob-1"></div>
+        <div className="blob-2"></div>
+        <div className="blob-extra"></div>
+        <div className="absolute inset-0 bg-pattern-grid opacity-10 z-0"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
           <ProgressBar />
           
           <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
@@ -341,7 +348,11 @@ export default function BookingPage() {
   if (step === 'payment' && clientSecret) {
     return (
       <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+        <div className="blob-1"></div>
+        <div className="blob-2"></div>
+        <div className="blob-extra"></div>
+        <div className="absolute inset-0 bg-pattern-grid opacity-10 z-0"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl relative z-10">
           <ProgressBar />
           
           <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
@@ -385,7 +396,11 @@ export default function BookingPage() {
   if (step === 'confirmation') {
     return (
       <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+        <div className="blob-1"></div>
+        <div className="blob-2"></div>
+        <div className="blob-extra"></div>
+        <div className="absolute inset-0 bg-pattern-grid opacity-10 z-0"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl relative z-10">
           <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-200 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

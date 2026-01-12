@@ -22,11 +22,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <ErrorBoundaryWrapper>
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Toaster position="top-right" />
+          <Navbar />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Toaster position="top-right" />
         </ErrorBoundaryWrapper>
       </body>
     </html>

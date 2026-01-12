@@ -117,7 +117,11 @@ export async function GET(
       }
     }
 
-    return NextResponse.json(response)
+    return NextResponse.json(response, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=60',
+      },
+    })
   } catch (error) {
     console.error('Error fetching booking:', error)
     return NextResponse.json(
