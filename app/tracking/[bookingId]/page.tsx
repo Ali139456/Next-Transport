@@ -148,7 +148,9 @@ export default function TrackingPage() {
   const specialStatuses = ['cancelled', 'refunded', 'on_hold_customer', 'on_hold_operations', 'failed_pickup', 'failed_delivery', 'rebook_required'];
   const isSpecialStatus = specialStatuses.includes(booking.status);
   const currentStatusIndex = isSpecialStatus ? -1 : statusSteps.findIndex((step) => step.key === booking.status);
-  const statusDisplay = (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) ? statusSteps[currentStatusIndex] : { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' };
+  const statusDisplay = (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) 
+    ? statusSteps[currentStatusIndex] 
+    : { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' };
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
@@ -275,11 +277,11 @@ export default function TrackingPage() {
         ) : (
           <div className="space-y-4">
             {statusSteps.map((step, index) => {
-              const isCompleted = index <= currentStatusIndex
-              const isCurrent = index === currentStatusIndex
+              const isCompleted = index <= currentStatusIndex;
+              const isCurrent = index === currentStatusIndex;
 
-            return (
-              <div key={step.key} className="flex items-start">
+              return (
+                <div key={step.key} className="flex items-start">
                 <div className="flex items-center">
                   <div
                     className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
@@ -314,9 +316,9 @@ export default function TrackingPage() {
                   </div>
                 </div>
               </div>
-            )
-          })}
-        </div>
+              );
+            })}
+          </div>
       </div>
 
       {/* Booking Details */}
