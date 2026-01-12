@@ -57,35 +57,31 @@ async function handlePaymentSuccess(paymentIntent: any) {
   try {
     await connectDB()
 
-    const booking = await Booking.findOne({
-      'payment.stripePaymentIntentId': paymentIntent.id,
-    })
-
-    if (!booking) {
-      console.error('Booking not found for payment intent:', paymentIntent.id)
+    // Find booking via quote_id from payment intent metadata
+    const quoteId = paymentIntent.metadata?.quoteId
+    if (!quoteId) {
+      console.error('No quoteId in payment intent metadata:', paymentIntent.id)
       return
     }
 
-    // Update payment status
-    booking.payment.status = booking.payment.paymentMethod === 'full' ? 'paid' : 'partial'
-    booking.payment.paidAmount += paymentIntent.amount / 100
-
-    // Add transaction record
-    booking.payment.transactions.push({
-      amount: paymentIntent.amount / 100,
-      transactionId: paymentIntent.id,
-      date: new Date(),
-      type: 'payment',
+    const booking = await Booking.findOne({
+      quote_id: quoteId,
     })
 
-    // Update booking status
-    if (booking.status === 'pending') {
-      booking.status = 'confirmed'
-      booking.tracking.statusHistory.push({
-        status: 'confirmed',
-        timestamp: new Date(),
-        note: 'Payment received, booking confirmed',
-      })
+    if (!booking) {
+      console.error('Booking not found for quote:', quoteId)
+      return
+    }
+
+    const paymentMethod = paymentIntent.metadata?.paymentMethod || 'deposit'
+
+    // Update booking status based on payment
+    if (booking.status === 'booking_pending_payment') {
+      // If full payment, confirm immediately; if deposit, keep as pending until balance is paid
+      if (paymentMethod === 'full') {
+        booking.status = 'booked_confirmed'
+      }
+      // For deposit payments, status remains 'booking_pending_payment' until balance is paid
     }
 
     await booking.save()
@@ -98,13 +94,20 @@ async function handlePaymentFailure(paymentIntent: any) {
   try {
     await connectDB()
 
+    // Find booking via quote_id from payment intent metadata
+    const quoteId = paymentIntent.metadata?.quoteId
+    if (!quoteId) {
+      console.error('No quoteId in payment intent metadata:', paymentIntent.id)
+      return
+    }
+
     const booking = await Booking.findOne({
-      'payment.stripePaymentIntentId': paymentIntent.id,
+      quote_id: quoteId,
     })
 
     if (booking) {
       // Log payment failure
-      console.error('Payment failed for booking:', booking.bookingId)
+      console.error('Payment failed for booking:', booking.booking_number)
       // You might want to send a notification to the customer here
     }
   } catch (error) {

@@ -147,7 +147,7 @@ export default function TrackingPage() {
     if (!booking) return { key: '', label: '', icon: '⚠️' }
     if (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) return statusSteps[currentStatusIndex]
     return { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' }
-  }, [booking?.status, currentStatusIndex])
+  }, [booking, currentStatusIndex])
 
   if (loading) {
     return (
