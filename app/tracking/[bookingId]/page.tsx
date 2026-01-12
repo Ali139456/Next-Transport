@@ -148,9 +148,17 @@ export default function TrackingPage() {
   const specialStatuses = ['cancelled', 'refunded', 'on_hold_customer', 'on_hold_operations', 'failed_pickup', 'failed_delivery', 'rebook_required'];
   const isSpecialStatus = specialStatuses.includes(booking.status);
   const currentStatusIndex = isSpecialStatus ? -1 : statusSteps.findIndex((step) => step.key === booking.status);
-  const statusDisplay = (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) 
-    ? statusSteps[currentStatusIndex] 
-    : { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' };
+  
+  let statusDisplay;
+  if (currentStatusIndex >= 0 && statusSteps[currentStatusIndex]) {
+    statusDisplay = statusSteps[currentStatusIndex];
+  } else {
+    statusDisplay = {
+      key: booking.status,
+      label: formatStatus(booking.status),
+      icon: '⚠️'
+    };
+  }
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
@@ -256,6 +264,7 @@ export default function TrackingPage() {
       {/* Status Timeline */}
       <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-xl shadow-xl p-6 sm:p-8 mb-6 border-2 border-white/30">
         <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gray-900">Booking Status</h2>
+
         {isSpecialStatus ? (
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
             <div className="flex items-center">
@@ -277,48 +286,45 @@ export default function TrackingPage() {
         ) : (
           <div className="space-y-4">
             {statusSteps.map((step, index) => {
-              const isCompleted = index <= currentStatusIndex;
-              const isCurrent = index === currentStatusIndex;
+              const isCompleted = index <= currentStatusIndex
+              const isCurrent = index === currentStatusIndex
 
               return (
                 <div key={step.key} className="flex items-start">
-                <div className="flex items-center">
-                  <div
-                    className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
-                      isCompleted
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-gray-200 text-gray-500'
-                    } ${isCurrent ? 'ring-4 ring-blue-200 scale-110' : ''}`}
-                  >
-                    {isCompleted ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    ) : (
-                      index + 1
+                  <div className="flex items-center">
+                    <div
+                      className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${
+                        isCompleted ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-500'
+                      } ${isCurrent ? 'ring-4 ring-blue-200 scale-110' : ''}`}
+                    >
+                      {isCompleted ? (
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        index + 1
+                      )}
+                    </div>
+
+                    {index < statusSteps.length - 1 && (
+                      <div className={`w-1 h-12 ml-5 -mt-2 ${isCompleted ? 'bg-blue-600' : 'bg-gray-200'}`} />
                     )}
                   </div>
-                  {index < statusSteps.length - 1 && (
+
+                  <div className="ml-4 flex-1 pb-8">
                     <div
-                      className={`w-1 h-12 ml-5 -mt-2 ${
-                        isCompleted ? 'bg-blue-600' : 'bg-gray-200'
+                      className={`font-semibold text-base ${
+                        isCurrent ? 'text-blue-600' : isCompleted ? 'text-gray-900' : 'text-gray-500'
                       }`}
-                    />
-                  )}
-                </div>
-                <div className="ml-4 flex-1 pb-8">
-                  <div
-                    className={`font-semibold text-base ${
-                      isCurrent ? 'text-blue-600' : isCompleted ? 'text-gray-900' : 'text-gray-500'
-                    }`}
-                  >
-                    {step.label}
+                    >
+                      {step.label}
+                    </div>
                   </div>
                 </div>
-              </div>
-              );
+              )
             })}
           </div>
+        )}
       </div>
 
       {/* Booking Details */}
