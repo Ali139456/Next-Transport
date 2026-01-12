@@ -1,54 +1,28 @@
-import mongoose, { Schema, Document, Model } from 'mongoose'
+import mongoose, { Schema, Model, InferSchemaType, HydratedDocument } from 'mongoose'
 
-export interface IVehicle extends Document {
-  type: 'sedan' | 'suv' | 'ute' | 'van' | 'light-truck' | 'bike'
-  make: string
-  model: string
-  year: string
-  is_running: boolean
-  transport_type: 'open' | 'enclosed'
-  created_at: Date
-  updated_at: Date
-}
-
-const VehicleSchema: Schema = new Schema(
+const VehicleSchema = new Schema(
   {
     type: {
       type: String,
       enum: ['sedan', 'suv', 'ute', 'van', 'light-truck', 'bike'],
       required: true,
-      index: true,
     },
-    make: {
-      type: String,
-      required: true,
-    },
-    model: {
-      type: String,
-      required: true,
-    },
-    year: {
-      type: String,
-      required: true,
-    },
-    is_running: {
-      type: Boolean,
-      required: true,
-      default: true,
-    },
-    transport_type: {
-      type: String,
-      enum: ['open', 'enclosed'],
-      required: true,
-      index: true,
-    },
+    make: { type: String, required: true },
+    model: { type: String, required: true }, // keep as "model" safely (no Document conflict now)
+    year: { type: String, required: true },
+    transportType: { type: String, enum: ['open', 'enclosed'], required: true },
+    isRunning: { type: Boolean, default: true },
   },
-  {
-    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-  }
+  { timestamps: true }
 )
 
-const Vehicle: Model<IVehicle> =
+// ✅ TS type from schema (no extending Document)
+export type IVehicle = InferSchemaType<typeof VehicleSchema>
+
+// ✅ If you ever need the document type:
+export type VehicleDocument = HydratedDocument<IVehicle>
+
+export const Vehicle: Model<IVehicle> =
   mongoose.models.Vehicle || mongoose.model<IVehicle>('Vehicle', VehicleSchema)
 
 export default Vehicle
