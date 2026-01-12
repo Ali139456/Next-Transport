@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document, Model } from 'mongoose'
+import mongoose, { Schema, Model } from 'mongoose'
 
-export interface IDocument extends Document {
+export interface IDocument extends mongoose.Document {
   owner_type: 'booking' | 'vehicle' | 'customer' | 'condition_report'
   owner_id: mongoose.Types.ObjectId
   type: 'photo' | 'rego' | 'id'

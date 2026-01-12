@@ -159,7 +159,11 @@ export default function TrackingPage() {
   const currentStatusIndex = isSpecialStatus 
     ? -1 
     : statusSteps.findIndex((step) => step.key === booking.status)
-  const statusDisplay = statusSteps[currentStatusIndex] || { key: booking.status, label: formatStatus(booking.status), icon: '⚠️' }
+  const statusDisplay = statusSteps[currentStatusIndex] || { 
+    key: booking.status, 
+    label: formatStatus(booking.status), 
+    icon: '⚠️' 
+  }
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
