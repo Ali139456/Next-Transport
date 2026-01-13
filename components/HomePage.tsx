@@ -421,22 +421,22 @@ export default function HomePage() {
                 category: 'Cars',
                 title: 'Car transport', 
                 desc: 'Get your vehicle moved safely and on time.', 
-                bgGradient: 'linear-gradient(135deg, rgba(55, 48, 43, 0.95) 0%, rgba(35, 28, 23, 0.98) 100%)',
-                hasQuote: true 
+                image: '/images/services/car-transport.jpg',
+                bgGradient: 'linear-gradient(135deg, rgba(55, 48, 43, 0.85) 0%, rgba(35, 28, 23, 0.9) 100%)',
               },
               { 
                 category: '',
                 title: 'Light commercial transport', 
                 desc: 'Professional handling for utes, vans, and light trucks.', 
-                bgGradient: 'linear-gradient(135deg, rgba(180, 120, 70, 0.95) 0%, rgba(140, 80, 40, 0.98) 100%)',
-                hasQuote: false 
+                image: '/images/services/commercial-transport.jpg',
+                bgGradient: 'linear-gradient(135deg, rgba(180, 120, 70, 0.85) 0%, rgba(140, 80, 40, 0.9) 100%)',
               },
               { 
                 category: '',
                 title: 'Motorbike transport', 
                 desc: 'Specialized care for motorcycles and bikes across the country.', 
-                bgGradient: 'linear-gradient(135deg, rgba(70, 120, 110, 0.95) 0%, rgba(50, 90, 80, 0.98) 100%)',
-                hasQuote: false 
+                image: '/images/services/motorbike-transport.jpg',
+                bgGradient: 'linear-gradient(135deg, rgba(70, 120, 110, 0.85) 0%, rgba(50, 90, 80, 0.9) 100%)',
               },
             ].map((service, index) => (
               <div
@@ -445,18 +445,35 @@ export default function HomePage() {
                   visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ 
-                  background: service.bgGradient,
                   transitionDelay: `${index * 150}ms` 
                 }}
               >
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `url(${service.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                ></div>
+                
+                {/* Gradient Overlay */}
+                <div 
+                  className="absolute inset-0"
+                  style={{ 
+                    background: service.bgGradient,
+                  }}
+                ></div>
+                
                 {/* Icon in top left for cards 2 and 3 */}
                 {index > 0 && (
-                  <div className="absolute top-6 left-6 w-8 h-8 bg-white/20 rounded backdrop-blur-sm"></div>
+                  <div className="absolute top-6 left-6 w-8 h-8 bg-white/20 rounded backdrop-blur-sm z-10"></div>
                 )}
                 
                 {/* Category label (only for first card) */}
                 {service.category && (
-                  <div className="text-white/80 text-sm mb-2">{service.category}</div>
+                  <div className="relative z-10 text-white/80 text-sm mb-2">{service.category}</div>
                 )}
                 
                 {/* Content */}
@@ -468,26 +485,13 @@ export default function HomePage() {
                     {service.desc}
                   </p>
                   
-                  {/* Buttons */}
-                  <div className="flex flex-wrap gap-3">
-                    {service.hasQuote && (
-                      <button
-                        onClick={() => setShowQuoteModal(true)}
-                        className="px-6 py-2.5 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300"
-                      >
-                        Quote
-                      </button>
-                    )}
-                    <button
-                      onClick={() => router.push('/quote')}
-                      className="px-6 py-2.5 bg-transparent text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
-                    >
-                      Learn
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  </div>
+                  {/* Quote Button */}
+                  <button
+                    onClick={() => setShowQuoteModal(true)}
+                    className="px-6 py-2.5 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300 w-fit"
+                  >
+                    Quote
+                  </button>
                 </div>
               </div>
             ))}
@@ -623,122 +627,93 @@ export default function HomePage() {
         ref={howItWorksRef}
         data-section-id="how-it-works"
         className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
-        style={{ backgroundColor: '#2D5A4F' }}
+        style={{ backgroundColor: '#1e3a5f' }}
       >
-        {/* Background image overlay */}
-        <div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'url(/images/shipping-containers-bg.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           <div 
             className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
               visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <span className="text-yellow-400 font-bold text-sm sm:text-base uppercase tracking-wide">CHECK OUR STEPS</span>
-              <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+            <div className="text-white/60 text-sm sm:text-base uppercase tracking-wide mb-2">Process</div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">
-              Our Freight Working Process
+              Four simple steps
             </h2>
+            <p className="text-white/80 text-lg sm:text-xl">Get your vehicle moving in minutes, not days.</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-8 sm:gap-12 relative">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               { 
-                stepNum: 'STEP - 1',
-                title: 'The Paperwork', 
-                desc: 'Once you place your order via mail or fax our field staff will collect the documents and consignments from the shipper.',
-                icon: '📄'
+                stepNum: 'One',
+                title: 'Get an instant quote online', 
+                desc: 'Tell us where and when. Price appears in seconds.',
+                image: '/images/how-it-works/quote.jpg',
               },
               { 
-                stepNum: 'STEP - 2',
-                title: 'Select Location', 
-                desc: 'We\'ll evaluate the size and weight of your cargo, find just the right carrier to fly your goods to their destination.',
-                icon: '📍'
+                stepNum: 'Two',
+                title: 'Book and pay through our platform', 
+                desc: 'Secure checkout. No surprises. No phone tag.',
+                image: '/images/how-it-works/book.jpg',
               },
               { 
-                stepNum: 'STEP - 3',
-                title: 'Partners Till The End', 
-                desc: 'Our teams will be working hard at every step of the journey to ensure that your shipment is delivered on time.',
-                icon: '⚙️'
+                stepNum: 'Three',
+                title: 'We pick up and you track live', 
+                desc: 'Real-time updates show exactly where your vehicle is.',
+                image: '/images/how-it-works/track.jpg',
+              },
+              { 
+                stepNum: 'Four',
+                title: 'Delivered safely to your door', 
+                desc: 'Your vehicle arrives on time, every time.',
+                image: '/images/how-it-works/deliver.jpg',
               },
             ].map((step, index) => (
-              <div key={index} className="relative">
-                {/* Chevron connector between steps */}
-                {index < 2 && (
-                  <div className="hidden sm:block absolute top-16 left-full w-full h-0.5 z-0" style={{ width: 'calc(100% - 2rem)' }}>
-                    <div className="relative h-full">
-                      <svg className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                      </svg>
-                    </div>
+              <div
+                key={index}
+                className={`group transition-all duration-700 ${
+                  visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Step Number */}
+                  <div className="text-white/60 text-sm sm:text-base mb-3 font-medium">
+                    {step.stepNum}
                   </div>
-                )}
-                <div
-                  className={`text-center group transition-all duration-700 ${
-                    visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                  }`}
-                  style={{ transitionDelay: `${index * 150}ms` }}
-                >
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-yellow-400/20 backdrop-blur-sm flex items-center justify-center border-2 border-yellow-400/30">
-                      <span className="text-4xl">{step.icon}</span>
-                    </div>
-                    
-                    {/* Step number */}
-                    <div className="text-yellow-400 font-bold text-sm sm:text-base mb-2">
-                      {step.stepNum}
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">
-                      {step.title}
-                    </h3>
-                    
-                    {/* Description */}
-                    <p className="text-white/90 text-sm sm:text-base leading-relaxed">
-                      {step.desc}
-                    </p>
+                  
+                  {/* Title */}
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-white">
+                    {step.title}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className="text-white/70 text-sm sm:text-base mb-4 leading-relaxed">
+                    {step.desc}
+                  </p>
+                  
+                  {/* Learn Link */}
+                  <Link 
+                    href="/quote"
+                    className="text-white font-medium mb-6 hover:text-white/80 transition-colors duration-300 flex items-center gap-2 w-fit"
+                  >
+                    Learn
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                  
+                  {/* Image */}
+                  <div className="relative rounded-lg overflow-hidden mt-auto">
+                    <div 
+                      className="w-full h-64 bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${step.image})`,
+                      }}
+                    ></div>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* CTA Banner */}
-          <div 
-            className={`mt-16 sm:mt-20 bg-yellow-400 rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 transition-all duration-1000 ${
-              visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-                We Are Best Transport Agency For Give Best Quality Service
-              </h3>
-            </div>
-            <button
-              onClick={() => router.push('/quote')}
-              className="px-8 py-4 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 whitespace-nowrap"
-            >
-              Request Services
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
           </div>
         </div>
       </section>
