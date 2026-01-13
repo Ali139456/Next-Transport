@@ -88,7 +88,7 @@ export default function AboutPage() {
           {/* Who NextTransport Is */}
           <div 
             data-section-id="who-we-are"
-            ref={(el) => (sectionsRef.current['who-we-are'] = el)}
+            ref={(el) => { sectionsRef.current['who-we-are'] = el }}
             className={`bg-gradient-to-br from-sky-50 to-blue-100 rounded-2xl shadow-xl p-8 border border-sky-200/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
               visibleSections.has('who-we-are') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
@@ -113,7 +113,7 @@ export default function AboutPage() {
           {/* Backed by InTraffic */}
           <div 
             data-section-id="intraffic"
-            ref={(el) => (sectionsRef.current['intraffic'] = el)}
+            ref={(el) => { sectionsRef.current['intraffic'] = el }}
             className={`bg-gradient-to-br from-sky-50 to-blue-100 rounded-2xl shadow-xl p-8 border border-sky-200/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
               visibleSections.has('intraffic') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
@@ -139,7 +139,7 @@ export default function AboutPage() {
           {/* Nationwide Carrier Network */}
           <div 
             data-section-id="network"
-            ref={(el) => (sectionsRef.current['network'] = el)}
+            ref={(el) => { sectionsRef.current['network'] = el }}
             className={`bg-gradient-to-br from-sky-50 to-blue-100 rounded-2xl shadow-xl p-8 border border-sky-200/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
               visibleSections.has('network') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
@@ -181,7 +181,7 @@ export default function AboutPage() {
           {/* Safety & Compliance Focus */}
           <div 
             data-section-id="safety"
-            ref={(el) => (sectionsRef.current['safety'] = el)}
+            ref={(el) => { sectionsRef.current['safety'] = el }}
             className={`bg-gradient-to-br from-sky-50 to-blue-100 rounded-2xl shadow-xl p-8 border border-sky-200/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 ${
               visibleSections.has('safety') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
