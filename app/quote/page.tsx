@@ -92,75 +92,41 @@ export default function QuotePage() {
   }
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
-      {/* Animated blob gradients */}
-      <div className="blob-1"></div>
-      <div className="blob-2"></div>
-      <div className="blob-extra"></div>
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-pattern-grid opacity-10 z-0"></div>
-      
-      {/* Floating decorative elements */}
-      <div className="absolute top-20 right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-float-slow pointer-events-none z-0"></div>
-      <div className="absolute bottom-20 left-10 w-40 h-40 bg-accent-300/10 rounded-full blur-3xl animate-float-slow-reverse pointer-events-none z-0"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        {/* Hero Section with Animation */}
-        <div className="text-center mb-8 sm:mb-12 animate-slide-up">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl mb-6 shadow-lg">
-            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white drop-shadow-lg bg-gradient-to-r from-white via-white to-accent-100 bg-clip-text text-transparent">
-            Get Instant Quote
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
-            Get accurate pricing in seconds. No hidden fees, transparent pricing.
-          </p>
-          
-          {/* Trust Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-8">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <svg className="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm text-white font-medium">Instant Pricing</span>
+    <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        {/* White Card Container */}
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Left: Form */}
+            <div className="p-6 sm:p-8 lg:p-10">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-accent-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Calculate Shipping</h1>
+              </div>
+              <p className="text-gray-600 mb-6 text-sm sm:text-base">Please Fill All Inquiry To Get Your Total Price.</p>
+              
+              <QuoteCalculatorPreview 
+                onQuoteComplete={handleQuoteCalculated}
+                isPageMode={true}
+              />
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <svg className="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm text-white font-medium">No Hidden Fees</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <svg className="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm text-white font-medium">GST Included</span>
+            
+            {/* Right: Image */}
+            <div className="hidden lg:block relative">
+              <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: 'url(/images/quote/delivery-person.jpg)',
+                }}
+              ></div>
             </div>
           </div>
         </div>
-
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left: Input Form */}
-          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 hover:shadow-3xl transition-all duration-300 hover:scale-[1.01]">
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b-2 border-accent-200/50">
-              <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-accent-900">Quote Calculator</h2>
-                <p className="text-sm text-gray-600">Fill in your details below</p>
-              </div>
-            </div>
-            <QuoteCalculatorPreview 
-              onQuoteComplete={handleQuoteCalculated}
-              isPageMode={true}
-            />
-          </div>
 
           {/* Right: Pricing Explanation & Output Panel - Sticky */}
           <div className="lg:sticky lg:top-8 lg:self-start space-y-6">
