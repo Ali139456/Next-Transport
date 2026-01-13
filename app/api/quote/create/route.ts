@@ -87,8 +87,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Map vehicle type to valid enum values
-    const mapVehicleType = (type: string): string => {
-      const typeMap: { [key: string]: string } = {
+    const mapVehicleType = (type: string): 'sedan' | 'suv' | 'ute' | 'van' | 'light-truck' | 'bike' => {
+      const typeMap: { [key: string]: 'sedan' | 'suv' | 'ute' | 'van' | 'light-truck' | 'bike' } = {
         'car': 'sedan',
         'sedan': 'sedan',
         'suv': 'suv',
