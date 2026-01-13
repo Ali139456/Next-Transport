@@ -127,9 +127,10 @@ export default function QuotePage() {
             </div>
           </div>
         </div>
-
-          {/* Right: Pricing Explanation & Output Panel - Sticky */}
-          <div className="lg:sticky lg:top-8 lg:self-start space-y-6">
+      </div>
+    </div>
+  )
+}
             {/* Pricing Explanation */}
             <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl p-6 sm:p-8 border-2 border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
