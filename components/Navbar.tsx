@@ -1,12 +1,24 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { user, loading: authLoading, logout } = useAuth()
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
 
   return (
     <nav className="bg-black shadow-lg sticky top-0 z-40 border-b border-gray-800">
@@ -17,7 +29,7 @@ export default function Navbar() {
             <img 
               src="/images/logo.png" 
               alt="NextTransport Logo" 
-              className="w-auto h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28"
+              className="w-auto h-20 sm:h-24 md:h-24 lg:h-28 xl:h-32"
               loading="eager"
               decoding="async"
             />
@@ -122,7 +134,14 @@ export default function Navbar() {
 
         {/* Mobile/Tablet Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-800">
+          <>
+            {/* Backdrop */}
+            <div 
+              className="lg:hidden fixed inset-0 bg-black/50 z-40 top-20"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            {/* Menu */}
+            <div className="lg:hidden fixed inset-0 top-20 bg-black z-50 overflow-y-auto py-4 border-t border-gray-800">
             <div className="flex flex-col space-y-1 pt-2">
               <Link 
                 href="/" 
@@ -198,11 +217,13 @@ export default function Navbar() {
               )}
               {!authLoading && user ? (
                 <>
-                  <div className="px-4 py-3 mx-4 my-2 rounded-full bg-gradient-to-r from-accent-500 to-accent-600 shadow-lg border border-accent-400/30 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <span className="text-white font-semibold text-base">
+                  <div className="px-4 py-2 mx-auto my-2 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 shadow-lg border border-accent-400/30 flex items-center justify-center gap-2 max-w-xs w-full">
+                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-white font-semibold text-sm text-center">
                       {user.name || user.username}
                     </span>
                   </div>
@@ -211,22 +232,29 @@ export default function Navbar() {
                       logout()
                       setMobileMenuOpen(false)
                     }}
-                    className="block bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-3 rounded-lg text-center font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 mt-2 mx-4 text-base"
+                    className="block bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-2 rounded-xl text-center font-bold transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 mt-2 mx-auto text-sm flex items-center justify-center gap-2 max-w-xs w-full"
                   >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
                     Logout
                   </button>
                 </>
               ) : (
                 <Link
                   href="/login"
-                  className="block bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-4 py-3 rounded-lg text-center font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 mt-2 mx-4 text-base"
+                  className="block bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white px-6 py-2 rounded-xl text-center font-bold transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 mt-2 mx-auto text-sm flex items-center justify-center gap-2 max-w-xs w-full"
                   onClick={() => setMobileMenuOpen(false)}
                 >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
                   Login
                 </Link>
               )}
             </div>
-          </div>
+            </div>
+          </>
         )}
       </div>
     </nav>

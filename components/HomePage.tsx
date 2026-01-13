@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -361,7 +361,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12 max-w-7xl mx-auto">
             {[
               { icon: '⭐', title: '4.9', subtitle: 'Google Reviews', gradient: 'from-yellow-400 to-orange-500', glow: 'shadow-yellow-500/50' },
               { icon: '🛡', title: 'Fully Insured', subtitle: 'Transport', gradient: 'from-red-400 to-red-600', glow: 'shadow-red-500/50' },
@@ -488,12 +488,12 @@ export default function HomePage() {
                   
                   {/* Buttons */}
                   <div className="flex items-center gap-4 flex-wrap">
-                    <button
-                      onClick={() => setShowQuoteModal(true)}
+                  <button
+                    onClick={() => setShowQuoteModal(true)}
                       className="px-6 py-2.5 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white/20 transition-all duration-300 hover:scale-105"
-                    >
-                      Quote
-                    </button>
+                  >
+                    Quote
+                  </button>
                     <Link href="/about" className="text-white font-medium hover:text-accent-200 transition-colors inline-flex items-center gap-2 group/link">
                       Learn
                       <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -526,7 +526,7 @@ export default function HomePage() {
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-gray-900">
               Why choose NextTransport
-            </h2>
+              </h2>
             <p className="text-gray-700 text-lg sm:text-xl max-w-3xl mx-auto">
               We built this for people tired of the old way.
             </p>
@@ -561,7 +561,7 @@ export default function HomePage() {
               },
             ].map((feature, index) => (
               <div
-                key={index}
+                    key={index}
                 className={`relative rounded-2xl overflow-hidden group hover:scale-105 transition-all duration-500 min-h-[300px] flex flex-col ${
                   visibleSections.has('why-nexttransport') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
@@ -575,15 +575,15 @@ export default function HomePage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/60"></div>
-                </div>
-                
+            </div>
+
                 {/* Icon in top left */}
                 <div className="absolute top-6 left-6 w-10 h-10 bg-white/20 rounded-lg backdrop-blur-sm z-10 flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
-                </div>
-                
+                      </svg>
+                    </div>
+                    
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-end h-full p-6 sm:p-8">
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 text-white">
@@ -601,8 +601,8 @@ export default function HomePage() {
                       </svg>
                     </Link>
                   )}
-                </div>
-              </div>
+                    </div>
+                    </div>
             ))}
           </div>
         </div>
@@ -612,99 +612,150 @@ export default function HomePage() {
       <section 
         ref={howItWorksRef}
         data-section-id="process"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
+        style={{ backgroundColor: '#0f172a' }}
       >
-        <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
-        <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.1)' }}></div>
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.08)' }}></div>
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: 'url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop&q=80")',
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-700/90 via-accent-600/85 to-accent-800/90"></div>
+        
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           {/* Header */}
           <div 
-            className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-16 md:mb-20 transition-all duration-1000 ${
               visibleSections.has('process') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="text-gray-600 text-sm sm:text-base uppercase tracking-wide mb-2">Process</div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-gray-900">
-              Four simple steps
+            <div className="text-accent-300 text-sm font-bold mb-3 flex items-center justify-center gap-2">
+              <span>↓</span>
+              <span>CHECK OUR STEPS</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
+              Our Vehicle Transport Process
             </h2>
-            <p className="text-gray-700 text-lg sm:text-xl max-w-3xl mx-auto">
-              Get your vehicle moving in minutes, not days.
-            </p>
           </div>
 
-          {/* Four Step Cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          {/* Steps Container with Diagonal Arrows */}
+          <div className="relative flex flex-col lg:flex-row items-center justify-between mb-16 lg:mb-32">
             {[
               { 
-                number: 'One',
-                title: 'Get an instant quote online',
-                desc: 'Tell us where and when. Price appears in seconds.',
-                image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop&q=80',
-                learnLink: true,
+                number: '1',
+                title: 'Get Instant Quote',
+                desc: 'Enter your pickup and delivery locations. Receive an accurate quote in seconds with transparent pricing.',
+                icon: (
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                ),
               },
               { 
-                number: 'Two',
-                title: 'Book and pay through our platform',
-                desc: 'Secure checkout. No surprises. No phone tag.',
-                image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=600&fit=crop&q=80',
-                learnLink: true,
+                number: '2',
+                title: 'Book & Pay Securely',
+                desc: 'Complete your booking through our secure platform. No hidden fees, no phone calls needed.',
+                icon: (
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>
+                ),
               },
               { 
-                number: 'Three',
-                title: 'We pick up and you track live',
-                desc: 'Real-time updates show exactly where your vehicle is.',
-                image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80',
-                learnLink: true,
+                number: '3',
+                title: 'Track Live',
+                desc: 'Monitor your vehicle in real-time from pickup to delivery. Get updates every step of the way.',
+                icon: (
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.293 12.293a1.999 1.999 0 010-2.827l4.364-4.364a8 8 0 110 11.314z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                ),
               },
               { 
-                number: 'Four',
-                title: 'Delivered safely to your door',
-                desc: 'Your vehicle arrives on time, every time.',
-                image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop&q=80',
-                learnLink: true,
+                number: '4',
+                title: 'Safe Delivery',
+                desc: 'Your vehicle arrives safely at your door. On time, every time, with full condition reports.',
+                icon: (
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                ),
               },
-            ].map((step, index) => (
-              <div
-                key={index}
-                className={`relative rounded-2xl overflow-hidden group hover:scale-105 transition-all duration-500 min-h-[350px] flex flex-col ${
-                  visibleSections.has('process') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url(${step.image})`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/60"></div>
-                </div>
-                
-                {/* Content */}
-                <div className="relative z-10 flex flex-col justify-between h-full p-6 sm:p-8">
-                  <div>
-                    <div className="text-white/90 text-sm sm:text-base mb-4 font-medium">{step.number}</div>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 text-white">
-                      {step.title}
-                    </h3>
-                    <p className="text-white/95 text-sm sm:text-base mb-6">
-                      {step.desc}
-                    </p>
+            ].map((step, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {/* Step Card */}
+                  <div className="flex-1 relative z-10 mb-8 lg:mb-0 flex flex-col">
+                    <div 
+                      className={`flex flex-col items-start px-6 lg:px-8 transition-all duration-500 flex-1 ${
+                        visibleSections.has('process') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                      }`}
+                      style={{ transitionDelay: `${index * 150}ms`, minHeight: '320px' }}
+                    >
+                      {/* Icon and Label */}
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-16 h-16 bg-white/20 rounded flex items-center justify-center flex-shrink-0">
+                          <div className="text-accent-300">
+                            {step.icon}
+                          </div>
+                        </div>
+                        <div className="text-accent-300 text-xl lg:text-2xl font-bold">STEP - {step.number}</div>
+                      </div>
+                      
+                      {/* Content */}
+                      <h3 className="text-white text-2xl lg:text-3xl font-bold mb-4">{step.title}</h3>
+                      <p className="text-gray-300 text-base leading-relaxed flex-1">
+                        {step.desc}
+                      </p>
+                    </div>
                   </div>
-                  
-                  {step.learnLink && (
-                    <Link href="/quote" className="text-white font-medium hover:text-accent-200 transition-colors inline-flex items-center gap-2 group/link">
-                      Learn
-                      <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+
+                  {/* Large Diagonal Arrow Divider - Only show between steps on large screens */}
+                  {index < 3 && (
+                    <div className="hidden lg:flex w-24 flex-shrink-0 items-center justify-center self-stretch">
+                      <div className="relative w-full h-full flex items-center justify-center" style={{ minHeight: '320px' }}>
+                        <svg viewBox="0 0 100 300" className="w-full h-full max-h-[200px]" preserveAspectRatio="none">
+                          <path 
+                            d="M 20 50 L 80 150 L 20 250" 
+                            stroke="#60a5fa" 
+                            strokeWidth="2" 
+                            fill="none"
+                            opacity="0.6"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   )}
-                </div>
-              </div>
-            ))}
+                </React.Fragment>
+              )
+            })}
+          </div>
+
+          {/* CTA Banner */}
+          <div className="bg-gradient-to-r from-accent-300 to-accent-400 rounded-2xl p-8 lg:p-12 shadow-2xl relative overflow-hidden">
+            {/* Decorative circles */}
+            <div className="absolute top-0 left-0 w-64 h-64 bg-accent-200 rounded-full opacity-30 -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent-200 rounded-full opacity-30 translate-x-1/3 translate-y-1/3"></div>
+            
+            {/* Squiggle decoration */}
+            <svg className="absolute bottom-8 right-40 w-24 h-24 text-accent-700 opacity-20 hidden lg:block" viewBox="0 0 100 50">
+              <path d="M 10 25 Q 20 10, 30 25 T 50 25 T 70 25 T 90 25" stroke="currentColor" strokeWidth="3" fill="none"/>
+            </svg>
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+              <h2 className="text-3xl lg:text-4xl font-bold text-accent-900 leading-tight max-w-2xl text-center lg:text-left">
+                We Are Best Transport Agency For<br />Give Best Quality Service
+              </h2>
+              <button 
+                onClick={() => setShowQuoteModal(true)}
+                className="bg-accent-700 hover:bg-accent-800 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-lg font-bold text-base lg:text-lg transition-all whitespace-nowrap shadow-lg hover:shadow-xl"
+              >
+                Request Services <span className="ml-2">»</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -766,8 +817,8 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-yellow-500/30 animate-bounce-slow">
-                <span className="text-3xl">⭐</span>
-              </div>
+              <span className="text-3xl">⭐</span>
+            </div>
               <div>
                 <span className="text-3xl sm:text-4xl font-bold text-gray-900 block">4.9</span>
                 <span className="text-gray-600 text-sm sm:text-base">Google Reviews</span>
@@ -789,12 +840,12 @@ export default function HomePage() {
                 {reviews.map((review, index) => (
                   <div
                     key={index}
-                    className="min-w-full px-4 sm:px-6"
+                    className="min-w-full px-4 sm:px-6 flex"
                   >
-                    <div className={`bg-gradient-to-br from-blue-50 to-white p-6 sm:p-8 md:p-10 rounded-2xl border-2 border-blue-100 shadow-lg hover:shadow-xl transition-all ${
+                    <div className={`bg-gradient-to-br from-blue-50 to-white p-6 sm:p-8 md:p-10 rounded-2xl border-2 border-blue-100 shadow-lg hover:shadow-xl transition-all w-full flex flex-col ${
                       visibleSections.has('reviews') ? 'opacity-100' : 'opacity-0'
                     }`}
-                    style={{ transitionDelay: `${index * 100}ms` }}
+                    style={{ transitionDelay: `${index * 100}ms`, minHeight: '320px' }}
                     >
                       {/* Google Star Rating */}
                       <div className="flex items-center gap-2 mb-4">
@@ -809,12 +860,12 @@ export default function HomePage() {
                       </div>
                       
                       {/* Review Text */}
-                      <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: '#1a1a1a' }}>
+                      <p className="text-base sm:text-lg leading-relaxed mb-6 flex-1" style={{ color: '#1a1a1a' }}>
                         {review.text}
                       </p>
                       
                       {/* Name and Location */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mt-auto">
                         <div>
                           <div className="font-bold text-lg sm:text-xl" style={{ color: '#4783A8' }}>
                             {review.name}
@@ -830,10 +881,10 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows - Positioned outside the card container */}
             <button
               onClick={() => setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110 z-10"
               aria-label="Previous review"
             >
               <svg className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -842,7 +893,7 @@ export default function HomePage() {
             </button>
             <button
               onClick={() => setCurrentReview((prev) => (prev + 1) % reviews.length)}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-12 bg-white hover:bg-gray-50 shadow-lg border-2 border-gray-200 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110 z-10"
               aria-label="Next review"
             >
               <svg className="w-5 h-5 sm:w-6 sm:h-6 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -859,7 +910,7 @@ export default function HomePage() {
                   className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                     index === currentReview
                       ? 'w-8 sm:w-10'
-                      : 'bg-white/30 hover:bg-white/50'
+                      : 'bg-sky-300/60 hover:bg-sky-300/80'
                   }`}
                   style={index === currentReview ? { backgroundColor: '#4783A8' } : {}}
                   aria-label={`Go to review ${index + 1}`}
@@ -873,12 +924,17 @@ export default function HomePage() {
       {/* CTA Banner */}
       <section 
         data-section-id="cta"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
+        style={{ backgroundColor: '#0f172a' }}
       >
-        <div className="absolute inset-0 bg-pattern-grid opacity-5 animate-pulse-slow"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.2)' }}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.15)' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-3xl animate-pulse-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.1)', animationDelay: '0.5s' }}></div>
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage: 'url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop&q=80")',
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-700/90 via-accent-600/85 to-accent-800/90"></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center relative z-10">
           <div
@@ -887,16 +943,16 @@ export default function HomePage() {
             }`}
           >
             <div className="mb-6 inline-block">
-              <div className="w-20 h-20 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-accent-500/30 mx-auto animate-bounce-slow">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl shadow-accent-500/30 mx-auto animate-bounce-slow border border-white/20">
                 <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-gray-900">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-white">
               Ready to move your vehicle?
             </h2>
-            <p className="text-gray-700 text-lg sm:text-xl mb-8 sm:mb-10">Get your instant quote in seconds</p>
+            <p className="text-white/90 text-lg sm:text-xl mb-8 sm:mb-10">Get your instant quote in seconds</p>
             <button
               onClick={() => setShowQuoteModal(true)}
               className="group bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 font-bold py-4 sm:py-5 px-8 sm:px-12 rounded-xl sm:rounded-2xl text-lg sm:text-xl md:text-2xl transition-all duration-300 shadow-2xl hover:shadow-accent-500/50 hover:scale-110 transform flex items-center justify-center gap-3 mx-auto relative overflow-hidden border border-white/20"
@@ -912,144 +968,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black text-white relative overflow-hidden border-t border-white/10">
-        <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 sm:gap-10 lg:gap-12 mb-12">
-            {/* Logo and Description */}
-            <div className="sm:col-span-2 lg:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="text-2xl sm:text-3xl font-bold">
-                  <span className="text-white">NEXT</span>
-                  <span className="text-accent-400">TRANSPORT</span>
-                </div>
-                <div className="flex gap-1">
-                  <svg className="w-4 h-4 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                  <svg className="w-4 h-4 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-white/70 text-sm sm:text-base mb-6 leading-relaxed">
-                Australia&apos;s leading vehicle transport service. Get instant quotes, track in real-time, and enjoy door-to-door delivery across the country.
-              </p>
-              <div className="flex gap-4">
-                {[
-                  { name: 'Facebook', icon: 'M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z' },
-                  { name: 'Twitter', icon: 'M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z' },
-                  { name: 'Instagram', icon: 'M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.533.96-.877 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.533-1.379-.877-.419-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.057-1.267-.07-1.646-.07-4.859 0-3.213.015-3.588.074-4.859.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z' },
-                  { name: 'LinkedIn', icon: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' },
-                ].map((social) => (
-                  <a
-                    key={social.name}
-                    href="#"
-                    className="w-10 h-10 rounded-lg bg-white/10 hover:bg-accent-500 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:rotate-6 group"
-                    aria-label={social.name}
-                  >
-                    <svg className="w-5 h-5 text-white group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d={social.icon} />
-                    </svg>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Services */}
-            <div>
-              <h3 className="text-white font-bold text-base sm:text-lg mb-4">Services</h3>
-              <ul className="space-y-3">
-                {['Car transport', 'Ute transport', 'Motorbike transport', 'Registration help', 'Live tracking'].map((item) => (
-                  <li key={item}>
-                    <Link href="/quote" className="text-white/70 hover:text-accent-400 text-sm transition-colors duration-300 inline-flex items-center gap-2 group">
-                      <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="text-white font-bold text-base sm:text-lg mb-4">Company</h3>
-              <ul className="space-y-3">
-                {['About us', 'How it works', 'Testimonials', 'Contact us', 'Careers'].map((item) => (
-                  <li key={item}>
-                    <Link href="/about" className="text-white/70 hover:text-accent-400 text-sm transition-colors duration-300 inline-flex items-center gap-2 group">
-                      <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Support */}
-            <div>
-              <h3 className="text-white font-bold text-base sm:text-lg mb-4">Support</h3>
-              <ul className="space-y-3">
-                {['FAQ', 'Track booking', 'Insurance info', 'Pricing guide', 'Help center'].map((item) => (
-                  <li key={item}>
-                    <Link href="/faq" className="text-white/70 hover:text-accent-400 text-sm transition-colors duration-300 inline-flex items-center gap-2 group">
-                      <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h3 className="text-white font-bold text-base sm:text-lg mb-4">Legal</h3>
-              <ul className="space-y-3">
-                {['Terms of service', 'Privacy policy', 'Cookie policy', 'Disclaimer', 'Accessibility'].map((item) => (
-                  <li key={item}>
-                    <Link href="#" className="text-white/70 hover:text-accent-400 text-sm transition-colors duration-300 inline-flex items-center gap-2 group">
-                      <svg className="w-3 h-3 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-white/10">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="text-white/60 text-sm">
-                © 2025 NextTransport. All rights reserved.
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 text-white/60 text-sm">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.293 12.293a1.999 1.999 0 010-2.827l4.364-4.364a8 8 0 110 11.314z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span>Australia-wide service</span>
-                </div>
-                <div className="flex items-center gap-2 text-white/60 text-sm">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>24/7 Support</span>
-                </div>
-              </div>
-            </div>
-          </div>
+      <footer className="bg-black text-white py-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-white/60 text-sm">
+            © 2025 NextTransport. All rights reserved.
+          </p>
         </div>
       </footer>
 

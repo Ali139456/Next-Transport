@@ -204,14 +204,14 @@ export default function QuotePage() {
       </div>
 
       {/* Form and How We Calculate Section - Outside container for page-level margins */}
-      <div className="w-full relative z-10">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-6 lg:gap-8">
+      <div className="w-full relative z-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[150px]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-8 lg:justify-center">
           {/* Form Container - Left Side */}
-          <div className="w-full lg:flex-1" style={{ marginLeft: '200px' }}>
+          <div className="w-full lg:max-w-[1200px]">
             <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-0 border-2 border-white/30 hover:shadow-3xl transition-all duration-300">
               <div 
-                className="w-full flex flex-col"
-                style={{ width: '100%', height: '600px', maxWidth: '100%' }}
+                className="w-full flex flex-col h-auto lg:h-[600px]"
+                style={{ width: '100%', minHeight: '500px' }}
               >
                 <QuoteCalculatorPreview 
                   onQuoteComplete={handleQuoteCalculated}
@@ -222,7 +222,7 @@ export default function QuotePage() {
           </div>
 
           {/* How We Calculate Your Quote Section - Right Side, Vertical, Centered */}
-          <div className="w-full lg:w-80 lg:flex-shrink-0 lg:self-center" style={{ marginRight: '200px' }}>
+          <div className="w-full lg:w-96 xl:w-[420px] lg:flex-shrink-0 lg:self-center">
             <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-xl p-5 sm:p-6 border-2 border-white/30">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-gradient-to-br from-accent-500 to-accent-600 rounded-lg flex items-center justify-center shadow-md">
@@ -350,7 +350,7 @@ export default function QuotePage() {
                   </div>
                   
                   {/* Timeline Cards */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-4 border-2 border-blue-100 hover:border-blue-200 transition-all hover:shadow-md">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -388,7 +388,7 @@ export default function QuotePage() {
                       </svg>
                       <span className="font-semibold">What&apos;s Included:</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600">
                       <div className="flex items-center gap-1">
                         <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />

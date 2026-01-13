@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'images.unsplash.com'],
     unoptimized: false,
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -17,6 +17,10 @@ const nextConfig = {
   compress: true,
   // Power optimizations
   poweredByHeader: false,
+  // Experimental optimizations
+  experimental: {
+    optimizeCss: true,
+  },
   // Webpack optimizations
   webpack: (config, { isServer }) => {
     if (!isServer) {

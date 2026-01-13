@@ -186,7 +186,7 @@ export default function QuoteCalculatorPreview({
   }
 
   return (
-    <div className={`w-full h-full flex flex-col p-5 relative overflow-hidden ${isPageMode ? 'bg-white' : ''}`} style={{ borderRadius: '12px' }}>
+    <div className={`w-full h-full flex flex-col p-4 sm:p-5 relative overflow-hidden ${isPageMode ? 'bg-white' : ''}`} style={{ borderRadius: '12px' }}>
       {/* Decorative background elements */}
       {!isPageMode && (
         <>
@@ -215,9 +215,9 @@ export default function QuoteCalculatorPreview({
         <p className={`text-xs ml-14 font-medium ${isPageMode ? 'text-gray-600' : 'text-white/70'}`}>Please Fill All Inquiry To Get Your Total Price</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-hidden">
-        {/* Three Column Layout - Equal and Dynamic */}
-        <div className="grid grid-cols-3 gap-4 h-full" style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto">
+        {/* Responsive Grid Layout - 1 column on mobile, 2 on tablet, 3 on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-full">
           {/* Column 1 */}
           <div className="space-y-2 flex flex-col min-w-0">
             {/* Select Service / Vehicle Type */}
