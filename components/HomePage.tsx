@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 // Lazy load QuoteModal for better performance
 const LazyQuoteModal = dynamic(() => import('./QuoteModal'), {
@@ -400,66 +401,94 @@ export default function HomePage() {
       {/* Services Snapshot */}
       <section 
         data-section-id="services"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black"
       >
-        {/* Animated background elements */}
-        <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.2)' }}></div>
-        
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div 
             className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
               visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-accent-900 drop-shadow-lg">
-              Our Services
+            <div className="text-white/60 text-sm sm:text-base uppercase tracking-wide mb-2">Services</div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">
+              What we transport
             </h2>
-            <p className="text-gray-700 text-lg sm:text-xl">Comprehensive vehicle transport solutions</p>
+            <p className="text-white/80 text-lg sm:text-xl">Secure relocation for sedans, SUVs, and all standard passenger vehicles Australia-wide.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
             {[
-              { icon: '🚗', title: 'Car Transport', desc: 'Safe and secure transport for all car types across Australia', link: 'Get Quote', gradient: 'from-red-400 to-red-600', bgGradient: 'from-red-50 to-white', borderColor: 'border-red-200' },
-              { icon: '🚙', title: 'Light Commercials', desc: 'Professional transport for utes, vans, and light trucks', link: 'Get Quote', gradient: 'from-blue-400 to-blue-600', bgGradient: 'from-blue-50 to-white', borderColor: 'border-blue-200' },
-              { icon: '🏍️', title: 'Motorbike Transport', desc: 'Specialized handling for motorcycles and bikes', link: 'Get Quote', gradient: 'from-purple-400 to-purple-600', bgGradient: 'from-purple-50 to-white', borderColor: 'border-purple-200' },
+              { 
+                category: 'Cars',
+                title: 'Car transport', 
+                desc: 'Get your vehicle moved safely and on time.', 
+                bgGradient: 'linear-gradient(135deg, rgba(55, 48, 43, 0.95) 0%, rgba(35, 28, 23, 0.98) 100%)',
+                hasQuote: true 
+              },
+              { 
+                category: '',
+                title: 'Light commercial transport', 
+                desc: 'Professional handling for utes, vans, and light trucks.', 
+                bgGradient: 'linear-gradient(135deg, rgba(180, 120, 70, 0.95) 0%, rgba(140, 80, 40, 0.98) 100%)',
+                hasQuote: false 
+              },
+              { 
+                category: '',
+                title: 'Motorbike transport', 
+                desc: 'Specialized care for motorcycles and bikes across the country.', 
+                bgGradient: 'linear-gradient(135deg, rgba(70, 120, 110, 0.95) 0%, rgba(50, 90, 80, 0.98) 100%)',
+                hasQuote: false 
+              },
             ].map((service, index) => (
               <div
                 key={index}
-                className={`bg-gradient-to-br ${service.bgGradient} rounded-2xl p-6 sm:p-8 shadow-xl border-2 ${service.borderColor} group hover:scale-105 hover:shadow-2xl transition-all duration-500 relative overflow-hidden ${
+                className={`relative rounded-2xl p-6 sm:p-8 md:p-10 min-h-[400px] flex flex-col justify-between group hover:scale-105 transition-all duration-500 overflow-hidden ${
                   visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ 
+                  background: service.bgGradient,
+                  transitionDelay: `${index * 150}ms` 
+                }}
               >
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                {/* Icon in top left for cards 2 and 3 */}
+                {index > 0 && (
+                  <div className="absolute top-6 left-6 w-8 h-8 bg-white/20 rounded backdrop-blur-sm"></div>
+                )}
                 
-                <div className="relative z-10">
-                  <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                    <span className="text-4xl sm:text-5xl filter drop-shadow-lg">
-                      {service.icon}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-accent-900 group-hover:text-accent-700 transition-colors duration-300 text-center">
+                {/* Category label (only for first card) */}
+                {service.category && (
+                  <div className="text-white/80 text-sm mb-2">{service.category}</div>
+                )}
+                
+                {/* Content */}
+                <div className="relative z-10 flex-1 flex flex-col justify-end">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-white">
                     {service.title}
                   </h3>
-                  <p className="text-gray-700 text-sm sm:text-base mb-6 text-center font-medium">
+                  <p className="text-white/90 text-sm sm:text-base mb-6">
                     {service.desc}
                   </p>
-                  <button
-                    onClick={() => setShowQuoteModal(true)}
-                    className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white font-semibold text-sm sm:text-base py-3 px-6 rounded-xl flex items-center justify-center gap-2 group/link transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105`}
-                  >
-                    {service.link}
-                    <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </button>
+                  
+                  {/* Buttons */}
+                  <div className="flex flex-wrap gap-3">
+                    {service.hasQuote && (
+                      <button
+                        onClick={() => setShowQuoteModal(true)}
+                        className="px-6 py-2.5 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300"
+                      >
+                        Quote
+                      </button>
+                    )}
+                    <button
+                      onClick={() => router.push('/quote')}
+                      className="px-6 py-2.5 bg-transparent text-white font-medium rounded-lg hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+                    >
+                      Learn
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-                
-                {/* Decorative corner element */}
-                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-20 rounded-bl-full transition-opacity duration-300`}></div>
               </div>
             ))}
           </div>
