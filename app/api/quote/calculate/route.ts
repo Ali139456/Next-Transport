@@ -24,6 +24,8 @@ export async function POST(request: NextRequest) {
       transportType: body.transportType,
       addOns: {
         insurance: body.insurance === true || body.insurance === 'true' || String(body.insurance).toLowerCase() === 'true',
+        expressDelivery: body.expressDelivery === true || body.expressDelivery === 'true' || String(body.expressDelivery).toLowerCase() === 'true',
+        packaging: body.packaging === true || body.packaging === 'true' || String(body.packaging).toLowerCase() === 'true',
       },
     }
 

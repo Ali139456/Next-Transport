@@ -10,24 +10,49 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import toast from 'react-hot-toast'
 import { useAuth } from '@/hooks/useAuth'
 
+// Make all fields optional in the base schema to allow step-by-step validation
 const bookingSchema = z.object({
   // Step 2: Customer Details
-  firstName: z.string().min(2, 'First name is required'),
-  lastName: z.string().min(2, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number is required'),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  email: z.string().optional(),
+  phone: z.string().optional(),
   // Step 3: Vehicle Details
-  vehicleMake: z.string().min(1, 'Vehicle make is required'),
-  vehicleModel: z.string().min(1, 'Vehicle model is required'),
-  vehicleYear: z.string().min(4, 'Vehicle year is required'),
+  vehicleMake: z.string().optional(),
+  vehicleModel: z.string().optional(),
+  vehicleYear: z.string().optional(),
   vehicleRegistration: z.string().optional(),
   vehicleNotes: z.string().optional(),
   // Step 4: Pickup & Delivery Contacts
-  pickupContactName: z.string().min(2, 'Pickup contact name is required'),
-  pickupContactPhone: z.string().min(10, 'Pickup contact phone is required'),
-  deliveryContactName: z.string().min(2, 'Delivery contact name is required'),
-  deliveryContactPhone: z.string().min(10, 'Delivery contact phone is required'),
+  pickupContactName: z.string().optional(),
+  pickupContactPhone: z.string().optional(),
+  deliveryContactName: z.string().optional(),
+  deliveryContactPhone: z.string().optional(),
   // Step 5: Payment
+  paymentMethod: z.enum(['full', 'deposit']).optional().default('full'),
+})
+
+// Step-specific validation schemas for manual validation
+const customerSchema = z.object({
+  firstName: z.string().min(2, 'First name must be at least 2 characters'),
+  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits'),
+})
+
+const vehicleSchema = z.object({
+  vehicleMake: z.string().min(1, 'Vehicle make is required'),
+  vehicleModel: z.string().min(1, 'Vehicle model is required'),
+  vehicleYear: z.string().min(4, 'Vehicle year must be 4 digits'),
+  vehicleRegistration: z.string().optional(),
+  vehicleNotes: z.string().optional(),
+})
+
+const contactsSchema = z.object({
+  pickupContactName: z.string().min(2, 'Pickup contact name is required'),
+  pickupContactPhone: z.string().min(10, 'Pickup contact phone must be at least 10 digits'),
+  deliveryContactName: z.string().min(2, 'Delivery contact name is required'),
+  deliveryContactPhone: z.string().min(10, 'Delivery contact phone must be at least 10 digits'),
   paymentMethod: z.enum(['full', 'deposit']),
 })
 
@@ -93,14 +118,19 @@ export default function BookingPage() {
   const [clientSecret, setClientSecret] = useState<string | null>(null)
   const [bookingId, setBookingId] = useState<string | null>(null)
   const [trackingToken, setTrackingToken] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    trigger,
+    setError,
+    clearErrors,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
+    mode: 'onBlur',
     defaultValues: {
       paymentMethod: 'full',
     },
@@ -155,17 +185,129 @@ export default function BookingPage() {
   const currentStepIndex = steps.findIndex(s => s.id === step)
 
   const handleStepSubmit = async (data: BookingFormData) => {
-    if (step === 'customer') {
-      setStep('vehicle')
+    // Safely log data without circular references
+    const safeData = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      vehicleMake: data.vehicleMake,
+      vehicleModel: data.vehicleModel,
+      vehicleYear: data.vehicleYear,
+      paymentMethod: data.paymentMethod,
+    }
+    console.log('Form submitted for step:', step, 'Data:', safeData)
+    
+    if (isSubmitting) {
+      console.log('Already submitting, ignoring...')
       return
     }
+    
+    setIsSubmitting(true)
+    
+    try {
+      // Clear previous errors for fields not in current step
+      clearErrors()
+      
+      // Validate only current step fields using step-specific schema
+      let validationResult: any = { success: true, errors: {} }
+      
+      if (step === 'customer') {
+        const result = customerSchema.safeParse({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+        })
+        if (!result.success) {
+          validationResult.success = false
+          result.error.errors.forEach((err) => {
+            const field = err.path[0] as string
+            validationResult.errors[field] = err.message
+            setError(field as any, { message: err.message })
+          })
+        }
+      } else if (step === 'vehicle') {
+        const result = vehicleSchema.safeParse({
+          vehicleMake: data.vehicleMake,
+          vehicleModel: data.vehicleModel,
+          vehicleYear: data.vehicleYear,
+          vehicleRegistration: data.vehicleRegistration,
+          vehicleNotes: data.vehicleNotes,
+        })
+        if (!result.success) {
+          validationResult.success = false
+          result.error.errors.forEach((err) => {
+            const field = err.path[0] as string
+            validationResult.errors[field] = err.message
+            setError(field as any, { message: err.message })
+          })
+        }
+      } else if (step === 'contacts') {
+        const result = contactsSchema.safeParse({
+          pickupContactName: data.pickupContactName,
+          pickupContactPhone: data.pickupContactPhone,
+          deliveryContactName: data.deliveryContactName,
+          deliveryContactPhone: data.deliveryContactPhone,
+          paymentMethod: data.paymentMethod,
+        })
+        if (!result.success) {
+          validationResult.success = false
+          result.error.errors.forEach((err) => {
+            const field = err.path[0] as string
+            validationResult.errors[field] = err.message
+            setError(field as any, { message: err.message })
+          })
+        }
+      }
+      
+      if (!validationResult.success) {
+        console.log('Validation failed for step:', step, validationResult.errors)
+        const errorMessages = Object.values(validationResult.errors).join(', ')
+        toast.error(`Please fix: ${errorMessages}`)
+        setIsSubmitting(false)
+        return
+      }
+      
+      if (step === 'customer') {
+        // Save customer data to database
+        try {
+          console.log('Saving customer data...')
+          const response = await fetch('/api/auth/user', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: `${data.firstName} ${data.lastName}`,
+              email: data.email,
+              phone: data.phone,
+            }),
+          })
 
-    if (step === 'vehicle') {
-      setStep('contacts')
-      return
-    }
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}))
+            console.error('Failed to save customer data:', errorData)
+            throw new Error(errorData.error || 'Failed to save customer data')
+          }
 
-    if (step === 'contacts') {
+          const result = await response.json()
+          console.log('Customer data saved successfully:', result)
+          toast.success('Customer details saved')
+          setStep('vehicle')
+        } catch (error: any) {
+          console.error('Error saving customer data:', error)
+          toast.error(error.message || 'Failed to save customer data')
+          // Still proceed to next step even if save fails
+          setStep('vehicle')
+        }
+        return
+      }
+
+      if (step === 'vehicle') {
+        setStep('contacts')
+        return
+      }
+
+      if (step === 'contacts') {
       // Create booking
       try {
         const preferredDate = new Date(quote.preferredDate || new Date())
@@ -174,8 +316,19 @@ export default function BookingPage() {
         const endDate = new Date(preferredDate)
         endDate.setDate(endDate.getDate() + 2)
 
+        // Get quote ID - check multiple possible locations
+        const quoteId = quote.quote?.id || quote.quote?._id || quote.quote_id || quote.id || quote._id
+        
+        if (!quoteId) {
+          console.error('Quote object:', quote)
+          toast.error('Quote ID not found. Please create a new quote.')
+          return
+        }
+        
+        console.log('Using quote ID:', quoteId)
+
         const bookingPayload = {
-          quote_id: quote.quote_id || quote.id,
+          quote_id: quoteId,
           pickupAddress: {
             address: quote.pickupAddress?.address || '',
             suburb: quote.pickupAddress?.suburb || quote.pickupSuburb || '',
@@ -234,8 +387,16 @@ export default function BookingPage() {
         }
       } catch (error: any) {
         toast.error(error.message || 'Failed to create booking')
+      } finally {
+        setIsSubmitting(false)
       }
       return
+      }
+    } catch (error: any) {
+      console.error('Form submission error:', error)
+      toast.error(error.message || 'An error occurred')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -297,28 +458,66 @@ export default function BookingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
           <ProgressBar />
           
-          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Quote Summary</h2>
+          <div className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10 animate-fadeIn">
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b-2 border-accent-200/50">
+              <div className="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Quote Summary</h2>
+                <p className="text-sm text-gray-600 mt-1">Review your quote details</p>
+              </div>
+            </div>
             
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between items-center pb-4 border-b border-gray-200">
-                <span className="text-lg font-semibold text-gray-700">Total Price (incl. GST)</span>
-                <span className="text-3xl font-extrabold text-blue-600">
-                  ${quote.pricing?.total_inc_gst?.toFixed(2) || quote.total_inc_gst?.toFixed(2) || '0.00'}
-                </span>
+            <div className="space-y-6 mb-6">
+              {/* Total Price - Highlighted */}
+              <div className="relative overflow-hidden bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl p-6 shadow-xl">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+                <div className="relative z-10">
+                  <div className="text-white/90 text-sm font-medium mb-2">Total Price (incl. GST)</div>
+                  <div className="text-4xl sm:text-5xl font-extrabold text-white mb-1">
+                    ${quote.pricing?.totalPrice?.toFixed(2) || quote.totalPrice?.toFixed(2) || quote.total_inc_gst?.toFixed(2) || '0.00'}
+                  </div>
+                  <div className="text-white/80 text-xs mt-2">All fees included • No surprises</div>
+                </div>
               </div>
               
+              {/* Pickup and Delivery Cards */}
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600 mb-1">Pickup</div>
-                  <div className="font-semibold text-gray-900">
-                    {quote.pickupSuburb || quote.pickupAddress?.suburb}, {quote.pickupPostcode || quote.pickupAddress?.postcode}
+                <div className="bg-gradient-to-br from-blue-50 to-white rounded-xl p-5 border-2 border-blue-100 hover:border-blue-200 transition-all hover:shadow-md">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.293 12.293a1.999 1.999 0 010-2.827l4.364-4.364a8 8 0 110 11.314z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium">Pickup Location</div>
+                  </div>
+                  <div className="font-bold text-gray-900 text-lg">
+                    {quote.pickupSuburb || quote.pickupAddress?.suburb || 'N/A'}
+                  </div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    {quote.pickupPostcode || quote.pickupAddress?.postcode || ''}
                   </div>
                 </div>
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <div className="text-sm text-gray-600 mb-1">Delivery</div>
-                  <div className="font-semibold text-gray-900">
-                    {quote.dropoffSuburb || quote.dropoffAddress?.suburb}, {quote.dropoffPostcode || quote.dropoffAddress?.postcode}
+                <div className="bg-gradient-to-br from-green-50 to-white rounded-xl p-5 border-2 border-green-100 hover:border-green-200 transition-all hover:shadow-md">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium">Delivery Location</div>
+                  </div>
+                  <div className="font-bold text-gray-900 text-lg">
+                    {quote.dropoffSuburb || quote.dropoffAddress?.suburb || 'N/A'}
+                  </div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    {quote.dropoffPostcode || quote.dropoffAddress?.postcode || ''}
                   </div>
                 </div>
               </div>
@@ -327,15 +526,18 @@ export default function BookingPage() {
             <div className="flex gap-4">
               <button
                 onClick={handleEditQuote}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-colors"
+                className="flex-1 bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] border border-gray-300"
               >
                 Edit Quote
               </button>
               <button
                 onClick={() => setStep('customer')}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg"
+                className="flex-1 bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] flex items-center justify-center gap-2 group"
               >
-                Continue
+                <span>Continue</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
               </button>
             </div>
           </div>
@@ -364,8 +566,8 @@ export default function BookingPage() {
               <p className="text-sm text-gray-600 mt-4 mb-1">Payment Amount</p>
               <p className="text-2xl font-bold text-blue-600">
                 ${watch('paymentMethod') === 'full' 
-                  ? (quote.pricing?.total_inc_gst || quote.total_inc_gst || 0).toFixed(2)
-                  : ((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15).toFixed(2)
+                  ? (quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0).toFixed(2)
+                  : ((quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0) * 0.15).toFixed(2)
                 }
               </p>
             </div>
@@ -380,8 +582,8 @@ export default function BookingPage() {
               <CheckoutForm
                 bookingData={{
                   paymentAmount: watch('paymentMethod') === 'full' 
-                    ? (quote.pricing?.total_inc_gst || quote.total_inc_gst || 0)
-                    : ((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15),
+                    ? (quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0)
+                    : ((quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0) * 0.15),
                 }}
                 onSuccess={handlePaymentSuccess}
               />
@@ -449,11 +651,48 @@ export default function BookingPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <ProgressBar />
         
-        <form onSubmit={handleSubmit(handleStepSubmit)} className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
+        <form onSubmit={handleSubmit(
+          handleStepSubmit,
+          (errors) => {
+            // Safely extract error messages without circular references
+            const errorMessages: string[] = []
+            Object.keys(errors).forEach((key) => {
+              const error = errors[key as keyof typeof errors]
+              if (error && typeof error === 'object' && 'message' in error) {
+                errorMessages.push(`${key}: ${error.message}`)
+              } else {
+                errorMessages.push(`${key}: Invalid`)
+              }
+            })
+            if (errorMessages.length > 0) {
+              toast.error(`Please fix: ${errorMessages.join(', ')}`)
+            }
+          }
+        )} className="bg-gradient-to-br from-white/95 to-accent-50/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 sm:p-8 border-2 border-white/30 relative z-10">
           {/* Step 2: Customer Details */}
           {step === 'customer' && (
             <>
               <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900">Customer Details</h2>
+              {Object.keys(errors).length > 0 && (
+                <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-xl">
+                  <p className="text-red-800 font-semibold mb-2">Please fix the following errors:</p>
+                  <ul className="list-disc list-inside text-sm text-red-700">
+                    {errors.firstName && <li>First Name: {errors.firstName.message || 'Required'}</li>}
+                    {errors.lastName && <li>Last Name: {errors.lastName.message || 'Required'}</li>}
+                    {errors.email && <li>Email: {errors.email.message || 'Required'}</li>}
+                    {errors.phone && <li>Mobile: {errors.phone.message || 'Required'}</li>}
+                  </ul>
+                  <details className="mt-2">
+                    <summary className="text-xs text-red-600 cursor-pointer">Debug Info</summary>
+                    <pre className="text-xs mt-2 p-2 bg-red-100 rounded overflow-auto">
+                      {Object.keys(errors).map(key => {
+                        const error = errors[key as keyof typeof errors]
+                        return `${key}: ${error?.message || 'Invalid'}`
+                      }).join('\n')}
+                    </pre>
+                  </details>
+                </div>
+              )}
               <div className="grid sm:grid-cols-2 gap-4 mb-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
@@ -555,14 +794,14 @@ export default function BookingPage() {
                       <input type="radio" {...register('paymentMethod')} value="full" className="mr-3" defaultChecked />
                       <div>
                         <div className="font-semibold text-gray-900">Pay in Full</div>
-                        <div className="text-sm text-gray-600">${(quote.pricing?.total_inc_gst || quote.total_inc_gst || 0).toFixed(2)}</div>
+                        <div className="text-sm text-gray-600">${(quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0).toFixed(2)}</div>
                       </div>
                     </label>
                     <label className="flex items-center p-3 bg-gradient-to-br from-accent-50/80 to-white rounded-lg cursor-pointer hover:bg-accent-100/50 border border-accent-200/50">
                       <input type="radio" {...register('paymentMethod')} value="deposit" className="mr-3" />
                       <div>
                         <div className="font-semibold text-gray-900">Deposit + Balance Later</div>
-                        <div className="text-sm text-gray-600">${((quote.pricing?.total_inc_gst || quote.total_inc_gst || 0) * 0.15).toFixed(2)} deposit</div>
+                        <div className="text-sm text-gray-600">${((quote.pricing?.totalPrice || quote.totalPrice || quote.total_inc_gst || 0) * 0.15).toFixed(2)} deposit</div>
                       </div>
                     </label>
                   </div>
@@ -586,9 +825,20 @@ export default function BookingPage() {
             )}
             <button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg"
+              disabled={isSubmitting}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg flex items-center justify-center gap-2"
             >
-              {step === 'contacts' ? 'Create Booking' : 'Continue'}
+              {isSubmitting ? (
+                <>
+                  <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </>
+              ) : (
+                step === 'contacts' ? 'Create Booking' : 'Continue'
+              )}
             </button>
           </div>
         </form>

@@ -28,75 +28,110 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get or create pickup address
-    let pickupAddressDoc = await Address.findOne({
-      address: pickupAddress.address,
+    // Helper function to get state from postcode (Australian postcodes)
+    const getStateFromPostcode = (postcode: string): string => {
+      const code = parseInt(postcode)
+      if (code >= 2000 && code < 3000) return 'NSW'
+      if (code >= 3000 && code < 4000) return 'VIC'
+      if (code >= 4000 && code < 5000) return 'QLD'
+      if (code >= 5000 && code < 6000) return 'SA'
+      if (code >= 6000 && code < 7000) return 'WA'
+      if (code >= 7000 && code < 8000) return 'TAS'
+      if (code >= 800 && code < 1000) return 'NT'
+      if (code >= 2600 && code < 2620) return 'ACT'
+      return 'NSW' // Default to NSW
+    }
+
+    // Prepare pickup address with defaults
+    const pickupAddressData = {
+      address: pickupAddress.address || `${pickupAddress.suburb} (Address TBC)`,
       suburb: pickupAddress.suburb,
       postcode: pickupAddress.postcode,
-      state: pickupAddress.state,
+      state: pickupAddress.state || getStateFromPostcode(pickupAddress.postcode),
+      contact_name: pickupAddress.contactName || '',
+      contact_phone: pickupAddress.contactPhone || '',
+    }
+
+    // Get or create pickup address
+    let pickupAddressDoc = await Address.findOne({
+      suburb: pickupAddressData.suburb,
+      postcode: pickupAddressData.postcode,
+      state: pickupAddressData.state,
     })
 
     if (!pickupAddressDoc) {
-      pickupAddressDoc = new Address({
-        address: pickupAddress.address,
-        suburb: pickupAddress.suburb,
-        postcode: pickupAddress.postcode,
-        state: pickupAddress.state,
-        contact_name: pickupAddress.contactName,
-        contact_phone: pickupAddress.contactPhone,
-      })
+      pickupAddressDoc = new Address(pickupAddressData)
       await pickupAddressDoc.save()
+    }
+
+    // Prepare dropoff address with defaults
+    const dropoffAddressData = {
+      address: dropoffAddress.address || `${dropoffAddress.suburb} (Address TBC)`,
+      suburb: dropoffAddress.suburb,
+      postcode: dropoffAddress.postcode,
+      state: dropoffAddress.state || getStateFromPostcode(dropoffAddress.postcode),
+      contact_name: dropoffAddress.contactName || '',
+      contact_phone: dropoffAddress.contactPhone || '',
     }
 
     // Get or create dropoff address
     let dropoffAddressDoc = await Address.findOne({
-      address: dropoffAddress.address,
-      suburb: dropoffAddress.suburb,
-      postcode: dropoffAddress.postcode,
-      state: dropoffAddress.state,
+      suburb: dropoffAddressData.suburb,
+      postcode: dropoffAddressData.postcode,
+      state: dropoffAddressData.state,
     })
 
     if (!dropoffAddressDoc) {
-      dropoffAddressDoc = new Address({
-        address: dropoffAddress.address,
-        suburb: dropoffAddress.suburb,
-        postcode: dropoffAddress.postcode,
-        state: dropoffAddress.state,
-        contact_name: dropoffAddress.contactName,
-        contact_phone: dropoffAddress.contactPhone,
-      })
+      dropoffAddressDoc = new Address(dropoffAddressData)
       await dropoffAddressDoc.save()
+    }
+
+    // Map vehicle type to valid enum values
+    const mapVehicleType = (type: string): string => {
+      const typeMap: { [key: string]: string } = {
+        'car': 'sedan',
+        'sedan': 'sedan',
+        'suv': 'suv',
+        'ute': 'ute',
+        'van': 'van',
+        'light-truck': 'light-truck',
+        'bike': 'bike',
+      }
+      return typeMap[type.toLowerCase()] || 'sedan'
+    }
+
+    // Prepare vehicle data with defaults
+    const vehicleData = {
+      type: mapVehicleType(vehicle.type),
+      make: vehicle.make || 'TBC',
+      model: vehicle.model || 'TBC',
+      year: vehicle.year || new Date().getFullYear().toString(),
+      transportType: transportType || 'open',
+      isRunning: vehicle.isRunning !== undefined ? Boolean(vehicle.isRunning) : true,
     }
 
     // Get or create vehicle
     let vehicleDoc = await Vehicle.findOne({
-      type: vehicle.type,
-      make: vehicle.make,
-      model: vehicle.model,
-      year: vehicle.year,
-      is_running: vehicle.isRunning,
-      transport_type: transportType,
+      type: vehicleData.type,
+      make: vehicleData.make,
+      model: vehicleData.model,
+      year: vehicleData.year,
+      transportType: vehicleData.transportType,
+      isRunning: vehicleData.isRunning,
     })
 
     if (!vehicleDoc) {
-      vehicleDoc = new Vehicle({
-        type: vehicle.type,
-        make: vehicle.make,
-        model: vehicle.model,
-        year: vehicle.year,
-        is_running: vehicle.isRunning,
-        transport_type: transportType,
-      })
+      vehicleDoc = new Vehicle(vehicleData)
       await vehicleDoc.save()
     }
 
     // Calculate pricing
     const pricingInput: PricingInput = {
-      pickupPostcode: pickupAddress.postcode,
-      deliveryPostcode: dropoffAddress.postcode,
-      vehicleType: vehicle.type,
-      isRunning: vehicle.isRunning,
-      transportType: transportType,
+      pickupPostcode: pickupAddressData.postcode,
+      deliveryPostcode: dropoffAddressData.postcode,
+      vehicleType: vehicleData.type,
+      isRunning: vehicleData.isRunning,
+      transportType: vehicleData.transportType,
       addOns: addOns || {},
     }
 

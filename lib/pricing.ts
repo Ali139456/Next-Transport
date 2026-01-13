@@ -45,6 +45,8 @@ const OPEN_MULTIPLIER = 1.0
 // Add-on prices
 const ADDON_PRICES = {
   insurance: 150, // Base insurance cost
+  expressDelivery: 40, // Express delivery
+  packaging: 15, // Premium handling/packaging
 }
 
 // Minimum distance in km (for short trips)
@@ -94,6 +96,16 @@ export async function calculatePrice(input: PricingInput): Promise<PricingResult
   if (input.addOns?.insurance) {
     addOns.insurance = ADDON_PRICES.insurance
     addOnsTotal += ADDON_PRICES.insurance
+  }
+  
+  if (input.addOns?.expressDelivery) {
+    addOns.expressDelivery = ADDON_PRICES.expressDelivery
+    addOnsTotal += ADDON_PRICES.expressDelivery
+  }
+  
+  if (input.addOns?.packaging) {
+    addOns.packaging = ADDON_PRICES.packaging
+    addOnsTotal += ADDON_PRICES.packaging
   }
   
   // Calculate totals
