@@ -622,12 +622,19 @@ export default function HomePage() {
       <section 
         ref={howItWorksRef}
         data-section-id="how-it-works"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
+        style={{ backgroundColor: '#2D5A4F' }}
       >
-        {/* Animated background elements */}
-        <div className="absolute inset-0 bg-pattern-grid opacity-10"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.2)' }}></div>
+        {/* Background image overlay */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'url(/images/shipping-containers-bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div 
@@ -635,45 +642,103 @@ export default function HomePage() {
               visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-accent-900 drop-shadow-lg">
-              How It Works
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <span className="text-yellow-400 font-bold text-sm sm:text-base uppercase tracking-wide">CHECK OUR STEPS</span>
+              <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">
+              Our Freight Working Process
             </h2>
-            <p className="text-gray-700 text-lg sm:text-xl">Simple steps to get your vehicle transported</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid sm:grid-cols-3 gap-8 sm:gap-12 relative">
             {[
-              { title: 'Get a Quote', desc: 'Instant online pricing in seconds', gradient: 'from-yellow-400 to-orange-500', icon: '💵', bgGradient: 'from-yellow-50 to-orange-50', borderColor: 'border-yellow-200' },
-              { title: 'Book Online', desc: 'Secure Stripe checkout', gradient: 'from-blue-400 to-blue-600', icon: '📱', bgGradient: 'from-blue-50 to-cyan-50', borderColor: 'border-blue-200' },
-              { title: 'Pickup & Track', desc: 'Live updates and ETA', gradient: 'from-green-400 to-green-600', icon: '🚚', bgGradient: 'from-green-50 to-emerald-50', borderColor: 'border-green-200' },
-              { title: 'Delivered Safely', desc: 'Door-to-door, no stress', gradient: 'from-purple-400 to-purple-600', icon: '✅', bgGradient: 'from-purple-50 to-pink-50', borderColor: 'border-purple-200' },
+              { 
+                stepNum: 'STEP - 1',
+                title: 'The Paperwork', 
+                desc: 'Once you place your order via mail or fax our field staff will collect the documents and consignments from the shipper.',
+                icon: '📄'
+              },
+              { 
+                stepNum: 'STEP - 2',
+                title: 'Select Location', 
+                desc: 'We\'ll evaluate the size and weight of your cargo, find just the right carrier to fly your goods to their destination.',
+                icon: '📍'
+              },
+              { 
+                stepNum: 'STEP - 3',
+                title: 'Partners Till The End', 
+                desc: 'Our teams will be working hard at every step of the journey to ensure that your shipment is delivered on time.',
+                icon: '⚙️'
+              },
             ].map((step, index) => (
-              <div
-                key={index}
-                className={`text-center group transition-all duration-700 hover:scale-105 ${
-                  visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className={`bg-gradient-to-br ${step.bgGradient} rounded-2xl p-6 sm:p-8 shadow-lg border-2 ${step.borderColor} group-hover:shadow-xl transition-all duration-300 relative overflow-hidden`}>
-                  {/* Gradient overlay on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
-                  
-                  <div className="relative z-10">
-                    <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${step.gradient} flex flex-col items-center justify-center text-white shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 relative overflow-hidden`}>
-                      <span className="text-3xl sm:text-4xl mb-1">{step.icon}</span>
-                      <span className="text-lg font-bold">{index + 1}</span>
+              <div key={index} className="relative">
+                {/* Chevron connector between steps */}
+                {index < 2 && (
+                  <div className="hidden sm:block absolute top-16 left-full w-full h-0.5 z-0" style={{ width: 'calc(100% - 2rem)' }}>
+                    <div className="relative h-full">
+                      <svg className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                      </svg>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2 text-accent-900 group-hover:text-accent-700 transition-colors duration-300">
+                  </div>
+                )}
+                <div
+                  className={`text-center group transition-all duration-700 ${
+                    visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                >
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-yellow-400/20 backdrop-blur-sm flex items-center justify-center border-2 border-yellow-400/30">
+                      <span className="text-4xl">{step.icon}</span>
+                    </div>
+                    
+                    {/* Step number */}
+                    <div className="text-yellow-400 font-bold text-sm sm:text-base mb-2">
+                      {step.stepNum}
+                    </div>
+                    
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-2xl font-bold mb-4 text-white">
                       {step.title}
                     </h3>
-                    <p className="text-gray-700 text-sm sm:text-base font-medium">{step.desc}</p>
+                    
+                    {/* Description */}
+                    <p className="text-white/90 text-sm sm:text-base leading-relaxed">
+                      {step.desc}
+                    </p>
                   </div>
-                  
-                  {/* Decorative corner element */}
-                  <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-20 rounded-bl-full transition-opacity duration-300`}></div>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* CTA Banner */}
+          <div 
+            className={`mt-16 sm:mt-20 bg-yellow-400 rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 transition-all duration-1000 ${
+              visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
+          >
+            <div className="flex-1 text-center sm:text-left">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
+                We Are Best Transport Agency For Give Best Quality Service
+              </h3>
+            </div>
+            <button
+              onClick={() => router.push('/quote')}
+              className="px-8 py-4 bg-teal-700 hover:bg-teal-800 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 whitespace-nowrap"
+            >
+              Request Services
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
