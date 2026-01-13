@@ -10,8 +10,10 @@ export default function QuotePage() {
   const [quote, setQuote] = useState<any>(null)
   const [isAnimating, setIsAnimating] = useState(false)
   const [showQuoteModal, setShowQuoteModal] = useState(false)
+  const [isCalculating, setIsCalculating] = useState(false)
 
   const handleQuoteCalculated = async (formData: any) => {
+    setIsCalculating(true)
     try {
       // Map vehicle type to valid enum values for pricing
       const mapVehicleType = (type: string): string => {
@@ -122,6 +124,8 @@ export default function QuotePage() {
       toast.success('Quote calculated successfully!')
     } catch (error: any) {
       toast.error(error.message || 'Failed to calculate quote')
+    } finally {
+      setIsCalculating(false)
     }
   }
 
@@ -153,6 +157,88 @@ export default function QuotePage() {
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 relative overflow-hidden">
+      {/* Modern Loader Overlay */}
+      {isCalculating && (
+        <div className="fixed inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 backdrop-blur-md z-50 flex items-center justify-center animate-[fadeIn_0.3s_ease-out]">
+          {/* Animated background particles */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 bg-accent-400 rounded-full opacity-30 animate-float-slow"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  top: `${30 + (i % 3) * 20}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${3 + i * 0.5}s`,
+                }}
+              />
+            ))}
+          </div>
+          
+          <div className="relative">
+            {/* Outer rotating ring with gradient */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-32 h-32 border-4 border-transparent border-t-accent-300 border-r-accent-400 rounded-full animate-spin" style={{ animationDuration: '1.5s' }}></div>
+            </div>
+            
+            {/* Middle rotating ring */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-24 h-24 border-4 border-transparent border-b-accent-500 border-l-accent-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+            </div>
+            
+            {/* Inner pulsing ring */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 border-4 border-accent-500/50 rounded-full animate-pulse"></div>
+            </div>
+            
+            {/* Center icon with glow effect */}
+            <div className="relative w-28 h-28 bg-gradient-to-br from-accent-400 via-accent-500 to-accent-600 rounded-full flex items-center justify-center shadow-2xl shadow-accent-500/60 transform hover:scale-110 transition-transform duration-300">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full blur-xl opacity-50 animate-pulse"></div>
+              
+              {/* Icon */}
+              <div className="relative z-10">
+                <svg className="w-12 h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              
+              {/* Rotating dots around icon */}
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-2 h-2 bg-white rounded-full"
+                  style={{
+                    top: '50%',
+                    left: '50%',
+                    transform: `translate(-50%, -50%) rotate(${i * 45}deg) translateY(-42px)`,
+                    animation: `pulse 1.5s ease-in-out infinite`,
+                    animationDelay: `${i * 0.2}s`,
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Loading text with gradient */}
+            <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 text-center">
+              <p className="text-white text-xl font-bold mb-3 bg-gradient-to-r from-white via-accent-200 to-white bg-clip-text text-transparent animate-pulse">
+                Calculating your quote...
+              </p>
+              <div className="flex gap-2 justify-center">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-3 h-3 bg-gradient-to-br from-accent-300 to-accent-500 rounded-full animate-bounce shadow-lg shadow-accent-400/50"
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Animated blob gradients */}
       <div className="blob-1"></div>
       <div className="blob-2"></div>
