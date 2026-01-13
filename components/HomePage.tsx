@@ -415,21 +415,18 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
             {[
               { 
-                category: 'Cars',
                 title: 'Car transport', 
                 desc: 'Get your vehicle moved safely and on time.', 
                 image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&h=600&fit=crop&q=80',
                 bgGradient: 'linear-gradient(135deg, rgba(55, 48, 43, 0.85) 0%, rgba(35, 28, 23, 0.9) 100%)',
               },
               { 
-                category: '',
                 title: 'Light commercial transport', 
                 desc: 'Professional handling for utes, vans, and light trucks.', 
                 image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&q=80',
                 bgGradient: 'linear-gradient(135deg, rgba(180, 120, 70, 0.85) 0%, rgba(140, 80, 40, 0.9) 100%)',
               },
               { 
-                category: '',
                 title: 'Motorbike transport', 
                 desc: 'Specialized care for motorcycles and bikes across the country.', 
                 image: 'https://images.unsplash.com/photo-1558980663-3685c1d673c4?w=800&h=600&fit=crop&q=80',
@@ -438,7 +435,7 @@ export default function HomePage() {
             ].map((service, index) => (
               <div
                 key={index}
-                className={`relative rounded-2xl p-6 sm:p-8 md:p-10 min-h-[400px] flex flex-col justify-between group hover:scale-105 transition-all duration-500 overflow-hidden ${
+                className={`relative rounded-2xl p-6 sm:p-8 md:p-10 min-h-[280px] flex flex-col justify-between group hover:scale-105 transition-all duration-500 overflow-hidden ${
                   visibleSections.has('services') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ 
@@ -463,19 +460,6 @@ export default function HomePage() {
                   }}
                 ></div>
                 
-                {/* Icon in top left for cards 2 and 3 */}
-                {index > 0 && (
-                  <div className="absolute top-6 left-6 w-10 h-10 bg-white/20 rounded-lg backdrop-blur-sm z-10 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                  </div>
-                )}
-                
-                {/* Category label (only for first card) */}
-                {service.category && (
-                  <div className="relative z-10 text-white/90 text-sm mb-2 font-medium">{service.category}</div>
-                )}
                 
                 {/* Content */}
                 <div className="relative z-10 flex-1 flex flex-col justify-end">
@@ -562,7 +546,7 @@ export default function HomePage() {
             ].map((feature, index) => (
               <div
                     key={index}
-                className={`relative rounded-2xl overflow-hidden group hover:scale-105 transition-all duration-500 min-h-[300px] flex flex-col ${
+                className={`relative rounded-2xl overflow-hidden group hover:scale-105 transition-all duration-500 min-h-[240px] flex flex-col ${
                   visibleSections.has('why-nexttransport') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
@@ -576,13 +560,6 @@ export default function HomePage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/60"></div>
             </div>
-
-                {/* Icon in top left */}
-                <div className="absolute top-6 left-6 w-10 h-10 bg-white/20 rounded-lg backdrop-blur-sm z-10 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                      </svg>
-                    </div>
                     
                 {/* Content */}
                 <div className="relative z-10 flex flex-col justify-end h-full p-6 sm:p-8">
@@ -688,7 +665,7 @@ export default function HomePage() {
               return (
                 <React.Fragment key={index}>
                   {/* Step Card */}
-                  <div className="flex-1 relative z-10 mb-8 lg:mb-0 flex flex-col">
+                  <div className="flex-1 relative z-10 mb-0 lg:mb-0 flex flex-col">
                     <div 
                       className={`flex flex-col items-start px-6 lg:px-8 transition-all duration-500 flex-1 ${
                         visibleSections.has('process') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
