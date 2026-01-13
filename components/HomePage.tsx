@@ -626,94 +626,116 @@ export default function HomePage() {
       <section 
         ref={howItWorksRef}
         data-section-id="how-it-works"
-        className="py-16 sm:py-20 md:py-24 relative overflow-hidden"
-        style={{ backgroundColor: '#1e3a5f' }}
+        className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          {/* Header */}
           <div 
-            className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
+            className={`text-center mb-8 sm:mb-12 transition-all duration-1000 ${
               visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
           >
-            <div className="text-white/60 text-sm sm:text-base uppercase tracking-wide mb-2">Process</div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-white">
-              Four simple steps
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 text-gray-900">
+              How It Works
             </h2>
-            <p className="text-white/80 text-lg sm:text-xl">Get your vehicle moving in minutes, not days.</p>
+            <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+              You choose the cities where you&apos;d like to deliver. All deliveries are within a specific service area and delivery services vary by location. Whatever the mode or requirement, we will find and book the ideal expedited shipping solution to ensure a timely delivery.
+            </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {[
-              { 
-                stepNum: 'One',
-                title: 'Get an instant quote online', 
-                desc: 'Tell us where and when. Price appears in seconds.',
-                image: '/images/how-it-works/quote.jpg',
-              },
-              { 
-                stepNum: 'Two',
-                title: 'Book and pay through our platform', 
-                desc: 'Secure checkout. No surprises. No phone tag.',
-                image: '/images/how-it-works/book.jpg',
-              },
-              { 
-                stepNum: 'Three',
-                title: 'We pick up and you track live', 
-                desc: 'Real-time updates show exactly where your vehicle is.',
-                image: '/images/how-it-works/track.jpg',
-              },
-              { 
-                stepNum: 'Four',
-                title: 'Delivered safely to your door', 
-                desc: 'Your vehicle arrives on time, every time.',
-                image: '/images/how-it-works/deliver.jpg',
-              },
-            ].map((step, index) => (
-              <div
-                key={index}
-                className={`group transition-all duration-700 ${
-                  visibleSections.has('how-it-works') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className="flex flex-col h-full">
-                  {/* Step Number */}
-                  <div className="text-white/60 text-sm sm:text-base mb-3 font-medium">
-                    {step.stepNum}
+
+          {/* Two Column Layout */}
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            {/* Left Side - Image */}
+            <div 
+              className={`relative transition-all duration-1000 ${
+                visibleSections.has('how-it-works') ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+              }`}
+            >
+              <div className="relative rounded-lg overflow-hidden shadow-2xl">
+                <div 
+                  className="w-full h-[500px] sm:h-[600px] bg-cover bg-center"
+                  style={{
+                    backgroundImage: 'url(/images/how-it-works/transport-vehicles.jpg)',
+                  }}
+                ></div>
+                {/* Overlay with play button (optional) */}
+                <div className="absolute bottom-6 left-6 bg-blue-900/90 backdrop-blur-sm p-6 rounded-lg max-w-xs">
+                  <div className="flex items-center gap-4 mb-3">
+                    <button className="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                      <svg className="w-6 h-6 text-gray-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </button>
+                    <div className="text-white font-bold text-sm">We have 25 years experience in this passion</div>
                   </div>
-                  
-                  {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-bold mb-3 text-white">
-                    {step.title}
-                  </h3>
-                  
-                  {/* Description */}
-                  <p className="text-white/70 text-sm sm:text-base mb-4 leading-relaxed">
-                    {step.desc}
+                  <p className="text-white/80 text-xs">
+                    There are many variations of passages available, but the majority have suffered alteration in some form.
                   </p>
-                  
-                  {/* Learn Link */}
-                  <Link 
-                    href="/quote"
-                    className="text-white font-medium mb-6 hover:text-white/80 transition-colors duration-300 flex items-center gap-2 w-fit"
-                  >
-                    Learn
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                  
-                  {/* Image */}
-                  <div className="relative rounded-lg overflow-hidden mt-auto">
-                    <div 
-                      className="w-full h-64 bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${step.image})`,
-                      }}
-                    ></div>
-                  </div>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right Side - Steps */}
+            <div 
+              className={`space-y-6 transition-all duration-1000 ${
+                visibleSections.has('how-it-works') ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+              }`}
+            >
+              {[
+                { 
+                  title: 'Customer places order',
+                  desc: 'Inspection and quality check of goods',
+                  icon: '💻',
+                  iconBg: 'bg-blue-100',
+                },
+                { 
+                  title: 'Payment successful',
+                  desc: 'Payoneer, Paypal, or Visa master card',
+                  icon: '💳',
+                  iconBg: 'bg-green-100',
+                },
+                { 
+                  title: 'Warehouse receives order',
+                  desc: 'Check the accuracy of the goods',
+                  icon: '📦',
+                  iconBg: 'bg-orange-100',
+                },
+                { 
+                  title: 'Item picked, packed & shipped',
+                  desc: 'Ship the goods to a local carrier',
+                  icon: '🚚',
+                  iconBg: 'bg-purple-100',
+                },
+                { 
+                  title: 'Delivered & Measure success',
+                  desc: 'Your vehicle arrives safely at destination',
+                  icon: '✅',
+                  iconBg: 'bg-teal-100',
+                },
+              ].map((step, index) => (
+                <div key={index} className="flex items-start gap-4 relative">
+                  {/* Dashed line connector */}
+                  {index < 4 && (
+                    <div className="absolute left-6 top-16 w-0.5 h-12 border-l-2 border-dashed border-gray-300"></div>
+                  )}
+                  
+                  {/* Icon Circle */}
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-full ${step.iconBg} flex items-center justify-center text-2xl z-10 relative`}>
+                    <span>{step.icon}</span>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 pt-1">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm sm:text-base">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
