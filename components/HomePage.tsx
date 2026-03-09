@@ -28,20 +28,20 @@ export default function HomePage() {
   const howItWorksRef = useRef<HTMLDivElement>(null)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
   
-  // Memoize particles for performance
+  // Memoize particles with deterministic values to avoid server/client hydration mismatch
   const particles = useMemo(() => {
     return Array.from({ length: 10 }, (_, i) => ({
       id: i,
-      left: Math.random() * 100,
-      top: Math.random() * 100,
-      delay: Math.random() * 5,
-      duration: 10 + Math.random() * 10,
+      left: ((i * 7.3 + 13) % 100),
+      top: ((i * 11.2 + 17) % 100),
+      delay: (i * 1.7) % 5,
+      duration: 10 + (i * 2.3) % 10,
     }))
   }, [])
 
   // Memoize gradient overlay style to reduce re-renders
   const gradientOverlayStyle = useMemo(() => ({
-    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(71, 131, 168, 0.2) 0%, transparent 50%), linear-gradient(to bottom, rgba(71, 131, 168, 0.85), rgba(58, 107, 138, 0.8), rgba(71, 131, 168, 0.85))`
+    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(37, 99, 235, 0.25) 0%, transparent 50%), linear-gradient(to bottom, rgba(29, 78, 216, 0.9), rgba(30, 64, 175, 0.85), rgba(29, 78, 216, 0.9))`
   }), [mousePosition.x, mousePosition.y])
 
   // Memoize reviews to prevent recreation on every render
@@ -290,14 +290,14 @@ export default function HomePage() {
         <div 
           className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl animate-float-slow"
           style={{
-            backgroundColor: 'rgba(71, 131, 168, 0.3)',
+            backgroundColor: 'rgba(37, 99, 235, 0.35)',
             transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`,
           }}
         />
         <div 
           className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse"
           style={{
-            backgroundColor: 'rgba(90, 155, 200, 0.25)',
+            backgroundColor: 'rgba(96, 165, 250, 0.3)',
             transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`,
           }}
         />
@@ -310,7 +310,7 @@ export default function HomePage() {
             }`}
           >
             <div className="mb-4 sm:mb-6 inline-block animate-bounce-slow">
-              <span className="text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider shadow-lg backdrop-blur-sm" style={{ backgroundColor: 'rgba(71, 131, 168, 0.9)' }}>
+              <span className="text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider shadow-lg backdrop-blur-sm" style={{ backgroundColor: 'rgba(29, 78, 216, 0.9)' }}>
                 Australia&apos;s #1 Vehicle Transport
               </span>
             </div>
@@ -363,10 +363,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-12 max-w-7xl mx-auto">
             {[
-              { icon: '⭐', title: '4.9', subtitle: 'Google Reviews', gradient: 'from-yellow-400 to-orange-500', glow: 'shadow-yellow-500/50' },
-              { icon: '🛡', title: 'Fully Insured', subtitle: 'Transport', gradient: 'from-red-400 to-red-600', glow: 'shadow-red-500/50' },
-              { icon: '🚚', title: 'Trusted by', subtitle: 'Dealers & Fleets', gradient: 'from-orange-400 to-orange-600', glow: 'shadow-orange-500/50' },
-              { icon: '🇦🇺', title: 'Australia-wide', subtitle: 'Coverage', gradient: 'from-blue-400 to-blue-600', glow: 'shadow-blue-500/50' },
+              { icon: '⭐', title: '4.9', subtitle: 'Google Reviews', gradient: 'from-yellow-400 to-orange-500' },
+              { icon: '🛡', title: 'Fully Insured', subtitle: 'Transport', gradient: 'from-red-400 to-red-600' },
+              { icon: '🚚', title: 'Trusted by', subtitle: 'Dealers & Fleets', gradient: 'from-orange-400 to-orange-600' },
+              { icon: '🇦🇺', title: 'Australia-wide', subtitle: 'Coverage', gradient: 'from-blue-400 to-blue-600' },
             ].map((item, index) => (
               <div
                 key={index}
@@ -376,7 +376,7 @@ export default function HomePage() {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="flex items-center gap-4 sm:gap-5">
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ${item.glow} shadow-xl`}>
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                     <span className="text-3xl sm:text-4xl">{item.icon}</span>
                   </div>
                   <div>
@@ -398,8 +398,8 @@ export default function HomePage() {
         className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.1)' }}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.08)' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(37, 99, 235, 0.12)' }}></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(96, 165, 250, 0.1)' }}></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div 
             className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${
@@ -499,8 +499,8 @@ export default function HomePage() {
         className="py-16 sm:py-20 md:py-24 xl:py-32 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5"></div>
-        <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.1)' }}></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.08)' }}></div>
+        <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(37, 99, 235, 0.12)' }}></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(96, 165, 250, 0.1)' }}></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           {/* Header */}
           <div 
@@ -743,8 +743,8 @@ export default function HomePage() {
         className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5 animate-pulse-slow"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.2)' }}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.15)' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(37, 99, 235, 0.18)' }}></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(96, 165, 250, 0.14)' }}></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div ref={trustBadgesRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
@@ -782,9 +782,9 @@ export default function HomePage() {
         className="py-16 sm:py-24 md:py-32 relative overflow-hidden bg-white"
       >
         <div className="absolute inset-0 bg-pattern-grid opacity-5 animate-pulse-slow"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.15)' }}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(90, 155, 200, 0.1)' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl animate-pulse-slow" style={{ backgroundColor: 'rgba(71, 131, 168, 0.05)', animationDelay: '1s' }}></div>
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl animate-float-slow" style={{ backgroundColor: 'rgba(37, 99, 235, 0.14)' }}></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl animate-float-slow-reverse" style={{ backgroundColor: 'rgba(96, 165, 250, 0.1)' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl animate-pulse-slow" style={{ backgroundColor: 'rgba(37, 99, 235, 0.06)', animationDelay: '1s' }}></div>
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div 

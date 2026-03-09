@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
 import ErrorBoundaryWrapper from '@/components/ErrorBoundaryWrapper'
+import { AuthProvider } from '@/components/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <ErrorBoundaryWrapper>
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
+          <AuthProvider>
+            <Navbar />
+            <main className="min-h-screen">
+              {children}
+            </main>
+          </AuthProvider>
           <Toaster position="top-right" />
         </ErrorBoundaryWrapper>
       </body>

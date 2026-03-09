@@ -21,15 +21,15 @@ export default function Navbar() {
   }, [mobileMenuOpen])
 
   return (
-    <nav className="bg-black shadow-lg sticky top-0 z-40 border-b border-gray-800">
+    <nav className="bg-[#0033FF] shadow-lg sticky top-0 z-40 border-b border-[#0022cc]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20 sm:h-24 md:h-28">
           <Link href="/" className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
-              src="/images/logo.png" 
-              alt="NextTransport Logo" 
-              className="w-auto h-20 sm:h-24 md:h-24 lg:h-28 xl:h-32"
+              src="/images/Png-20260309T022520Z-3-001/Png/Logo%20With%20original%20background.png" 
+              alt="Next Transport Logo" 
+              className="w-auto h-[7rem]"
               loading="eager"
               decoding="async"
             />
@@ -137,11 +137,11 @@ export default function Navbar() {
           <>
             {/* Backdrop */}
             <div 
-              className="lg:hidden fixed inset-0 bg-black/50 z-40 top-20"
+              className="lg:hidden fixed inset-0 bg-black/40 z-40 top-20"
               onClick={() => setMobileMenuOpen(false)}
             />
             {/* Menu */}
-            <div className="lg:hidden fixed inset-0 top-20 bg-black z-50 overflow-y-auto py-4 border-t border-gray-800">
+            <div className="lg:hidden fixed inset-0 top-20 bg-[#0033FF] z-50 overflow-y-auto py-4 border-t border-[#0022cc]">
             <div className="flex flex-col space-y-1 pt-2">
               <Link 
                 href="/" 

@@ -20,17 +20,18 @@ module.exports = {
           800: '#1e293b',
           900: '#0f172a',
         },
+        // Logo blue theme (matches Next Transport logo)
         accent: {
-          50: '#e6f2f8',
-          100: '#cce5f1',
-          200: '#99cbe3',
-          300: '#66b1d5',
-          400: '#3397c7',
-          500: '#50a0c8', // Primary logo blue
-          600: '#3c78a0', // Secondary logo blue
-          700: '#283c50', // Dark logo blue
-          800: '#1e2d3c',
-          900: '#141428', // Darkest logo color
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',  // Lighter blue (NEXT text)
+          500: '#2563eb',  // Main logo blue
+          600: '#1d4ed8',  // Buttons, hover
+          700: '#1e40af',
+          800: '#1e3a8a',
+          900: '#172554',
         },
         secondary: {
           50: '#fafafa',
